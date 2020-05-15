@@ -65,7 +65,7 @@ public final class FacesViewController: UIViewController {
   /// https://developers.google.com/ar/develop/developer-guides/creating-assets-for-augmented-faces
   private func setupScene() {
     guard let faceImage = UIImage(named: "Face.scnassets/red_hand_full_mouth.png"),
-      let scene = SCNScene(named: "Face.scnassets/blank_face.scn"),
+      let scene = SCNScene(named: "Face.scnassets/hidden_face.scn"),
       let modelRoot = scene.rootNode.childNode(withName: "asset", recursively: false)
     else { fatalError("Failed to load face scene!") }
 
