@@ -18,6 +18,11 @@ extension String {
     static let indigenous = NSLocalizedString("intro.indigenous", comment: "Indigenous")
     static let women = NSLocalizedString("intro.women", comment: "Women")
     
+    static var next: String { return NSLocalizedString("indicator.next", comment: "Next button title") }
+    static var slideviewheader: String { return NSLocalizedString("slideview.header", comment: "Text") }
+    static func slidetext(slidetext2: String) -> String {
+        return NSLocalizedString(slidetext2, comment: "slidetext") }
+    
     func width(for font: UIFont) -> CGFloat {
         let fontAttributes = [NSAttributedString.Key.font: font]
         return (self as NSString).size(withAttributes: fontAttributes).width
@@ -25,7 +30,9 @@ extension String {
 }
 
 extension UIFont {
+    static var system17: UIFont { return .systemFont(ofSize: 17) }
     static var roboto24: UIFont { return UIFont(name: "Roboto-Regular", size: 24) ?? .systemFont(ofSize: 24) }
+    static var roboto36: UIFont { return UIFont(name: "Roboto-Regular", size: 36) ?? .systemFont(ofSize: 36) }
     static var roboto48: UIFont { return UIFont(name: "Roboto-Regular", size: 48) ?? .systemFont(ofSize: 48) }
 }
 
