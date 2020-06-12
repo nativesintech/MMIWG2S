@@ -73,7 +73,7 @@ public final class FacesViewController: UIViewController {
     modelRoot.simdScale = simd_float3(1, 1, 1) * 0.01
     foreheadLeftNode = modelRoot.childNode(withName: "FOREHEAD_LEFT", recursively: true)
     foreheadRightNode = modelRoot.childNode(withName: "FOREHEAD_RIGHT", recursively: true)
-    noseTipNode = modelRoot.childNode(withName: "NOSE_TIP", recursively: true)
+    noseTipNode = modelRoo   `          t.childNode(withName: "NOSE_TIP", recursively: true)
 
     faceNode.addChildNode(faceTextureNode)
     faceNode.addChildNode(faceOccluderNode)

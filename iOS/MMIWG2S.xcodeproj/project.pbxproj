@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2229079D248A9ECF005691FB /* SlideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2229079C248A9ECF005691FB /* SlideViewController.swift */; };
+		2229079F248A9FA8005691FB /* TopBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2229079E248A9FA8005691FB /* TopBanner.swift */; };
+		222907A32490452E005691FB /* MMIWG2S in Resources */ = {isa = PBXBuildFile; fileRef = 222907A22490452E005691FB /* MMIWG2S */; };
 		6933B02823172482007E1C28 /* FaceMeshGeometryConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6933B01F23172481007E1C28 /* FaceMeshGeometryConverter.swift */; };
 		6933B02923172482007E1C28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6933B02023172481007E1C28 /* LaunchScreen.storyboard */; };
 		6933B02A23172482007E1C28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6933B02123172481007E1C28 /* Assets.xcassets */; };
@@ -17,6 +20,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2229079C248A9ECF005691FB /* SlideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideViewController.swift; sourceTree = "<group>"; };
+		2229079E248A9FA8005691FB /* TopBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBanner.swift; sourceTree = "<group>"; };
+		222907A22490452E005691FB /* MMIWG2S */ = {isa = PBXFileReference; lastKnownFileType = folder; path = MMIWG2S; sourceTree = "<group>"; };
 		3E2554A5F7C8198C9886C988 /* Pods-MMIWG2S.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MMIWG2S.release.xcconfig"; path = "Target Support Files/Pods-MMIWG2S/Pods-MMIWG2S.release.xcconfig"; sourceTree = "<group>"; };
 		550BC05DCA1320633583F014 /* libPods-MMIWG2S.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MMIWG2S.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		692DB6DC22FCA472007A4EEF /* MMIWG2S.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MMIWG2S.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,6 +60,7 @@
 			isa = PBXGroup;
 			children = (
 				6933B01E23172481007E1C28 /* MMIWG2S */,
+				222907A22490452E005691FB /* MMIWG2S */,
 				692DB6DD22FCA472007A4EEF /* Products */,
 				96AE2E2B17F4EF661A6BFC2A /* Pods */,
 				0D76C3B7980124018B8E887D /* Frameworks */,
@@ -78,6 +85,8 @@
 				6933B02123172481007E1C28 /* Assets.xcassets */,
 				6933B02323172481007E1C28 /* Face.scnassets */,
 				6933B02723172481007E1C28 /* Info.plist */,
+				2229079C248A9ECF005691FB /* SlideViewController.swift */,
+				2229079E248A9FA8005691FB /* TopBanner.swift */,
 			);
 			path = MMIWG2S;
 			sourceTree = "<group>";
@@ -153,6 +162,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6933B02A23172482007E1C28 /* Assets.xcassets in Resources */,
+				222907A32490452E005691FB /* MMIWG2S in Resources */,
 				6933B02C23172482007E1C28 /* Face.scnassets in Resources */,
 				6933B02923172482007E1C28 /* LaunchScreen.storyboard in Resources */,
 			);
@@ -207,9 +217,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2229079D248A9ECF005691FB /* SlideViewController.swift in Sources */,
 				6933B02D23172482007E1C28 /* AppDelegate.swift in Sources */,
 				6933B02823172482007E1C28 /* FaceMeshGeometryConverter.swift in Sources */,
 				6933B02B23172482007E1C28 /* FacesViewController.swift in Sources */,
+				2229079F248A9FA8005691FB /* TopBanner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,7 +351,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6CH33V25NQ;
+				DEVELOPMENT_TEAM = TZDF6FGCZA;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/MMIWG2S/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -347,7 +359,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mehequanna.MMIWG2S;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mark.MMIWG2S;
 				PRODUCT_NAME = MMIWG2S;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -362,7 +374,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 6CH33V25NQ;
+				DEVELOPMENT_TEAM = TZDF6FGCZA;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/MMIWG2S/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -370,7 +382,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.mehequanna.MMIWG2S;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mark.MMIWG2S;
 				PRODUCT_NAME = MMIWG2S;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
