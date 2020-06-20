@@ -1,5 +1,5 @@
 //
-//  TopBanner.swift
+//  BottomBanner.swift
 //  MMIWG2S
 //
 //  Created by Marvin Amaro on 6/5/20.
@@ -7,7 +7,7 @@
 //
 
 import UIKit
-class TopBannerView:UIView {
+class BottomBannerView:UIView {
     let label = UILabel(frame:CGRect(x:0,y:0,width:200,height:21))
 
     override init(frame: CGRect)
