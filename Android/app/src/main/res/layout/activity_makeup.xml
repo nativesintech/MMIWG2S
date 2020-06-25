@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MakeupActivity">
+    tools:context=".MmiwActivity">
 
-    <fragment android:name="no.realitylab.arface.FaceArFragment"
+    <fragment android:name="com.mehequanna.mmiw.FaceArFragment"
         android:id="@+id/face_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
