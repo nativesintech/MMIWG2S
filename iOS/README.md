@@ -1,4 +1,4 @@
-### Setup instructions for AugmentedFacesExample app.
+### Setup instructions for MMIW AR app.
 
 #### CocoaPods installation
 If you haven't installed CocoaPods before, then you will want to follow these instructions from the [CocoaPods Guide](https://guides.cocoapods.org/using/getting-started.html):

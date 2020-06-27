@@ -1,4 +1,4 @@
-package no.realitylab.arface
+package com.mehequanna.mmiw
 
 import org.junit.Test
 
