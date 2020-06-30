@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
-        button_makeup.setOnClickListener {
+        button_mmiw.setOnClickListener {
             startActivity(Intent(this, MmiwActivity::class.java))
         }
     }

@@ -21,10 +21,16 @@ class FaceArFragment : ArFragment() {
         return EnumSet.of(Session.Feature.FRONT_CAMERA)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val frameLayout = super.onCreateView(inflater, container, savedInstanceState) as? FrameLayout
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val frameLayout =
+            super.onCreateView(inflater, container, savedInstanceState) as? FrameLayout
         planeDiscoveryController.hide()
         planeDiscoveryController.setInstructionView(null)
-        return  frameLayout
+
+        return frameLayout
     }
 }
