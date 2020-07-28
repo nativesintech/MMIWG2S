@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">MMIW AR</string>
     <string name="makeup">MMIW Prototype</string>
+    <string name="hashtag_caps">#MMIW</string>
+    <string name="stat_text_1">On some reservations, native women are murdered at a rate of 10 times the national average.</string>
+    <string name="next_slide">Next</string>
 </resources>
