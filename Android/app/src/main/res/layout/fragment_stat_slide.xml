@@ -56,10 +56,10 @@
         android:textColor="@android:color/white"
         android:layout_marginEnd="16dp" />
 
-    <ImageView
+    <com.mehequanna.mmiw.widgets.StatIndicatorViewGroup
         android:id="@+id/progressIndicator"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintEnd_toStartOf="@id/nextText"
         app:layout_constraintTop_toTopOf="@id/nextText"
         app:layout_constraintBottom_toBottomOf="@id/nextText" />
