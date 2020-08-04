@@ -63,6 +63,7 @@ class SlideViewController: UIViewController, UIScrollViewDelegate {
 
             scrollView.isPagingEnabled = true
             scrollView.contentSize = CGSize(width:scrollView.frame.width * 3, height:scrollView.frame.height)
+            
             pageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: .valueChanged)
 
             
@@ -119,7 +120,7 @@ class SlideViewController: UIViewController, UIScrollViewDelegate {
         //Setup UI
         var labelMMIW = UILabel(frame:CGRect(x:0,y:0,width:50,height:21))
         var labelMMIWInfo = UILabel(frame:CGRect(x:0,y:0,width:200,height:200))
-        var buttonNext = UIButton(frame:CGRect(x:0,y:0, width:30, height:15))
+        var buttonNext = UIButton(frame:CGRect(x:0,y:0, width:30, height:17))
 
 
         labelMMIW.translatesAutoresizingMaskIntoConstraints = false
@@ -128,15 +129,15 @@ class SlideViewController: UIViewController, UIScrollViewDelegate {
         view.addSubview(labelMMIW)
         view.addSubview(labelMMIWInfo)
 
-        view.addSubview(buttonNext)
+ //       view.addSubview(buttonNext)
         pc1View.translatesAutoresizingMaskIntoConstraints = false
-        buttonNext.addSubview(pc1View)
+//        buttonNext.addSubview(pc1View)
         pc2View.translatesAutoresizingMaskIntoConstraints = false
-        buttonNext.addSubview(pc2View)
+//        buttonNext.addSubview(pc2View)
         pc3View.translatesAutoresizingMaskIntoConstraints = false
-        buttonNext.addSubview(pc3View)
+//        buttonNext.addSubview(pc3View)
         pc4View.translatesAutoresizingMaskIntoConstraints = false
-        buttonNext.addSubview(pc4View)
+//        buttonNext.addSubview(pc4View)
 
         
         labelMMIW.textAlignment = .center
@@ -155,16 +156,42 @@ class SlideViewController: UIViewController, UIScrollViewDelegate {
         pc3View.backgroundColor = UIColor.white
         pc4View.backgroundColor = UIColor.white
         //labelMMIWInfo.backgroundColor = UIColor.red
+        
         buttonNext.alpha = 1.0
         buttonNext.setTitleColor(UIColor.white, for:.normal)
         buttonNext.setTitleColor(UIColor.green, for:.selected)
-        ///buttonNext.backgroundColor = UIColor.blue
+
+        buttonNext.imageEdgeInsets = UIEdgeInsets(top:0, left:0, bottom:0, right:0 )
+        buttonNext.contentEdgeInsets = UIEdgeInsets(top:0, left:0, bottom:0, right:0 )
+        buttonNext.titleLabel?.font = UIFont.systemFont(ofSize: 17)
         buttonNext.setTitle("Next", for:.normal)
+        
+        pageControl.currentPage += pageControl.currentPage
 
-        var views: [String:Any] = ["labelMMIW":labelMMIW, "labelMMIWInfo":labelMMIWInfo, "buttonNext":buttonNext]
+        buttonNext.addTarget(self, action: #selector(self.changePage(sender:)), for: .touchUpInside)
+        
+        let bottomView = UIView(frame:CGRect(x:0, y:0, width:100, height:50))
+        bottomView.addSubview(pc1View)
+        bottomView.addSubview(pc2View)
+        bottomView.addSubview(pc3View)
+        bottomView.addSubview(pc4View)
+        bottomView.addSubview(buttonNext)
+        //let gr = UITapGestureRecognizer(target: self, action:#selector(self.handleTap(_:)))
 
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[labelMMIW(50)]->=0-[labelMMIWInfo(160)]-12-[buttonNext(15)]-36-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
+        let gr = UITapGestureRecognizer(target: self, action: #selector(self.changePage(sender:)))
 
+        bottomView.isUserInteractionEnabled = true
+        bottomView.addGestureRecognizer(gr)
+        
+        bottomView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(bottomView)
+        
+        
+        var views: [String:Any] = ["labelMMIW":labelMMIW, "labelMMIWInfo":labelMMIWInfo, "bottomView":bottomView]
+
+/*        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[labelMMIW(50)]->=0-[labelMMIWInfo(160)]-12-[buttonNext(17)]-36-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
+*/
+        
         /*   independent uiviews original constraints
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[labelMMIW(50)]->=0-[labelMMIWInfo(160)]-12-[pc1View(15)]-36-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
 
@@ -173,22 +200,39 @@ class SlideViewController: UIViewController, UIScrollViewDelegate {
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[labelMMIW(50)]->=0-[labelMMIWInfo(160)]-12-[pc3View(15)]-36-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
 
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[labelMMIW(50)]->=0-[labelMMIWInfo(160)]-12-[pc4View(15)]-36-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
-
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[labelMMIW(50)]->=0-[labelMMIWInfo(160)]-12-[buttonNext(15)]-36-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
 */
+
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-36-[labelMMIW]-56-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views: ["labelMMIW":labelMMIW]))
  
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-25-[labelMMIWInfo]-25-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views: ["labelMMIWInfo":labelMMIWInfo]))
 
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[labelMMIW(50)]->=0-[labelMMIWInfo(160)]-12-[bottomView(17)]-36-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
+
         // page control and button constraints
 
-        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|->=0-[buttonNext(100)]-27-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
+        self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|->=0-[bottomView(70)]-10-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
        
         views = ["pc1View":pc1View, "pc2View":pc2View, "pc3View":pc3View, "pc4View":pc4View, "buttonNext":buttonNext]
 
+    // bottomView constraints
+        
+        bottomView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|->=0-[pc1View(15)]-2-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
+
+        bottomView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|->=0-[pc2View(15)]-2-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
+
+        bottomView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|->=0-[pc3View(15)]-2-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
+
+        bottomView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|->=0-[pc4View(15)]-2-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
+
+        bottomView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|->=0-[buttonNext(15)]-2-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
+
+        bottomView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|->=0-[pc1View(2)]-2-[pc2View(2)]-2-[pc3View(2)]-2-[pc4View(2)]-2-[buttonNext(45)]|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
+
+        
+        
         // button constraints
         
-        buttonNext.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|->=0-[pc1View(15)]-2-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
+/*        buttonNext.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|->=0-[pc1View(15)]-2-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
 
         buttonNext.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|->=0-[pc2View(15)]-2-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
 
@@ -196,8 +240,10 @@ class SlideViewController: UIViewController, UIScrollViewDelegate {
 
         buttonNext.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|->=0-[pc4View(15)]-2-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
 
-        buttonNext.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-[pc1View(2)]-2-[pc2View(2)]-2-[pc3View(2)]-2-[pc4View(2)]->=0-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
-        
+        buttonNext.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|->=0-[titleLabel(15)]-2-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
+
+        buttonNext.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|->=0-[pc1View(2)]-2-[pc2View(2)]-2-[pc3View(2)]-2-[pc4View(2)]-2-[titleLabel(45)]->=0-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
+ */
 /*
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|->=0-[pc1View(2)]-2-[pc2View(2)]-2-[pc3View(2)]-2-[pc4View(2)]-4-[buttonNext(40)]-27-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views:views))
 */
@@ -210,7 +256,7 @@ class SlideViewController: UIViewController, UIScrollViewDelegate {
         //self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[bbView(100)]-40-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views: ["bbView":self.bbView]))
         self.view.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-10-[bbView]-10-|", options:NSLayoutConstraint.FormatOptions.init(rawValue:0), metrics:nil, views: ["bbView":self.bbView]))
 */
-    }
+
 
  /*
     // MARK: - Navigation
@@ -221,5 +267,16 @@ class SlideViewController: UIViewController, UIScrollViewDelegate {
         // Pass the selected object to the new view controller.
     }
     */
-
+    }
+    
+    func buttonClicked(sender: UIButton!)
+    {
+        
+        
+    }
+    
+    @objc func handleTap(_ sender: UIGestureRecognizer)
+    {
+        print("test")
+    }
 }
