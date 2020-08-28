@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   ) -> Bool {
 
     window = UIWindow(frame: UIScreen.main.bounds)
-    window?.rootViewController = SlideViewController()
+    window?.rootViewController = SlidePageViewController()
     window?.makeKeyAndVisible()
 
     return true
