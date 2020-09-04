@@ -29,13 +29,9 @@ import java.io.FileOutputStream
 import java.io.IOException
 
 class MmiwActivity : AppCompatActivity() {
-    companion object {
-        const val MIN_OPENGL_VERSION = 3.0
-    }
-
-    lateinit var arFragment: FaceArFragment
+    private lateinit var arFragment: FaceArFragment
     private var faceMeshTexture: Texture? = null
-    var faceNodeMap = HashMap<AugmentedFace, AugmentedFaceNode>()
+    private var faceNodeMap = HashMap<AugmentedFace, AugmentedFaceNode>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,7 +59,7 @@ class MmiwActivity : AppCompatActivity() {
                                 val faceNode = AugmentedFaceNode(f)
                                 faceNode.setParent(scene)
                                 faceNode.faceMeshTexture = faceMeshTexture
-                                faceNodeMap.put(f, faceNode)
+                                faceNodeMap[f] = faceNode
                             }
                         }
                         // Remove any AugmentedFaceNodes associated with an AugmentedFace that stopped tracking.
@@ -81,12 +77,14 @@ class MmiwActivity : AppCompatActivity() {
             }
         }
 
-        capture.setOnClickListener {
-            takePhoto()
+        capture_button.setOnClickListener {
+            capture_button.isEnabled = false
+            sceneView.pause()
+            takePhoto() // TODO Move this until after the image is ready
         }
     }
 
-    fun checkIsSupportedDeviceOrFinish(): Boolean {
+    private fun checkIsSupportedDeviceOrFinish(): Boolean {
         if (ArCoreApk.getInstance()
                 .checkAvailability(this) == ArCoreApk.Availability.UNSUPPORTED_DEVICE_NOT_CAPABLE
         ) {
@@ -98,7 +96,7 @@ class MmiwActivity : AppCompatActivity() {
             ?.deviceConfigurationInfo
             ?.glEsVersion
 
-        openGlVersionString?.let { s ->
+        openGlVersionString?.let { _ ->
             if (java.lang.Double.parseDouble(openGlVersionString) < MIN_OPENGL_VERSION) {
                 Toast.makeText(this, "Sceneform requires OpenGL ES 3.0 or later", Toast.LENGTH_LONG)
                     .show()
@@ -145,6 +143,12 @@ class MmiwActivity : AppCompatActivity() {
                 )
                 toast.show()
             }
+
+            // Re-enable capture_button even if the PixelCopy fails.
+            runOnUiThread {
+                capture_button.isEnabled = true
+            }
+
             handlerThread.quitSafely()
         }, Handler(handlerThread.looper))
     }
@@ -155,7 +159,7 @@ class MmiwActivity : AppCompatActivity() {
         // TODO figure where to share.
         val intent: Intent = ShareCompat.IntentBuilder.from(this)
             .setType("image/jpg")
-            .setSubject("SHRUG")
+            .setSubject("MMIW Support Image") // TODO
             .setStream(photoURI)
             .setChooserTitle("R.string.share_title")
             .createChooserIntent()
@@ -200,5 +204,9 @@ class MmiwActivity : AppCompatActivity() {
         } catch (e: Exception) {
             throw java.lang.Exception("Error writing temp queued file", e)
         }
+    }
+
+    companion object {
+        const val MIN_OPENGL_VERSION = 3.0
     }
 }
