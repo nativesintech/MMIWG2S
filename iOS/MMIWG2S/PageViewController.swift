@@ -1,5 +1,5 @@
 //
-//  PVController.swift
+//  PageViewController.swift
 //  MMIWG2S
 //
 //  Created by Marvin Amaro on 8/21/20.
@@ -9,20 +9,17 @@
 import UIKit
 
 
-class SlidePageViewController: UIPageViewController, UIPageViewControllerDataSource
-{
-    var vControllerGreen = ViewControllerGreen()
-    let vControllerBlue = ViewControllerBlue()
-    let vControllerRed = UIViewController()
-
+class PageViewController: UIPageViewController, UIPageViewControllerDataSource, NextPageDelegate {
     
-    override init(transitionStyle: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]?)
-    {
+    var vController1 = ViewController1()
+    let vController2 = ViewController2()
+    let vController3 = ViewController3()
+    
+    override init(transitionStyle: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation, options: [UIPageViewController.OptionsKey : Any]?) {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: options)
     }
     
-    required init?(coder: NSCoder)
-    {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -34,7 +31,7 @@ class SlidePageViewController: UIPageViewController, UIPageViewControllerDataSou
 //    vControllerGreen.view.backgroundColor = UIColor.greenn
 
 //    private(set) lazy var orderedViewControllers:[UIViewController] = { return [ self.vControllerGreen, self.vControllerBlue, self.vControllerRed]}()
-    private(set) lazy var orderedViewControllers:[UIViewController] = { return [ self.vControllerGreen, self.vControllerBlue]}()
+    private(set) lazy var orderedViewControllers:[UIViewController] = { return [ self.vController1, self.vController2, self.vController3]}()
  //   super.viewDidLoad()
 /*    private(set) lazy var orderedViewControllers:[UIViewController] = {return [self.newColoredViewController(color: "Green"), self.newColoredViewController(color:"Red"), self.newColoredViewController(color:"Blue")]}()
 */
@@ -46,12 +43,15 @@ class SlidePageViewController: UIPageViewController, UIPageViewControllerDataSou
     {
         super.viewDidLoad()
         dataSource = self
+        
         if let firstViewController = orderedViewControllers.first {
             setViewControllers([firstViewController],
                                direction:.forward,
                               animated:true,
                               completion:nil)
         }
+        vController1.delegate = self
+        vController2.delegate = self
     }
 
     func pageViewController(_ pageViewController: UIPageViewController,
@@ -96,6 +96,7 @@ class SlidePageViewController: UIPageViewController, UIPageViewControllerDataSou
         return orderedViewControllers[nextIndex]
     }
 
+    
 
 /*
 extension TutorialPageViewController: UIPageViewControllerDataSource {
@@ -116,7 +117,25 @@ extension TutorialPageViewController: UIPageViewControllerDataSource {
      viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
          return nil}
 */
+    func vc1tovc2() {
+        setViewControllers([vController2],
+         direction:.forward,
+        animated:true,
+        completion:nil)
+    }
+    
+    func vc2tovc3() {
+        setViewControllers([vController3],
+         direction:.forward,
+        animated:true,
+        completion:nil)
+
+    }
+
 
 }
  
-
+protocol NextPageDelegate {
+    func vc1tovc2()
+    func vc2tovc3()
+}

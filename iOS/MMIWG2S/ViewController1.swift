@@ -1,131 +1,48 @@
 //
-//  SlideViewController.swift
+//  ViewController1.swift
 //  MMIWG2S
 //
-//  Created by Marvin Amaro on 6/5/20.
+//  Created by Marvin Amaro on 8/23/20.
 //  Copyright © 2020 Google LLC. All rights reserved.
 //
 
 import UIKit
 
-class SlideViewController: UIViewController, UIScrollViewDelegate {
-
-    var tbView:TopBannerView = TopBannerView(frame: CGRect(x:0, y:0, width:0, height:0))
-    var bbView:UIView = BottomBannerView(frame: CGRect(x:0, y:0, width:0, height:0))
+class ViewController1:UIViewController
+{
     var pc1View:UIView = UIView(frame: CGRect(x:0, y:0, width:0, height:0))
     var pc2View:UIView = UIView(frame: CGRect(x:0, y:0, width:0, height:0))
     var pc3View:UIView = UIView(frame: CGRect(x:0, y:0, width:0, height:0))
     var pc4View:UIView = UIView(frame: CGRect(x:0, y:0, width:0, height:0))
-
-    var colors:[UIColor] = [UIColor.red, UIColor.blue, UIColor.green, UIColor.yellow]
-    let scrollView = UIScrollView(frame: CGRect(x:0, y:0, width:500, height:800))
-    var pageControl = UIPageControl(frame:CGRect(x:200, y:700, width:200, height:50))
-    var imageNames = (1...3).map{"image\($0)"}
+    var delegate: NextPageDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configurePageControl()
-        scrollView.delegate = self
-        scrollView.frame = view.frame
-        //scrollView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(scrollView)
-
-        for index in 0..<3
-        {
-            print(imageNames[index])
-            view.frame.origin.x = scrollView.frame.size.width * CGFloat(index)
-            view.frame.size = scrollView.frame.size
-            let image = UIImage(named:imageNames[index])
-            let imageView = UIImageView(image:image)
-            imageView.frame = view.frame
-            imageView.contentMode = .scaleAspectFill
-            
-
-            // let subView = UIView(frame:view.frame)
-           // subView.addSubview(imageView)
-            //subView.backgroundColor = colors[index]
-            //imageView.translatesAutoresizingMaskIntoConstraints = false
-            scrollView.addSubview(imageView)
-            if index == 1 {
-                let gradient = UIImage(named:"Rectangle1.png")
-                let gradientView = UIImageView(image:gradient)
-                gradientView.frame = view.frame
-                gradientView.contentMode = .scaleAspectFill
-                scrollView.addSubview(gradientView)
-            }
-             if index == 2 {
-                 let gradient = UIImage(named:"Rectangle1-2.png")
-                 let gradientView = UIImageView(image:gradient)
-                 gradientView.frame = view.frame
-                 gradientView.contentMode = .scaleAspectFill
-                 scrollView.addSubview(gradientView)
-             }
-
-            scrollView.isPagingEnabled = true
-            scrollView.contentSize = CGSize(width:scrollView.frame.width * 3, height:scrollView.frame.height)
-            
-            pageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: .valueChanged)
-
-            
-            
-            //pageControl.addTarget(self, action: #selector(self.changePage(sender:)), for: UIControlEvents.valueChanged)
-
-        }
-/*
-        scrollView.addConstraint(NSLayoutConstraint(item:scrollView, attribute:.leading, relatedBy:.equal, toItem:scrollView.subviews[0], attribute:.leading, multiplier:1, constant:0))
-        
-        scrollView.addConstraint(NSLayoutConstraint(item:scrollView.subviews[0], attribute:.trailing, relatedBy:.equal, toItem:scrollView.subviews[1], attribute:.leading, multiplier:1, constant:0))
-
-        scrollView.addConstraint(NSLayoutConstraint(item:scrollView.subviews[1], attribute:.trailing, relatedBy:.equal, toItem:scrollView.subviews[2], attribute:.leading, multiplier:1, constant:0))
-        
-        scrollView.addConstraint(NSLayoutConstraint(item:scrollView.subviews[2], attribute:.leading, relatedBy:.equal, toItem:scrollView.subviews[2], attribute:.leading, multiplier:1, constant:0))
-
-        scrollView.addConstraint(NSLayoutConstraint(item:scrollView, attribute:.top, relatedBy:.equal, toItem:scrollView.subviews[0], attribute:.top, multiplier:1, constant:0))
-
-        scrollView.addConstraint(NSLayoutConstraint(item:scrollView, attribute:.top, relatedBy:.equal, toItem:scrollView.subviews[1], attribute:.top, multiplier:1, constant:0))
-
-        scrollView.addConstraint(NSLayoutConstraint(item:scrollView, attribute:.top, relatedBy:.equal, toItem:scrollView.subviews[2], attribute:.top, multiplier:1, constant:0))
-
- */
-        //view.backgroundColor = UIColor(red:50/255, green:0, blue:12.5/255, alpha:1.0)
-        
-        // Do any additional setup after loading the view.
+        let image = UIImage(named: "image1")
+        let imageView = UIImageView(image:image)
+        imageView.frame = view.frame
+        imageView.contentMode = .scaleAspectFill
+        view.addSubview(imageView)
+       
+        let gradient = UIImage(named:"Rectangle1.png")
+        let gradientView = UIImageView(image:gradient)
+        gradientView.frame = view.frame
+        gradientView.contentMode = .scaleAspectFill
+        view.addSubview(gradientView)
         setupUI()
     }
     
-    @objc func changePage(sender:AnyObject) ->()
-    {
-        let x = CGFloat(pageControl.currentPage) * scrollView.frame.size.width
-        scrollView.setContentOffset(CGPoint(x:x, y:0), animated:true)
-    }
-    
-    func scrollViewDidEndDecelerating(_ scrollView:UIScrollView)
-    {
-        let pageNumber = round(scrollView.contentOffset.x / scrollView.frame.size.width)
-        pageControl.currentPage = Int(pageNumber)
-    }
-    
-    func configurePageControl()
-    {
-        pageControl.numberOfPages = colors.count
-        pageControl.currentPage = 0
-        pageControl.tintColor = UIColor.red
-        pageControl.pageIndicatorTintColor = UIColor.white
-        pageControl.currentPageIndicatorTintColor = UIColor.green
-        view.addSubview(pageControl)
-    }
-    
     func setupUI()
-    {   
+    {
         //Setup UI
         let labelMMIW = UILabel(frame:CGRect(x:0,y:0,width:50,height:21))
         let labelMMIWInfo = UILabel(frame:CGRect(x:0,y:0,width:200,height:200))
         let buttonNext = UIButton(frame:CGRect(x:0,y:0, width:30, height:17))
 
-
         labelMMIW.translatesAutoresizingMaskIntoConstraints = false
         labelMMIWInfo.translatesAutoresizingMaskIntoConstraints = false
         buttonNext.translatesAutoresizingMaskIntoConstraints = false
+
         view.addSubview(labelMMIW)
         view.addSubview(labelMMIWInfo)
 
@@ -166,7 +83,6 @@ class SlideViewController: UIViewController, UIScrollViewDelegate {
         buttonNext.titleLabel?.font = UIFont.systemFont(ofSize: 17)
         buttonNext.setTitle("Next", for:.normal)
         
-        pageControl.currentPage += pageControl.currentPage
 
         buttonNext.addTarget(self, action: #selector(self.changePage(sender:)), for: .touchUpInside)
         
@@ -269,14 +185,15 @@ class SlideViewController: UIViewController, UIScrollViewDelegate {
     */
     }
     
-    func buttonClicked(sender: UIButton!)
+    @objc func changePage(sender:AnyObject) ->()
     {
-        
-        
+        if (delegate != nil)
+        {
+            delegate?.vc1tovc2()
+       /* let x = CGFloat(pageControl.currentPage) * scrollView.frame.size.width
+        scrollView.setContentOffset(CGPoint(x:x, y:0), animated:true)
+       */
+        }
     }
-    
-    @objc func handleTap(_ sender: UIGestureRecognizer)
-    {
-        print("test")
-    }
+
 }
