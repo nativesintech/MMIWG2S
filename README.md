@@ -1,4 +1,4 @@
-# MMIW AR Face Mesh App
+# MMIW AR Face Mesh App WOOOHOOOO This is fun
 
 ## Project
 Our goal is to bring awareness to MMIW through the use of augmented reality face meshing technology. Users will learn about MMIW and then be able to take a picture with the iconic red hand over their face. They will then be able to share that picture with whatever social media or device they choose.  
