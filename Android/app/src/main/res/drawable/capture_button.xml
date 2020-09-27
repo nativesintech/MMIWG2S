@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Normal state -->
+    <item android:drawable="@drawable/capture_button_not_pressed" android:state_pressed="false" />
+    <!-- Pressed state -->
+    <item android:drawable="@drawable/capture_button_pressed" android:state_pressed="true" />
+</selector>

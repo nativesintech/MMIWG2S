@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="white_100">#f8f8f8</color>
+    <color name="white_50">#80f8f8f8</color>
+    <color name="transparent">#00000000</color>
+    <color name="capture_button_pressed_black">#191919</color>
+
+    <!--  Might be used in the future.  -->
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="red">#B10E0F</color>
 </resources>
