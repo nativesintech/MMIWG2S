@@ -12,3 +12,11 @@ For RDS It is about .001-.002 cheaper to use MySQL, difference of $8.76-17.52 pe
 So, Firebase seems like it is more for syncing data between devices. That being said, it looks like it is only for mobile. Realtime database are free for up to 100 simultaneous connection, 1GB of storage and 10GB downloaded per month. If you do Firestore, it is priced based on reads, writes, deletes, and stored data. (Las Vegas is cheapest):
 
 So Cloud Firestore is cross platform (can be used for things other than apps), but is also NoSQL
+
+Looks like Cloud Firestore is the way to go and we should have the key of each document be the state to limit the number of reads. We do have to be careful though becuase each document is limited to 1MB of data. Since the images are going to be much larger than this, we are going to probably store them in Cloud Storage and then just put the url to them in Firestore.
+
+Some more things about Firestore, in case you somehow end up with more than 1MB of data, apparently documents can get stored in what are called collections, so you probably will want to set up the database to have a collection per state, though initially trying to keep it to one document per state will be ideal. For scalability though, preparing for a collection of docs per state is ideal.
+
+Some limitations you should know. You can't do wildcard searches, OR queries, != queries, or try to search for fields that don't exist (I don't think these will be an issue just food for thought, so to speak)
+
+As for Cloud Storage there are 4 types; standard, nearline, coldline, and archive. We will be using standard because the other 3 are for infrequent retrieval, which will not be the case with our pictures. This will cost $.02 per GB per month.
