@@ -9,6 +9,7 @@
     <ImageView
         android:id="@+id/statImage"
         android:importantForAccessibility="no"
+        android:scaleType="centerCrop"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
@@ -43,26 +44,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="@string/stat_text_1" />
-
-    <TextView
-        android:id="@+id/nextText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next_slide"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="24dp"
-        android:textSize="24sp"
-        android:textColor="@android:color/white"
-        android:layout_marginEnd="16dp" />
-
-    <com.mehequanna.mmiw.widgets.StatIndicatorViewGroup
-        android:id="@+id/progressIndicator"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        app:layout_constraintEnd_toStartOf="@id/nextText"
-        app:layout_constraintTop_toTopOf="@id/nextText"
-        app:layout_constraintBottom_toBottomOf="@id/nextText" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
