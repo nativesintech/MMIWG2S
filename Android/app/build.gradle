@@ -41,3 +41,8 @@ dependencies {
 }
 
 apply plugin: 'com.google.ar.sceneform.plugin'
+
+sceneform.asset('sampledata/models/material.fbx',
+        'default',
+        'sampledata/models/material.sfa',
+        'src/main/assets/material')
