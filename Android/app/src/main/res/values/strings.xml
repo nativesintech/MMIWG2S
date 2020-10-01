@@ -8,4 +8,6 @@
     <string name="next_slide">Next</string>
     <string name="respect_agree">I Agree</string>
     <string name="respectful"><b>Please be respectful.</b> \n \nThis app\’s sole purpose is to bring awareness about #MMIWG2S. \n \nIf you would like to support the movement and add your voice, then this is the app for you. \n \nTo learn more, check out settings for links to more information. Thank you for your support." </string>
+    <string name="send_to">Send To</string>
+    <string name="back">Back</string>
 </resources>
