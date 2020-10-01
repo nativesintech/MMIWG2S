@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">MMIW AR</string>
-    <string name="makeup">MMIW Prototype</string>
+    <string name="hashtag_caps">#MMIW</string>
+    <string name="stat_text_1">On some reservations, native women are murdered at a rate of 10 times the national average.</string>
+    <string name="stat_text_2">Between 2005–2009 U.S. attorneys declined to prosecute 67% of native community matters involving sexual abuse.</string>
+    <string name="stat_text_3">On some reservations, native women are murdered at a rate of 10 times the national average.</string>
+    <string name="stat_text_4">96% of sexual violence against native women is perpetrated by non-natives.</string>
+    <string name="next_slide">Next</string>
 </resources>
