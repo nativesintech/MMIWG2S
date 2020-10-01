@@ -57,11 +57,11 @@ class MainActivity : AppCompatActivity(), StatViewPagerFragment.OnStatsCompleted
     }
 
     override fun onStatsCompleted() {
-//        if (sharedPrefs.getBoolean(PREF_TERMS_AGREED_TO, false)) {
-//            openArActivity()
-//        } else {
+        if (sharedPrefs.getBoolean(PREF_TERMS_AGREED_TO, false)) {
+            openArActivity()
+        } else {
         launchRespectFragment()
-//        }
+        }
     }
 
     override fun onBackedOut() {
