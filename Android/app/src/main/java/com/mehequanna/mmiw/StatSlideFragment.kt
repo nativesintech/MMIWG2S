@@ -38,11 +38,15 @@ class StatSlideFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_stat_slide, container, false)
-        createStatSlide(view, backgroundRes, statString, pageIndex)
+        createStatSlide(view, backgroundRes, statString)
         return view
     }
 
-    private fun createStatSlide(view: View, backgroundRes: Int, text: String, pageIndex: Int) {
+    private fun createStatSlide(
+        view: View,
+        backgroundRes: Int,
+        text: String
+    ) {
         view.statImage.setImageResource(backgroundRes)
         view.statText.text = text
     }

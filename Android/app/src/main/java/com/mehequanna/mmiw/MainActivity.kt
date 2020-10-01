@@ -25,8 +25,8 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-
             }
+
             override fun onPageSelected(position: Int) {
                 progressIndicator.setPage(position)
             }
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun onNextPressed() {
+    private fun onNextPressed() {
         val currentPage = stat_pager.currentItem
         if (currentPage < NUM_PAGES - 1) {
             stat_pager.currentItem = currentPage + 1
@@ -100,6 +100,4 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private const val NUM_PAGES = 4
     }
-
-
 }
