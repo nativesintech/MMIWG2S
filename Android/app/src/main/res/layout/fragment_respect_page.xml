@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black"
+    android:id="@+id/terms_motion_layout"
+    app:layoutDescription="@xml/terms_motion_scene"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/respect_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/respectful"
+        android:textColor="@color/white_100"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/accept_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:backgroundTint="@color/red"
+        android:textColor="@color/white_100"
+        android:text="@string/respect_agree"
+        android:focusable="true" />
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

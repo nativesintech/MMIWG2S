@@ -1,61 +1,54 @@
 package com.mehequanna.mmiw
 
+import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.viewpager.widget.ViewPager
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.appcompat.app.AppCompatActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), StatViewPagerFragment.OnStatsCompletedListener,
+    TermsFragment.OnTermsAcceptedListener {
 
-    private lateinit var pagerAdapter: StatSlidePagerAdapter
+    private val fragmentManager = supportFragmentManager
+    private lateinit var sharedPrefs: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        sharedPrefs = getSharedPreferences(SHARED_PREFS_FILE, Context.MODE_PRIVATE)
         setContentView(R.layout.activity_main)
-        pagerAdapter = StatSlidePagerAdapter(supportFragmentManager)
-        stat_pager.adapter = pagerAdapter
-        stat_pager.currentItem = 0
-        stat_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        launchStatsFragment()
+    }
 
-            override fun onPageScrollStateChanged(state: Int) {
-            }
+    private fun launchStatsFragment() {
+        val statsFragment = StatViewPagerFragment()
+        fragmentManager
+            .beginTransaction()
+            .add(R.id.fragment_stats_container, statsFragment)
+            .commit()
+    }
 
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-            }
-
-            override fun onPageSelected(position: Int) {
-                progressIndicator.setPage(position)
-            }
-
-        })
-        progressIndicator.setPage(stat_pager.currentItem)
-        nextButton.setOnClickListener {
-            onNextPressed()
-        }
+    private fun launchRespectFragment() {
+        val respectFragment = TermsFragment()
+        fragmentManager
+            .beginTransaction()
+            .add(R.id.fragment_terms_container, respectFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun onBackPressed() {
-        if (stat_pager.currentItem == 0) {
-            // If the user is currently looking at the first step, allow the system to handle the
-            // Back button. This calls finish() on this activity and pops the back stack.
-            super.onBackPressed()
-        } else {
-            // Otherwise, select the previous step.
-            stat_pager.currentItem = stat_pager.currentItem - 1
-        }
-    }
-
-    private fun onNextPressed() {
-        val currentPage = stat_pager.currentItem
-        if (currentPage < NUM_PAGES - 1) {
-            stat_pager.currentItem = currentPage + 1
-            progressIndicator.setPage(stat_pager.currentItem)
-        } else {
-            openArActivity()
+        val statsFragment = fragmentManager.findFragmentById(R.id.fragment_stats_container)
+        val termsFragment = fragmentManager.findFragmentById(R.id.fragment_terms_container)
+        when {
+            termsFragment != null -> {
+                fragmentManager.popBackStackImmediate()
+            }
+            statsFragment != null -> {
+                (statsFragment as StatViewPagerFragment).onBackPressed()
+            }
+            else -> {
+                super.onBackPressed()
+            }
         }
     }
 
@@ -63,41 +56,25 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, MmiwActivity::class.java))
     }
 
-    /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
-     * sequence.
-     */
-    private inner class StatSlidePagerAdapter(fm: FragmentManager) :
-        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        override fun getCount(): Int = NUM_PAGES
+    override fun onStatsCompleted() {
+        if (sharedPrefs.getBoolean(PREF_TERMS_AGREED_TO, false)) {
+            openArActivity()
+        } else {
+            launchRespectFragment()
+        }
+    }
 
-        override fun getItem(position: Int): StatSlideFragment =
-            when (position) {
-                0 -> StatSlideFragment().newInstance(
-                    R.drawable.stat1image,
-                    getString(R.string.stat_text_1),
-                    0
-                )
-                1 -> StatSlideFragment().newInstance(
-                    R.drawable.stat2image,
-                    getString(R.string.stat_text_2),
-                    1
-                )
-                2 -> StatSlideFragment().newInstance(
-                    R.drawable.stat3image,
-                    getString(R.string.stat_text_3),
-                    2
-                )
-                3 -> StatSlideFragment().newInstance(
-                    R.drawable.stat3image,
-                    getString(R.string.stat_text_4),
-                    3
-                )
-                else -> StatSlideFragment()
-            }
+    override fun onBackedOut() {
+        super.onBackPressed()
+    }
+
+    override fun onTermsAccepted() {
+        sharedPrefs.edit().putBoolean(PREF_TERMS_AGREED_TO, true).apply()
+        openArActivity()
     }
 
     companion object {
-        private const val NUM_PAGES = 4
+        private const val SHARED_PREFS_FILE = "MMIWPrefs"
+        private const val PREF_TERMS_AGREED_TO = "UserAgreedToTerms"
     }
 }
