@@ -15,7 +15,7 @@ class StatViewPagerFragment : Fragment() {
 
     private lateinit var pagerAdapter: StatSlidePagerAdapter
 
-    var listener: OnStatsCompletedListener? = null
+    private var listener: OnStatsCompletedListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,

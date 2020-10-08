@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(), StatViewPagerFragment.OnStatsCompleted
         if (sharedPrefs.getBoolean(PREF_TERMS_AGREED_TO, false)) {
             openArActivity()
         } else {
-        launchRespectFragment()
+            launchRespectFragment()
         }
     }
 
