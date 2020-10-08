@@ -4,15 +4,18 @@
 Our goal is to bring awareness to MMIW through the use of augmented reality face meshing technology. Users will learn about MMIW and then be able to take a picture with the iconic red hand over their face. They will then be able to share that picture with whatever social media or device they choose.  
 [Project Specs](PROJECT_SPECS.md)
 
-### Team Members (In joining order)
+### Contributors (In joining order)
 Stephen (Mehequanna) Emery, *Chickahominy Eastern* - Product Owner (and Android, iOS as I can)  
 Rachel Emery - Researcher and the reason the project got started  
 Mark Amaro, *Quechua* - iOS  
-Teressa Chizeck - UI/UX Design  
+Teressa Chizeck - User Experience  
 Caleb Paul - Android  
 Callum Johnston - iOS  
 Hằng Dao - Quality Assurance  
 Kaitlyn Anderson - Android  
+Jessica Willis - Database  
+Pete Soloway - User Experience  
+Nicole Guernsey - User Experience  
 
 ## Things to know
 This is a mono-repo, so check each folder's README to learn about each piece.
