@@ -12,7 +12,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
+import android.view.HapticFeedbackConstants
 import android.view.PixelCopy
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
@@ -34,6 +36,7 @@ class MmiwActivity : AppCompatActivity() {
     private lateinit var arFragment: FaceArFragment
     private var faceMeshTexture: Texture? = null
     private var faceNodeMap = HashMap<AugmentedFace, AugmentedFaceNode>()
+    private lateinit var sceneView: ArSceneView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +51,7 @@ class MmiwActivity : AppCompatActivity() {
             .build()
             .thenAccept { texture -> faceMeshTexture = texture }
 
-        val sceneView = arFragment.arSceneView
+        sceneView = arFragment.arSceneView
         sceneView.cameraStreamRenderPriority = Renderable.RENDER_PRIORITY_FIRST
         val scene = sceneView.scene
 
@@ -80,9 +83,21 @@ class MmiwActivity : AppCompatActivity() {
         }
 
         capture_button.setOnClickListener {
-            capture_button.isEnabled = false
-            sceneView.pause()
-            takePhoto() // TODO Move this until after the image is ready
+            it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+            changeButtonVisibility(false)
+            pauseSceneView(true)
+        }
+
+        send_button.setOnClickListener {
+            it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+            takePhoto()
+            send_button.isEnabled = false
+        }
+
+        back_button.setOnClickListener {
+            it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+            changeButtonVisibility(true)
+            pauseSceneView(false)
         }
     }
 
@@ -130,6 +145,16 @@ class MmiwActivity : AppCompatActivity() {
         return combinedBitmap
     }
 
+    private fun changeButtonVisibility(showCapture: Boolean) {
+        back_group.visibility = if (showCapture) View.GONE else View.VISIBLE
+        send_to_group.visibility = if (showCapture) View.GONE else View.VISIBLE
+        capture_button.visibility = if (showCapture) View.VISIBLE else View.GONE
+        capture_button.isEnabled = showCapture
+    }
+
+    private fun pauseSceneView(pause: Boolean) =
+        if (pause) sceneView.pause() else sceneView.resume()
+
     private fun takePhoto() {
         val arSceneView: ArSceneView = arFragment.arSceneView
 
@@ -173,7 +198,8 @@ class MmiwActivity : AppCompatActivity() {
 
             // Re-enable capture_button even if the PixelCopy fails.
             runOnUiThread {
-                capture_button.isEnabled = true
+                changeButtonVisibility(true)
+                send_button.isEnabled = true
             }
 
             handlerThread.quitSafely()
