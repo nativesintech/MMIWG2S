@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Matrix
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -107,11 +109,32 @@ class MmiwActivity : AppCompatActivity() {
         return true
     }
 
+    private fun takeScreenshot(): Bitmap =
+        mmiw_overlay_view.let { view ->
+            val bitmap = Bitmap.createBitmap(
+                view.width,
+                view.height,
+                Bitmap.Config.ARGB_8888
+            )
+            val canvas = Canvas(bitmap)
+            view.draw(canvas)
+            return bitmap
+        }
+
+    private fun combineBitmaps(baseBitmap: Bitmap, overlayBitmap: Bitmap): Bitmap {
+        val combinedBitmap =
+            Bitmap.createBitmap(baseBitmap.width, baseBitmap.height, baseBitmap.config)
+        val canvas = Canvas(combinedBitmap)
+        canvas.drawBitmap(baseBitmap, Matrix(), null)
+        canvas.drawBitmap(overlayBitmap, 0f, 0f, null)
+        return combinedBitmap
+    }
+
     private fun takePhoto() {
         val arSceneView: ArSceneView = arFragment.arSceneView
 
         // Create a bitmap the size of the scene view.
-        val bitmap = Bitmap.createBitmap(
+        val arViewBitmap = Bitmap.createBitmap(
             arSceneView.width,
             arSceneView.height,
             Bitmap.Config.ARGB_8888
@@ -121,11 +144,15 @@ class MmiwActivity : AppCompatActivity() {
         val handlerThread = HandlerThread("PixelCopier")
         handlerThread.start()
         // Make the request to copy.
-        PixelCopy.request(arSceneView, bitmap, { copyResult ->
+        PixelCopy.request(arSceneView, arViewBitmap, { copyResult ->
             if (copyResult == PixelCopy.SUCCESS) {
                 val file: File?
                 try {
-                    file = saveBitmapToDisk(bitmap)
+                    val screenElementsBitmap: Bitmap = takeScreenshot()
+                    val combinedBitmap: Bitmap =
+                        combineBitmaps(arViewBitmap, screenElementsBitmap)
+
+                    file = saveBitmapToDisk(combinedBitmap)
                 } catch (e: Exception) {
                     val toast: Toast = Toast.makeText(
                         this, e.toString(),
