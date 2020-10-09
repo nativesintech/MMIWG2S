@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="HashtagText" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:textColor">@color/white_100</item>
+        <item name="android:textSize">48sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

@@ -32,7 +32,7 @@ class TermsFragment : Fragment() {
         super.onAttach(context)
         listener = context as? OnTermsAcceptedListener
         if (listener == null) {
-            throw ClassCastException("$context must implement OnArticleSelectedListener")
+            throw ClassCastException("$context must implement OnTermsAcceptedListener")
         }
     }
 

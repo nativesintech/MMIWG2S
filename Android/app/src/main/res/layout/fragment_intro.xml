@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/intro_motion_layout"
+    android:background="@color/black"
+    app:layoutDescription="@xml/intro_motion_scene">
+
+    <androidx.constraintlayout.utils.widget.ImageFilterView
+        android:id="@+id/hand_watermark"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/hand_watermark"
+        app:altSrc="@drawable/hand_watermark_red"
+        android:background="@drawable/hand_watermark" />
+
+    <TextView
+        android:id="@+id/hashtag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hashtag_only"
+        style="@style/HashtagText"/>
+
+    <TextView
+        android:id="@+id/m_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/m_only"
+        style="@style/HashtagText"/>
+
+    <TextView
+        android:id="@+id/issing_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/issing"
+        style="@style/HashtagText"/>
+
+    <TextView
+        android:id="@+id/m_text_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/m_only"
+        style="@style/HashtagText"/>
+
+    <TextView
+        android:id="@+id/urdered_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/urdered"
+        style="@style/HashtagText"/>
+
+    <TextView
+        android:id="@+id/i_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/i_only"
+        style="@style/HashtagText"/>
+
+    <TextView
+        android:id="@+id/ndigenous_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ndigenous"
+        style="@style/HashtagText"/>
+
+    <TextView
+        android:id="@+id/w_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/w_only"
+        style="@style/HashtagText"/>
+
+    <TextView
+        android:id="@+id/omen_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/omen"
+        style="@style/HashtagText"/>
+
+</androidx.constraintlayout.motion.widget.MotionLayout>

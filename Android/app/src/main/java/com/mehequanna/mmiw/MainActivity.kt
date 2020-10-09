@@ -4,10 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), StatViewPagerFragment.OnStatsCompletedListener,
-    TermsFragment.OnTermsAcceptedListener {
+    TermsFragment.OnTermsAcceptedListener, IntroFragment.OnIntroAnimationCompletedListener {
 
     private val fragmentManager = supportFragmentManager
     private lateinit var sharedPrefs: SharedPreferences
@@ -16,10 +18,21 @@ class MainActivity : AppCompatActivity(), StatViewPagerFragment.OnStatsCompleted
         super.onCreate(savedInstanceState)
         sharedPrefs = getSharedPreferences(SHARED_PREFS_FILE, Context.MODE_PRIVATE)
         setContentView(R.layout.activity_main)
-        launchStatsFragment()
+        launchIntroFragment()
+    }
+
+    private fun launchIntroFragment() {
+        hashtag_text.visibility = View.GONE
+        val introFragment = IntroFragment()
+        fragmentManager
+            .beginTransaction()
+            .add(R.id.fragment_intro_container, introFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun launchStatsFragment() {
+        hashtag_text.visibility = View.VISIBLE
         val statsFragment = StatViewPagerFragment()
         fragmentManager
             .beginTransaction()
@@ -68,6 +81,10 @@ class MainActivity : AppCompatActivity(), StatViewPagerFragment.OnStatsCompleted
         super.onBackPressed()
     }
 
+    override fun onIntroCompleted() {
+        launchStatsFragment()
+    }
+
     override fun onTermsAccepted() {
         sharedPrefs.edit().putBoolean(PREF_TERMS_AGREED_TO, true).apply()
         openArActivity()
@@ -77,4 +94,5 @@ class MainActivity : AppCompatActivity(), StatViewPagerFragment.OnStatsCompleted
         private const val SHARED_PREFS_FILE = "MMIWPrefs"
         private const val PREF_TERMS_AGREED_TO = "UserAgreedToTerms"
     }
+
 }
