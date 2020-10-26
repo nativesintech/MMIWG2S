@@ -87,7 +87,7 @@ class ARFaceViewerUI: UIView {
     
     @objc private func blackButtonTapped() {
         guard redSelected else { return }
-        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+        UIView.animate(withDuration: 0.1, animations: { [weak self] in
             guard let self = self else { return }
             self.blackButton?.adjustDiameter(to: self.largerColorToggleWidth)
             self.redButton?.adjustDiameter(to: self.smallerColorToggleWidth)
@@ -98,7 +98,7 @@ class ARFaceViewerUI: UIView {
     
     @objc private func redButtonTapped() {
         guard !redSelected else { return }
-        UIView.animate(withDuration: 0.3, animations: { [weak self] in
+        UIView.animate(withDuration: 0.1, animations: { [weak self] in
            guard let self = self else { return }
             self.blackButton?.adjustDiameter(to: self.smallerColorToggleWidth)
             self.redButton?.adjustDiameter(to: self.largerColorToggleWidth)
