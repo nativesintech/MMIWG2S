@@ -142,11 +142,9 @@ extension FacesARViewController: ARSCNViewDelegate {
     
     func renderer(_ renderer: SCNSceneRenderer, didUpdate node: SCNNode, for anchor: ARAnchor) {
         guard anchor == currentFaceAnchor,
-            let contentNode = sceneView.scene.rootNode.childNode(withName: faceNodeName, recursively: true),
-                contentNode.parent == node
-                else { return }
-        
-        guard let faceGeometry = node.geometry as? ARSCNFaceGeometry,
+              let contentNode = sceneView.scene.rootNode.childNode(withName: faceNodeName, recursively: true),
+              contentNode.parent == node,
+              let faceGeometry = contentNode.geometry as? ARSCNFaceGeometry,
               let faceAnchor = anchor as? ARFaceAnchor
               else { return }
         
