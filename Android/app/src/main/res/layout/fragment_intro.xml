@@ -11,9 +11,7 @@
         android:id="@+id/hand_watermark"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:src="@drawable/hand_watermark"
-        app:altSrc="@drawable/hand_watermark_red"
-        android:background="@drawable/hand_watermark" />
+        android:src="@drawable/hand_watermark"/>
 
     <TextView
         android:id="@+id/hashtag"
