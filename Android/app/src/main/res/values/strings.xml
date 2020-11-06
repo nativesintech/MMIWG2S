@@ -10,4 +10,12 @@
     <string name="respectful"><b>Please be respectful.</b> \n \nThis app\’s sole purpose is to bring awareness about #MMIWG2S. \n \nIf you would like to support the movement and add your voice, then this is the app for you. \n \nTo learn more, check out settings for links to more information. Thank you for your support." </string>
     <string name="send_to">Send To</string>
     <string name="back">Back</string>
+    <string name="hashtag_only">#</string>
+    <string name="m_only">M</string>
+    <string name="i_only">I</string>
+    <string name="w_only">W</string>
+    <string name="issing">issing</string>
+    <string name="urdered">urdered</string>
+    <string name="ndigenous">ndigenous</string>
+    <string name="omen">omen</string>
 </resources>
