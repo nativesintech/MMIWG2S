@@ -20,8 +20,6 @@ class ARFaceViewerUI: UIView {
     private let shareButtonDiameter: CGFloat = 105
     private let toggleViewWidth: CGFloat = 97
     private let toggleViewBottomPadding: CGFloat = 75
-    private let largerColorToggleWidth: CGFloat = 54
-    private let smallerColorToggleWidth: CGFloat = 36
     
     var redSelected = true
     private var blackButton: SceneButton?
@@ -44,12 +42,12 @@ class ARFaceViewerUI: UIView {
         addSubview(toggleView)
         toggleView.translatesAutoresizingMaskIntoConstraints = false
         toggleView.widthAnchor.constraint(equalToConstant: toggleViewWidth).isActive = true
-        toggleView.heightAnchor.constraint(equalToConstant: largerColorToggleWidth).isActive = true
+        toggleView.heightAnchor.constraint(equalToConstant: SceneButton.largerColorToggleWidth).isActive = true
         toggleView.centerXAnchor.constraint(equalTo: centerXAnchor, constant: -min(UIScreen.main.bounds.width, UIScreen.main.bounds.height) * 2 / 7).isActive = true
         toggleView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -toggleViewBottomPadding).isActive = true
         
         
-        let blackButton = SceneButton(diameter: smallerColorToggleWidth, color: .offBlack)
+        let blackButton = SceneButton(diameter: SceneButton.smallerColorToggleWidth, color: .offBlack)
         blackButton.addTarget(self, action: #selector(blackButtonTapped), for: .touchUpInside)
 
         toggleView.addSubview(blackButton)
@@ -59,7 +57,7 @@ class ARFaceViewerUI: UIView {
         self.blackButton = blackButton
         
         
-        let redButton = SceneButton(diameter: largerColorToggleWidth, color: .offRed)
+        let redButton = SceneButton(diameter: SceneButton.largerColorToggleWidth, color: .offRed)
         redButton.addTarget(self, action: #selector(redButtonTapped), for: .touchUpInside)
         
         toggleView.addSubview(redButton)
@@ -89,8 +87,8 @@ class ARFaceViewerUI: UIView {
         guard redSelected else { return }
         UIView.animate(withDuration: 0.1, animations: { [weak self] in
             guard let self = self else { return }
-            self.blackButton?.adjustDiameter(to: self.largerColorToggleWidth)
-            self.redButton?.adjustDiameter(to: self.smallerColorToggleWidth)
+            self.blackButton?.adjustDiameter(to: SceneButton.largerColorToggleWidth)
+            self.redButton?.adjustDiameter(to: SceneButton.smallerColorToggleWidth)
         })
         redSelected = false
         delegate?.textureChanged(toRed: false)
@@ -100,8 +98,8 @@ class ARFaceViewerUI: UIView {
         guard !redSelected else { return }
         UIView.animate(withDuration: 0.1, animations: { [weak self] in
            guard let self = self else { return }
-            self.blackButton?.adjustDiameter(to: self.smallerColorToggleWidth)
-            self.redButton?.adjustDiameter(to: self.largerColorToggleWidth)
+            self.blackButton?.adjustDiameter(to: SceneButton.smallerColorToggleWidth)
+            self.redButton?.adjustDiameter(to: SceneButton.largerColorToggleWidth)
         })
         redSelected = true
         delegate?.textureChanged(toRed: true)
