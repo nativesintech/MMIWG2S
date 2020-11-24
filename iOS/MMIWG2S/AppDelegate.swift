@@ -15,6 +15,7 @@
  */
 
 import UIKit
+import ARKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,7 +28,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = FacesViewController()
+        if ARFaceTrackingConfiguration.isSupported {
+            window?.rootViewController = FacesARViewController()
+        } else {
+            window?.rootViewController = FacesViewController()
+        }
         window?.makeKeyAndVisible()
 
         return true

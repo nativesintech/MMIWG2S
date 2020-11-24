@@ -24,19 +24,7 @@ import ARCore
 /// Demonstrates how to use ARCore Augmented Faces with SceneKit.
 public final class FacesViewController: UIViewController {
     
-    // MARK: - UI Constants
-    
-    private let shareButtonBottomPadding: CGFloat = 50
-    private let shareButtonDiameter: CGFloat = 105
-    private let toggleViewWidth: CGFloat = 97
-    private let toggleViewBottomPadding: CGFloat = 75
-    private let largerColorToggleWidth: CGFloat = 54
-    private let smallerColorToggleWidth: CGFloat = 36
-    
-    // MARK: - UI Components
-    
-    private var blackButton: SceneButton?
-    private var redButton: SceneButton?
+    private let faceViewer = ARFaceViewerUI()
 
     // MARK: - Camera / Scene properties
 
@@ -70,8 +58,9 @@ public final class FacesViewController: UIViewController {
         setupScene()
         setupCamera()
         setupMotion()
-        setupShareButton()
-        setupColorToggle()
+        setupFaceViewer()
+        faceViewer.setupShareButton()
+        faceViewer.setupColorToggle()
 
         faceSession = try! GARAugmentedFaceSession(fieldOfView: videoFieldOfView)
     }
@@ -163,6 +152,18 @@ public final class FacesViewController: UIViewController {
         motionManager.deviceMotionUpdateInterval = 0.01
         motionManager.startDeviceMotionUpdates()
     }
+    
+    /// Setup the ui used during the face session
+    private func setupFaceViewer() {
+        faceViewer.delegate = self
+        
+        view.addSubview(faceViewer)
+        faceViewer.translatesAutoresizingMaskIntoConstraints = false
+        faceViewer.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        faceViewer.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        faceViewer.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        faceViewer.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
 
     /// Get permission to use device camera.
     ///
@@ -197,97 +198,40 @@ public final class FacesViewController: UIViewController {
         // 'forward' (Z+) opposite of SceneKit's forward (Z-), so rotate to orient correctly.
         node.simdLocalRotate(by: simd_quatf(angle: .pi, axis: simd_float3(0, 1, 0)))
     }
+    
+}
 
-    private func setupShareButton() {
-        let shareButton = SceneButton(diameter: shareButtonDiameter, color: .lightGray)
-        shareButton.addTarget(self, action: #selector(shareButtonTapped), for: .touchUpInside)
-        
-        view.addSubview(shareButton)
-        shareButton.translatesAutoresizingMaskIntoConstraints = false
-        shareButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        shareButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -shareButtonBottomPadding).isActive = true
-    }
-    
-    private func setupColorToggle() {
-        let toggleView = UIView()
-        view.addSubview(toggleView)
-        toggleView.translatesAutoresizingMaskIntoConstraints = false
-        toggleView.widthAnchor.constraint(equalToConstant: toggleViewWidth).isActive = true
-        toggleView.heightAnchor.constraint(equalToConstant: largerColorToggleWidth).isActive = true
-        toggleView.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -view.frame.width / 4).isActive = true
-        toggleView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -toggleViewBottomPadding).isActive = true
-        
-        let blackButton = SceneButton(diameter: smallerColorToggleWidth, color: .offBlack)
-        blackButton.addTarget(self, action: #selector(blackButtonTapped), for: .touchUpInside)
+// MARK: - ARFaceViewerUIDelegate
 
-        toggleView.addSubview(blackButton)
-        blackButton.translatesAutoresizingMaskIntoConstraints = false
-        blackButton.leadingAnchor.constraint(equalTo: toggleView.leadingAnchor).isActive = true
-        blackButton.centerYAnchor.constraint(equalTo: toggleView.centerYAnchor).isActive = true
-        self.blackButton = blackButton
-        
-        let redButton = SceneButton(diameter: largerColorToggleWidth, color: .offRed)
-        redButton.addTarget(self, action: #selector(redButtonTapped), for: .touchUpInside)
-        
-        toggleView.addSubview(redButton)
-        redButton.translatesAutoresizingMaskIntoConstraints = false
-        redButton.trailingAnchor.constraint(equalTo: toggleView.trailingAnchor).isActive = true
-        redButton.centerYAnchor.constraint(equalTo: toggleView.centerYAnchor).isActive = true
-        self.redButton = redButton
-    }
+extension FacesViewController: ARFaceViewerUIDelegate {
     
-    @objc private func blackButtonTapped() {
-        guard redSelected else { return }
-        UIView.animate(withDuration: 0.3, animations: {
-            self.blackButton?.adjustDiameter(to: self.largerColorToggleWidth)
-            self.redButton?.adjustDiameter(to: self.smallerColorToggleWidth)
-        }, completion: { _ in
-            // TODO: Get texture to update without crashing ARCore
-//            self.faceTextureMaterial.diffuse.contents = UIImage(named: "Face.scnassets/black_hand_80_texture.png")
-        })
-        redSelected = false
-    }
-    
-    @objc private func redButtonTapped() {
-        guard !redSelected else { return }
-        UIView.animate(withDuration: 0.2, animations: {
-            self.blackButton?.adjustDiameter(to: self.smallerColorToggleWidth)
-            self.redButton?.adjustDiameter(to: self.largerColorToggleWidth)
-        }, completion: { _ in
-        // TODO: Get texture to update without crashing ARCore
+    func textureChanged(toRed: Bool) {
+        // TODO: get these to work without crashing app
+        if toRed {
 //            self.faceTextureMaterial.diffuse.contents = UIImage(named: "Face.scnassets/red_hand_full_mouth.png")
-        })
-        redSelected = true
-    }
-
-    @objc private func shareButtonTapped() {
-        // TODO: capture image with AR data included
-        let deviceOrientation = UIDevice.current.orientation
-        guard let pixelBuffer = faceSession?.currentFrame?.capturedImage,
-              let image = UIImage(pixelBuffer: pixelBuffer, orientation: .from(deviceOrientation: deviceOrientation)) else { return }
-
-        DispatchQueue.main.async {
-            self.captureSession?.stopRunning()
-            let imagesToShare = [image]
-
-            let activityController = UIActivityViewController(activityItems: imagesToShare, applicationActivities: nil)
-            activityController.completionWithItemsHandler = { (activityType, completed:Bool, returnedItems:[Any]?, error: Error?) in
-               self.captureSession?.startRunning()
-            }
-            
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                activityController.popoverPresentationController?.sourceView = self.view
-                activityController.popoverPresentationController?.sourceRect = CGRect(x: self.view.frame.size.width / 2 , y: self.view.frame.size.height / 4, width: 0, height: 0)
-            }
-            
-            self.present(activityController, animated: true)
+        } else {
+//            self.faceTextureMaterial.diffuse.contents = UIImage(named: "Face.scnassets/black_hand_80_texture.png")
         }
     }
+    
+    func generateShareImage() -> UIImage? {
+        let deviceOrientation = UIDevice.current.orientation
+        guard let pixelBuffer = faceSession?.currentFrame?.capturedImage,
+              let image = UIImage(pixelBuffer: pixelBuffer, orientation: .from(deviceOrientation: deviceOrientation))
+              else { return nil }
+        captureSession?.stopRunning()
+        return image
+    }
+    
+    func resumeSessionOnceCaptured() {
+        captureSession?.startRunning()
+    }
+    
 }
 
 // MARK: - Camera delegate
 
-extension FacesViewController : AVCaptureVideoDataOutputSampleBufferDelegate {
+extension FacesViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
 
     public func captureOutput(
         _ output: AVCaptureOutput,

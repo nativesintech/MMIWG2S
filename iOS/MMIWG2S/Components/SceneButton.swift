@@ -17,6 +17,9 @@ class SceneButton: UIButton {
     
     private var widthConstraint: NSLayoutConstraint?
     private var heightConstraint: NSLayoutConstraint?
+    
+    static let largerColorToggleWidth: CGFloat = 54
+    static let smallerColorToggleWidth: CGFloat = 36
 
     init(diameter: CGFloat, color: UIColor) {
         self.color = color
