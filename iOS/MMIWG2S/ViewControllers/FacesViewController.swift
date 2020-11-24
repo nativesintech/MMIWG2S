@@ -35,6 +35,7 @@ public final class FacesViewController: UIViewController {
     private lazy var sceneView = SCNView()
     private lazy var sceneCamera = SCNCamera()
     private lazy var motionManager = CMMotionManager()
+    private var captureView = UIView()
 
     // MARK: - Face properties
 
@@ -48,7 +49,9 @@ public final class FacesViewController: UIViewController {
     private var noseTipNode: SCNNode?
     private var foreheadLeftNode: SCNNode?
     private var foreheadRightNode: SCNNode?
-    private var redSelected = true
+    private var isCapturing = false
+    
+    private let initialSize = UIScreen.main.bounds
 
     // MARK: - Implementation methods
 
@@ -62,7 +65,7 @@ public final class FacesViewController: UIViewController {
         faceViewer.setupShareButton()
         faceViewer.setupColorToggle()
 
-        faceSession = try! GARAugmentedFaceSession(fieldOfView: videoFieldOfView)
+        faceSession = try? GARAugmentedFaceSession(fieldOfView: videoFieldOfView)
     }
 
     /// Create the scene view from a scene and supporting nodes, and add to the view.
@@ -90,14 +93,26 @@ public final class FacesViewController: UIViewController {
         scene.rootNode.addChildNode(cameraNode)
 
         sceneView.scene = scene
-        sceneView.frame = view.bounds
         sceneView.delegate = self
         sceneView.rendersContinuously = true
         sceneView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         sceneView.backgroundColor = .clear
         // Flip 'x' to mirror content to mimic 'selfie' mode
         sceneView.layer.transform = CATransform3DMakeScale(-1, 1, 1)
-        view.addSubview(sceneView)
+        
+        captureView.addSubview(sceneView)
+        sceneView.translatesAutoresizingMaskIntoConstraints = false
+        sceneView.leadingAnchor.constraint(equalTo: captureView.leadingAnchor).isActive = true
+        sceneView.trailingAnchor.constraint(equalTo: captureView.trailingAnchor).isActive = true
+        sceneView.bottomAnchor.constraint(equalTo: captureView.bottomAnchor).isActive = true
+        sceneView.topAnchor.constraint(equalTo: captureView.topAnchor).isActive = true
+        
+        view.addSubview(captureView)
+        captureView.translatesAutoresizingMaskIntoConstraints = false
+        captureView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        captureView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        captureView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        captureView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
 
         faceTextureMaterial.diffuse.contents = faceImage
         // SCNMaterial does not premultiply alpha even with blendMode set to alpha, so do it manually.
@@ -134,12 +149,12 @@ public final class FacesViewController: UIViewController {
         view.layer.insertSublayer(cameraImageLayer, at: 0)
 
         // Start capturing images from the capture session once permission is granted.
-        getVideoPermission(permissionHandler: { granted in
+        getVideoPermission(permissionHandler: { [weak self] granted in
             guard granted else {
                 NSLog("Permission not granted to use camera.")
                 return
             }
-            self.captureSession?.startRunning()
+            self?.captureSession?.startRunning()
         })
     }
 
@@ -206,25 +221,42 @@ public final class FacesViewController: UIViewController {
 extension FacesViewController: ARFaceViewerUIDelegate {
     
     func textureChanged(toRed: Bool) {
-        // TODO: get these to work without crashing app
         if toRed {
-//            self.faceTextureMaterial.diffuse.contents = UIImage(named: "Face.scnassets/red_hand_full_mouth.png")
+            self.faceTextureMaterial.diffuse.contents = UIImage(named: "Face.scnassets/red_hand_full_mouth.png")
         } else {
-//            self.faceTextureMaterial.diffuse.contents = UIImage(named: "Face.scnassets/black_hand_80_texture.png")
+            self.faceTextureMaterial.diffuse.contents = UIImage(named: "Face.scnassets/black_hand_80_texture.png")
         }
     }
     
     func generateShareImage() -> UIImage? {
+        isCapturing = true
         let deviceOrientation = UIDevice.current.orientation
         guard let pixelBuffer = faceSession?.currentFrame?.capturedImage,
-              let image = UIImage(pixelBuffer: pixelBuffer, orientation: .from(deviceOrientation: deviceOrientation))
-              else { return nil }
+              let capturedImage = UIImage(pixelBuffer: pixelBuffer, orientation: .from(deviceOrientation: deviceOrientation))
+              else {
+            isCapturing = false
+            return nil
+        }
+        
         captureSession?.stopRunning()
-        return image
+        var sceneImage = sceneView.snapshot()
+        
+        if deviceOrientation.isLandscape {
+            sceneImage = sceneImage.rotate(radians: deviceOrientation == .landscapeLeft ? .pi / 2 : -.pi / 2) ?? sceneImage
+        }
+        UIGraphicsBeginImageContextWithOptions(capturedImage.size, true, 0.0)
+        capturedImage.draw(in: CGRect(origin: .zero, size: capturedImage.size))
+        sceneImage.draw(in: CGRect(origin: .zero, size: capturedImage.size))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        view.layoutIfNeeded()
+        return newImage
     }
     
     func resumeSessionOnceCaptured() {
         captureSession?.startRunning()
+        view.layoutIfNeeded()
+        isCapturing = false
     }
     
 }
@@ -233,23 +265,22 @@ extension FacesViewController: ARFaceViewerUIDelegate {
 
 extension FacesViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
 
-    public func captureOutput(
-        _ output: AVCaptureOutput,
-        didOutput sampleBuffer: CMSampleBuffer,
-        from connection: AVCaptureConnection
-        ) {
-        guard let imgBuffer = CMSampleBufferGetImageBuffer(sampleBuffer),
-            let deviceMotion = motionManager.deviceMotion
+    public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        guard let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer),
+              let deviceMotion = motionManager.deviceMotion
         else { return }
+        
+        CVPixelBufferLockBaseAddress(imageBuffer, .readOnly)
 
         let frameTime = CMTimeGetSeconds(CMSampleBufferGetPresentationTimeStamp(sampleBuffer))
 
         // Use the device's gravity vector to determine which direction is up for a face. This is the
         // positive counter-clockwise rotation of the device relative to landscape left orientation.
         let rotation = 2 * .pi - atan2(deviceMotion.gravity.x, deviceMotion.gravity.y) + .pi / 2
-        let rotationDegrees = (UInt)(rotation * 180 / .pi) % 360
-
-        faceSession?.update(with: imgBuffer, timestamp: frameTime, recognitionRotation: rotationDegrees)
+        let rotationDegrees = UInt(rotation * 180 / .pi) % 360
+        
+        faceSession?.update(with: imageBuffer, timestamp: frameTime, recognitionRotation: rotationDegrees)
+        CVPixelBufferUnlockBaseAddress(imageBuffer, .readOnly)
     }
 
 }
@@ -259,7 +290,7 @@ extension FacesViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
 extension FacesViewController : SCNSceneRendererDelegate {
 
     public func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
-        guard let frame = faceSession?.currentFrame else { return }
+        guard !isCapturing, let frame = faceSession?.currentFrame else { return }
 
         if let face = frame.face {
             faceTextureNode.geometry = faceMeshConverter.geometryFromFace(face)
@@ -275,7 +306,7 @@ extension FacesViewController : SCNSceneRendererDelegate {
 
         // Set the scene camera's transform to the projection matrix for this frame.
         DispatchQueue.main.sync {
-            sceneCamera.projectionTransform = SCNMatrix4.init(
+            sceneCamera.projectionTransform = SCNMatrix4(
                 frame.projectionMatrix(
                     forViewportSize: sceneView.bounds.size,
                     presentationOrientation: .portrait,

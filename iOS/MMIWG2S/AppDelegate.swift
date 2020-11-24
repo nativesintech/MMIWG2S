@@ -28,11 +28,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        if ARFaceTrackingConfiguration.isSupported {
-            window?.rootViewController = FacesARViewController()
-        } else {
+//        if ARFaceTrackingConfiguration.isSupported {
+//            window?.rootViewController = FacesARViewController()
+//        } else {
             window?.rootViewController = FacesViewController()
-        }
+//        }
         window?.makeKeyAndVisible()
 
         return true

@@ -35,19 +35,41 @@ extension UIImage {
         }
         self.init(cgImage: cgImage!, scale: 1.0, orientation: orientation)
     }
+    
+    func rotate(radians: Float) -> UIImage? {
+        var newSize = CGRect(origin: CGPoint.zero, size: self.size).applying(CGAffineTransform(rotationAngle: CGFloat(radians))).size
+        // Trim off the extremely small float value to prevent core graphics from rounding it up
+        newSize.width = floor(newSize.width)
+        newSize.height = floor(newSize.height)
+
+        UIGraphicsBeginImageContextWithOptions(newSize, false, self.scale)
+        let context = UIGraphicsGetCurrentContext()!
+
+        // Move origin to middle
+        context.translateBy(x: newSize.width/2, y: newSize.height/2)
+        // Rotate around middle
+        context.rotate(by: CGFloat(radians))
+        // Draw the image at its center
+        self.draw(in: CGRect(x: -self.size.width/2, y: -self.size.height/2, width: self.size.width, height: self.size.height))
+
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return newImage
+    }
 }
 
 extension UIImage.Orientation {
     static func from(deviceOrientation: UIDeviceOrientation) -> UIImage.Orientation {
         switch deviceOrientation {
         case .landscapeLeft:
-            return .upMirrored
+            return .down
         case .faceDown:
-            return .rightMirrored
+            return .left
         case .landscapeRight:
-            return .downMirrored
+            return .up
         default:
-            return .leftMirrored
+            return .right
         }
     }
 }
@@ -98,4 +120,8 @@ extension UIView {
         CATransaction.commit()
     }
     
+}
+
+public func * (size: CGSize, scalar: CGFloat) -> CGSize {
+    return CGSize(width: size.width * scalar, height: size.height * scalar)
 }
