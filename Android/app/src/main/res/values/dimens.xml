@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="statistics_view_text_size">24sp</dimen>
+    <dimen name="banner_text_size">48sp</dimen>
+
+    <!--  View pager dimensions  -->
+    <dimen name="page_margin">20dp</dimen>
+    <dimen name="viewpager_offset">30dp</dimen>
+    <dimen name="page_margin_and_offset">50dp</dimen>
+</resources>
