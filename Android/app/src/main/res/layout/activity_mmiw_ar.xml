@@ -86,6 +86,28 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/color_button_black"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="32dp"
+        android:background="@drawable/color_button_black"
+        android:contentDescription="@string/change_to_black_hand_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/capture_button" />
+
+    <Button
+        android:id="@+id/color_button_red"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/color_button_red"
+        android:contentDescription="@string/change_to_red_hand_color"
+        app:layout_constraintBottom_toBottomOf="@+id/color_button_black"
+        app:layout_constraintStart_toEndOf="@+id/color_button_black"
+        app:layout_constraintTop_toTopOf="@+id/color_button_black" />
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/back_button"
         android:layout_width="46dp"
@@ -93,11 +115,11 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
-        app:icon="@drawable/ic_back"
-        android:theme="@style/MaterialButtonTheme"
         android:background="@drawable/button_ripple_effect"
-        app:iconPadding="0dp"
+        android:theme="@style/MaterialButtonTheme"
+        app:icon="@drawable/ic_back"
         app:iconGravity="textStart"
+        app:iconPadding="0dp"
         app:layout_constraintBottom_toTopOf="@+id/back_button_text_view"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -126,11 +148,11 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        app:icon="@drawable/ic_share"
-        android:theme="@style/MaterialButtonTheme"
         android:background="@drawable/button_ripple_effect"
-        app:iconPadding="0dp"
+        android:theme="@style/MaterialButtonTheme"
+        app:icon="@drawable/ic_share"
         app:iconGravity="textStart"
+        app:iconPadding="0dp"
         app:layout_constraintBottom_toTopOf="@+id/send_button_text_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

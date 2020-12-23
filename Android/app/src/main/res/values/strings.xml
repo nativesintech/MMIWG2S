@@ -19,4 +19,6 @@
     <string name="ndigenous">ndigenous</string>
     <string name="omen">omen</string>
     <string name="share">Share</string>
+    <string name="change_to_black_hand_color">Change to black hand color.</string>
+    <string name="change_to_red_hand_color">Change to red hand color.</string>
 </resources>
