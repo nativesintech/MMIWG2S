@@ -233,7 +233,7 @@ extension FacesViewController: ARFaceViewerUIDelegate {
         let deviceOrientation = UIDevice.current.orientation
         guard let pixelBuffer = faceSession?.currentFrame?.capturedImage,
               let capturedImage = UIImage(pixelBuffer: pixelBuffer, orientation: .from(deviceOrientation: deviceOrientation))
-              else {
+        else {
             isCapturing = false
             return nil
         }
