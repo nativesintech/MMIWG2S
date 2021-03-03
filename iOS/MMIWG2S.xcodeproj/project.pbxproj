@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5D5D0BD72546521F0097BC25 /* FacesARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5D0BD62546521F0097BC25 /* FacesARViewController.swift */; };
 		5D5D0BE325465C9A0097BC25 /* ARFaceViewerUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5D0BE225465C9A0097BC25 /* ARFaceViewerUI.swift */; };
+		5D77DABE25EF36EB00DA7009 /* IntroAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D77DABD25EF36EB00DA7009 /* IntroAnimationViewController.swift */; };
 		5DA8A10524EA18DB001D8E41 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DA8A10424EA18DB001D8E41 /* Roboto-Regular.ttf */; };
 		5DA8A10724EA1904001D8E41 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5DA8A10624EA1904001D8E41 /* Localizable.strings */; };
 		5DA8A10D24EA199E001D8E41 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8A10C24EA199E001D8E41 /* Extensions.swift */; };
@@ -27,6 +28,7 @@
 		550BC05DCA1320633583F014 /* libPods-MMIWG2S.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MMIWG2S.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D5D0BD62546521F0097BC25 /* FacesARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacesARViewController.swift; sourceTree = "<group>"; };
 		5D5D0BE225465C9A0097BC25 /* ARFaceViewerUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARFaceViewerUI.swift; sourceTree = "<group>"; };
+		5D77DABD25EF36EB00DA7009 /* IntroAnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroAnimationViewController.swift; sourceTree = "<group>"; };
 		5DA8A10424EA18DB001D8E41 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		5DA8A10624EA1904001D8E41 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		5DA8A10C24EA199E001D8E41 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 			children = (
 				6933B02223172481007E1C28 /* FacesViewController.swift */,
 				5D5D0BD62546521F0097BC25 /* FacesARViewController.swift */,
+				5D77DABD25EF36EB00DA7009 /* IntroAnimationViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D77DABE25EF36EB00DA7009 /* IntroAnimationViewController.swift in Sources */,
 				6933B02D23172482007E1C28 /* AppDelegate.swift in Sources */,
 				5DA8A11024ECD218001D8E41 /* SceneButton.swift in Sources */,
 				5D5D0BD72546521F0097BC25 /* FacesARViewController.swift in Sources */,
@@ -419,6 +423,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "MMIWG2S/Resources/Roboto-Regular.ttf";
 				DEVELOPMENT_TEAM = 55MWY2R2NJ;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/MMIWG2S/Info.plist";
@@ -442,6 +447,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "MMIWG2S/Resources/Roboto-Regular.ttf";
 				DEVELOPMENT_TEAM = 55MWY2R2NJ;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/MMIWG2S/Info.plist";
