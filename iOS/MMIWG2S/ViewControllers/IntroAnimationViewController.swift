@@ -11,22 +11,23 @@ import UIKit
 import ARKit
 
 class IntroAnimationViewController: UIViewController {
-    typealias ConstraintSet = (top: NSLayoutConstraint, leading: NSLayoutConstraint)
-    typealias LabelSet = (label: UILabel, constraints: ConstraintSet)
+    private typealias ConstraintSet = (top: NSLayoutConstraint, leading: NSLayoutConstraint)
+    private typealias LabelSet = (label: UILabel, constraints: ConstraintSet)
     
-    let labelTexts: [String] = [.missing, .murdered, .indigenous, .women]
+    private let labelTexts: [String] = [.missing, .murdered, .indigenous, .women]
     
-    let initialAnimationDuration = 2.0
-    let animationFullWordsDelay = 1.0
-    let labelsLeadingMargin: CGFloat = 36
-    let labelsTopMargin: CGFloat = 47
-    let labelsVerticalDistance: CGFloat = 68
+    private let initialAnimationDuration = 3.0
+    private let animationFullWordsDelay = 1.5
+    private let labelsLeadingMargin: CGFloat = 36
+    private let labelsTopMargin: CGFloat = 47
+    private let labelsVerticalDistance: CGFloat = 68
     
-    var animatedLabels: [LabelSet] = []
+    private var animatedLabels: [LabelSet] = []
+    private var backgroundHandView: UIImageView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addBackground()
+        backgroundHandView = addBackground()
         setupLabels()
     }
     
@@ -35,15 +36,22 @@ class IntroAnimationViewController: UIViewController {
         startAnimation()
     }
     
-    private func addBackground() {
-        let backgroundView = UIImageView(image: UIImage(named: "face-background"))
-        backgroundView.contentMode = .scaleAspectFit
+    private func addBackground(withTint tint: UIColor? = nil) -> UIImageView {
+        let handImage: UIImage?
+        if let tint = tint {
+            handImage = UIImage(named: "face-background")?.tint(with: tint)
+        } else {
+            handImage = UIImage(named: "face-background")
+        }
+        let backgroundView = UIImageView(image: handImage)
+        backgroundView.contentMode = .scaleAspectFill
         
         view.addSubview(backgroundView)
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
         backgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         backgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         backgroundView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        return backgroundView
     }
     
     private func setupLabels() {
@@ -102,6 +110,15 @@ class IntroAnimationViewController: UIViewController {
         hashtagLabel.translatesAutoresizingMaskIntoConstraints = false
         hashtagLabel.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: -labelSummedWidth / 2).isActive = true
         hashtagLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: labelsTopMargin).isActive = true
+        
+        let newBackground = addBackground(withTint: .offRed)
+        newBackground.alpha = 0
+        view.layoutIfNeeded()
+        
+        UIView.animate(withDuration: initialAnimationDuration, delay: animationFullWordsDelay) { [weak self] in
+            self?.backgroundHandView?.alpha = 0
+            newBackground.alpha = 1
+        }
         
         UIView.animate(withDuration: initialAnimationDuration / 2, delay: animationFullWordsDelay + initialAnimationDuration, animations: {
             hashtagLabel.alpha = 1
