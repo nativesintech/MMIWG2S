@@ -28,11 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        if ARFaceTrackingConfiguration.isSupported {
-            window?.rootViewController = FacesARViewController()
-        } else {
-            window?.rootViewController = FacesViewController()
-        }
+        let navigationController = UINavigationController(rootViewController: IntroAnimationViewController())
+        navigationController.setNavigationBarHidden(true, animated: false)
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
 
         return true

@@ -13,10 +13,20 @@ import VideoToolbox
 extension String {
     static let ok = NSLocalizedString("error.ok", comment: "Ok")
     static let errorARSessionTitle = NSLocalizedString("error.arsessionfailure", comment: "Title for error message when AR session fails")
+    static let missing = NSLocalizedString("intro.missing", comment: "Missing")
+    static let murdered = NSLocalizedString("intro.murdered", comment: "Murdered")
+    static let indigenous = NSLocalizedString("intro.indigenous", comment: "Indigenous")
+    static let women = NSLocalizedString("intro.women", comment: "Women")
+    
+    func width(for font: UIFont) -> CGFloat {
+        let fontAttributes = [NSAttributedString.Key.font: font]
+        return (self as NSString).size(withAttributes: fontAttributes).width
+    }
 }
 
 extension UIFont {
     static var roboto24: UIFont { return UIFont(name: "Roboto-Regular", size: 24)! }
+    static var roboto48: UIFont { return UIFont(name: "Roboto-Regular", size: 48)! }
 }
 
 extension UIColor {
@@ -56,6 +66,18 @@ extension UIImage {
         UIGraphicsEndImageContext()
 
         return newImage
+    }
+    
+    func tint(with fillColor: UIColor) -> UIImage? {
+        let image = withRenderingMode(.alwaysTemplate)
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        fillColor.set()
+        image.draw(in: CGRect(origin: .zero, size: size))
+        guard let imageColored = UIGraphicsGetImageFromCurrentImageContext() else { return nil }
+        UIGraphicsEndImageContext()
+        
+        return imageColored
     }
 }
 
@@ -120,6 +142,13 @@ extension UIView {
         CATransaction.commit()
     }
     
+}
+
+extension UILabel {
+    var width: CGFloat {
+        guard let text = text, let font = font else { return 0 }
+        return text.width(for: font)
+    }
 }
 
 public func * (size: CGSize, scalar: CGFloat) -> CGSize {

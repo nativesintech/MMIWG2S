@@ -8,3 +8,9 @@
 
 "alert.ok" = "Ok";
 "error.arsessionfailure" = "The AR session failed.";
+
+"intro.missing" = "Missing";
+"intro.murdered" = "Murdered";
+"intro.indigenous" = "Indigenous";
+"intro.women" = "Women";
+
