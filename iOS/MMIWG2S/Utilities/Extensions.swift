@@ -25,8 +25,8 @@ extension String {
 }
 
 extension UIFont {
-    static var roboto24: UIFont { return UIFont(name: "Roboto-Regular", size: 24)! }
-    static var roboto48: UIFont { return UIFont(name: "Roboto-Regular", size: 48)! }
+    static var roboto24: UIFont { return UIFont(name: "Roboto-Regular", size: 24) ?? .systemFont(ofSize: 24) }
+    static var roboto48: UIFont { return UIFont(name: "Roboto-Regular", size: 48) ?? .systemFont(ofSize: 48) }
 }
 
 extension UIColor {

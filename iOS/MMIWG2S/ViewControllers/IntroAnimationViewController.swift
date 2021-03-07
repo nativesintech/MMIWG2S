@@ -115,10 +115,10 @@ class IntroAnimationViewController: UIViewController {
         newBackground.alpha = 0
         view.layoutIfNeeded()
         
-        UIView.animate(withDuration: initialAnimationDuration, delay: animationFullWordsDelay) { [weak self] in
+        UIView.animate(withDuration: initialAnimationDuration, delay: animationFullWordsDelay, animations: { [weak self] in
             self?.backgroundHandView?.alpha = 0
             newBackground.alpha = 1
-        }
+        })
         
         UIView.animate(withDuration: initialAnimationDuration / 2, delay: animationFullWordsDelay + initialAnimationDuration, animations: {
             hashtagLabel.alpha = 1
