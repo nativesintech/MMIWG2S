@@ -5,6 +5,7 @@
     <color name="transparent">#00000000</color>
     <color name="capture_button_pressed_black">#191919</color>
     <color name="red">#B10E0F</color>
+    <color name="banner_black">#B3191919</color>
     <color name="black">#000000</color>
 
     <!--  Might be used in the future.  -->

@@ -15,10 +15,13 @@ import android.os.HandlerThread
 import android.view.HapticFeedbackConstants
 import android.view.PixelCopy
 import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ShareCompat
 import androidx.core.content.FileProvider.getUriForFile
+import androidx.core.view.ViewCompat
+import androidx.viewpager2.widget.ViewPager2
 import com.google.ar.core.ArCoreApk
 import com.google.ar.core.AugmentedFace
 import com.google.ar.core.TrackingState
@@ -26,6 +29,7 @@ import com.google.ar.sceneform.ArSceneView
 import com.google.ar.sceneform.rendering.Renderable
 import com.google.ar.sceneform.rendering.Texture
 import com.google.ar.sceneform.ux.AugmentedFaceNode
+import com.mehequanna.mmiw.adapter.StatisticsAdapter
 import kotlinx.android.synthetic.main.activity_mmiw_ar.*
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -37,6 +41,7 @@ class MmiwActivity : AppCompatActivity() {
     private var faceMeshTexture: Texture? = null
     private var faceNodeMap = HashMap<AugmentedFace, AugmentedFaceNode>()
     private lateinit var sceneView: ArSceneView
+    private val statisticsAdapter = StatisticsAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,23 +87,9 @@ class MmiwActivity : AppCompatActivity() {
             }
         }
 
-        capture_button.setOnClickListener {
-            it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-            changeButtonVisibility(false)
-            pauseSceneView(true)
-        }
+        setupStatisticsViewPager()
 
-        send_button.setOnClickListener {
-            it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-            takePhoto()
-            send_button.isEnabled = false
-        }
-
-        back_button.setOnClickListener {
-            it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-            changeButtonVisibility(true)
-            pauseSceneView(false)
-        }
+        setViewOnClickerListeners()
     }
 
     private fun checkIsSupportedDeviceOrFinish(): Boolean {
@@ -122,6 +113,65 @@ class MmiwActivity : AppCompatActivity() {
             }
         }
         return true
+    }
+
+    private fun setupStatisticsViewPager() {
+        statisticsViewPager.adapter = statisticsAdapter
+        statisticsAdapter.setStatisticsAdapterData(Statistics(this).statisticsList)
+
+        with(statisticsViewPager) {
+            offscreenPageLimit = 3
+        }
+
+        updateViewPagerTransformer(
+            resources.getDimensionPixelOffset(R.dimen.viewpager_offset),
+            resources.getDimensionPixelOffset(R.dimen.page_margin)
+        )
+    }
+
+    private fun updateViewPagerTransformer(offsetPixels: Int, pageMarginPixels: Int) {
+        statisticsViewPager.setPageTransformer { page, position ->
+            val viewPager = page.parent.parent as ViewPager2
+            val offset = position * -(2 * offsetPixels + pageMarginPixels)
+            if (viewPager.orientation == ViewPager2.ORIENTATION_HORIZONTAL) {
+                if (ViewCompat.getLayoutDirection(viewPager) == ViewCompat.LAYOUT_DIRECTION_RTL) {
+                    page.translationX = -offset
+                } else {
+                    page.translationX = offset
+                }
+            } else {
+                page.translationY = offset
+            }
+        }
+    }
+
+    private fun setViewOnClickerListeners() {
+        capture_button.setOnClickListener {
+            it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+            changeButtonVisibility(false)
+            pauseSceneView(true)
+        }
+
+        send_button.setOnClickListener {
+            it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+            back_group.visibility = View.INVISIBLE
+            send_to_group.visibility = View.INVISIBLE
+            statisticsViewPager.visibility = View.GONE
+            statisticsCaptureView.apply {
+                visibility = View.VISIBLE
+                text = statisticsAdapter.getCurrentItemText(statisticsViewPager.currentItem)
+                waitForLayout {
+                    takePhoto()
+                }
+            }
+            send_button.isEnabled = false
+        }
+
+        back_button.setOnClickListener {
+            it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+            changeButtonVisibility(true)
+            pauseSceneView(false)
+        }
     }
 
     private fun takeScreenshot(): Bitmap =
@@ -148,6 +198,7 @@ class MmiwActivity : AppCompatActivity() {
     private fun changeButtonVisibility(showCapture: Boolean) {
         back_group.visibility = if (showCapture) View.GONE else View.VISIBLE
         send_to_group.visibility = if (showCapture) View.GONE else View.VISIBLE
+        statisticsViewPager.visibility = if (showCapture) View.GONE else View.VISIBLE
         capture_button.visibility = if (showCapture) View.VISIBLE else View.GONE
         capture_button.isEnabled = showCapture
     }
@@ -199,6 +250,7 @@ class MmiwActivity : AppCompatActivity() {
             // Re-enable capture_button even if the PixelCopy fails.
             runOnUiThread {
                 changeButtonVisibility(true)
+                statisticsCaptureView.visibility = View.INVISIBLE
                 send_button.isEnabled = true
             }
 
@@ -261,5 +313,21 @@ class MmiwActivity : AppCompatActivity() {
 
     companion object {
         const val MIN_OPENGL_VERSION = 3.0
+    }
+}
+
+private inline fun View.waitForLayout(crossinline action: () -> Unit) {
+    viewTreeObserver.also {
+        it.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                when {
+                    it.isAlive -> {
+                        it.removeOnGlobalLayoutListener(this)
+                        action()
+                    }
+                    else -> viewTreeObserver.removeOnGlobalLayoutListener(this)
+                }
+            }
+        })
     }
 }
