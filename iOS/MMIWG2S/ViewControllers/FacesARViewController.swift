@@ -17,8 +17,8 @@ class FacesARViewController: UIViewController {
     private var sceneView: ARSCNView = ARSCNView()
     private var currentFaceAnchor: ARFaceAnchor?
     
-    private let imageBlack = UIImage(named: "Face.scnassets/arkit_hand_black.png")
-    private let imageRed = UIImage(named: "Face.scnassets/arkit_hand_red.png")
+    private let imageBlack = UIImage(named: "Face.scnassets/new_arkit_hand_2.png")?.tint(with: .black)
+    private let imageRed = UIImage(named: "Face.scnassets/new_arkit_hand_2.png")?.tint(with: .offRed)
 
     private var configuration: ARFaceTrackingConfiguration {
         let configuration = ARFaceTrackingConfiguration()
@@ -135,6 +135,7 @@ extension FacesARViewController: ARSCNViewDelegate {
            let material = faceGeometry.firstMaterial {
             
             material.diffuse.contents = faceViewer.redSelected ? imageRed : imageBlack
+            material.diffuse.intensity = 0.7
             material.lightingModel = .physicallyBased
             
             let contentNode = SCNNode(geometry: faceGeometry)
