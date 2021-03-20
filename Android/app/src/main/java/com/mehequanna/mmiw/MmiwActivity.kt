@@ -152,10 +152,10 @@ class MmiwActivity : AppCompatActivity() {
             pauseSceneView(true)
         }
 
-        send_button.setOnClickListener {
+        share_button.setOnClickListener {
             it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
             back_group.visibility = View.INVISIBLE
-            send_to_group.visibility = View.INVISIBLE
+            share_group.visibility = View.INVISIBLE
             statisticsViewPager.visibility = View.GONE
             statisticsCaptureView.apply {
                 visibility = View.VISIBLE
@@ -164,7 +164,7 @@ class MmiwActivity : AppCompatActivity() {
                     takePhoto()
                 }
             }
-            send_button.isEnabled = false
+            share_button.isEnabled = false
         }
 
         back_button.setOnClickListener {
@@ -197,7 +197,7 @@ class MmiwActivity : AppCompatActivity() {
 
     private fun changeButtonVisibility(showCapture: Boolean) {
         back_group.visibility = if (showCapture) View.GONE else View.VISIBLE
-        send_to_group.visibility = if (showCapture) View.GONE else View.VISIBLE
+        share_group.visibility = if (showCapture) View.GONE else View.VISIBLE
         statisticsViewPager.visibility = if (showCapture) View.GONE else View.VISIBLE
         capture_button.visibility = if (showCapture) View.VISIBLE else View.GONE
         capture_button.isEnabled = showCapture
@@ -251,7 +251,7 @@ class MmiwActivity : AppCompatActivity() {
             runOnUiThread {
                 changeButtonVisibility(true)
                 statisticsCaptureView.visibility = View.INVISIBLE
-                send_button.isEnabled = true
+                share_button.isEnabled = true
             }
 
             handlerThread.quitSafely()
