@@ -52,7 +52,7 @@
             android:id="@+id/statisticsCaptureView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="64dp"
+            android:layout_marginBottom="30dp"
             android:padding="8dp"
             android:textAlignment="center"
             android:textColor="@color/white_100"
@@ -82,30 +82,35 @@
         android:clipToPadding="false"
         android:paddingBottom="16dp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/back_button"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/back_button"
         android:layout_width="46dp"
         android:layout_height="46dp"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/ic_back"
+        app:icon="@drawable/ic_back"
+        android:theme="@style/MaterialButtonTheme"
+        android:background="@drawable/button_ripple_effect"
+        app:iconPadding="0dp"
+        app:iconGravity="textStart"
         app:layout_constraintBottom_toTopOf="@+id/back_button_text_view"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/back_button_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
         android:labelFor="@+id/back_button"
         android:text="@string/back"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/back_button"
-        app:layout_constraintStart_toStartOf="@+id/back_button" />
+        app:layout_constraintStart_toStartOf="@+id/back_button"
+        app:layout_constraintTop_toBottomOf="@+id/back_button" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/back_group"
@@ -114,31 +119,36 @@
         android:visibility="gone"
         app:constraint_referenced_ids="back_button,back_button_text_view" />
 
-    <Button
-        android:id="@+id/send_button"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/share_button"
         android:layout_width="46dp"
         android:layout_height="46dp"
-        android:layout_marginEnd="36dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:background="@drawable/ic_send"
+        app:icon="@drawable/ic_share"
+        android:theme="@style/MaterialButtonTheme"
+        android:background="@drawable/button_ripple_effect"
+        app:iconPadding="0dp"
+        app:iconGravity="textStart"
         app:layout_constraintBottom_toTopOf="@+id/send_button_text_view"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/send_button_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:labelFor="@+id/send_button"
-        android:text="@string/send_to"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/send_button"
-        app:layout_constraintStart_toStartOf="@+id/send_button" />
+        android:labelFor="@+id/share_button"
+        android:text="@string/share"
+        app:layout_constraintEnd_toEndOf="@+id/share_button"
+        app:layout_constraintStart_toStartOf="@+id/share_button"
+        app:layout_constraintTop_toBottomOf="@+id/share_button" />
 
     <androidx.constraintlayout.widget.Group
-        android:id="@+id/send_to_group"
+        android:id="@+id/share_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="send_button,send_button_text_view" />
+        app:constraint_referenced_ids="share_button,send_button_text_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>
