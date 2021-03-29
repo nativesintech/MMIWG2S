@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Matrix
@@ -12,6 +13,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
+import android.util.TypedValue
 import android.view.HapticFeedbackConstants
 import android.view.PixelCopy
 import android.view.View
@@ -43,6 +45,10 @@ class MmiwActivity : AppCompatActivity() {
     private lateinit var sceneView: ArSceneView
     private val statisticsAdapter = StatisticsAdapter()
 
+    private lateinit var redHand: Texture
+    private lateinit var blackHand: Texture
+    private var changeColor = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!checkIsSupportedDeviceOrFinish()) {
@@ -52,9 +58,19 @@ class MmiwActivity : AppCompatActivity() {
         setContentView(R.layout.activity_mmiw_ar)
         arFragment = face_fragment as FaceArFragment
         Texture.builder()
-            .setSource(this, R.drawable.red_hand_80_texture)
+            .setSource(this, R.drawable.hand_red_solid)
             .build()
-            .thenAccept { texture -> faceMeshTexture = texture }
+            .thenAccept { texture ->
+                redHand = texture
+                faceMeshTexture = texture
+            }
+
+        Texture.builder()
+            .setSource(this, R.drawable.hand_black_solid)
+            .build()
+            .thenAccept { texture ->
+                blackHand = texture
+            }
 
         sceneView = arFragment.arSceneView
         sceneView.cameraStreamRenderPriority = Renderable.RENDER_PRIORITY_FIRST
@@ -70,8 +86,11 @@ class MmiwActivity : AppCompatActivity() {
                                 faceNode.setParent(scene)
                                 faceNode.faceMeshTexture = faceMeshTexture
                                 faceNodeMap[f] = faceNode
+                            } else if (changeColor) {
+                                faceNodeMap.getValue(f).faceMeshTexture = faceMeshTexture
                             }
                         }
+                        changeColor = false
                         // Remove any AugmentedFaceNodes associated with an AugmentedFace that stopped tracking.
                         val iter = faceNodeMap.entries.iterator()
                         while (iter.hasNext()) {
@@ -172,6 +191,24 @@ class MmiwActivity : AppCompatActivity() {
             changeButtonVisibility(true)
             pauseSceneView(false)
         }
+
+        color_button_black.setOnClickListener { blackButton ->
+            blackButton.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+            blackButton.updateHeightWidth(54f.toDips(resources))
+
+            color_button_red.updateHeightWidth(36f.toDips(resources))
+            faceMeshTexture = blackHand
+            changeColor = true
+        }
+
+        color_button_red.setOnClickListener { redButton ->
+            redButton.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+            redButton.updateHeightWidth(54f.toDips(resources))
+
+            color_button_black.updateHeightWidth(36f.toDips(resources))
+            faceMeshTexture = redHand
+            changeColor = true
+        }
     }
 
     private fun takeScreenshot(): Bitmap =
@@ -195,12 +232,17 @@ class MmiwActivity : AppCompatActivity() {
         return combinedBitmap
     }
 
-    private fun changeButtonVisibility(showCapture: Boolean) {
-        back_group.visibility = if (showCapture) View.GONE else View.VISIBLE
-        share_group.visibility = if (showCapture) View.GONE else View.VISIBLE
-        statisticsViewPager.visibility = if (showCapture) View.GONE else View.VISIBLE
-        capture_button.visibility = if (showCapture) View.VISIBLE else View.GONE
-        capture_button.isEnabled = showCapture
+    private fun changeButtonVisibility(isCapturing: Boolean) {
+        // Capture and hand option view
+        color_button_black.visibility = if (isCapturing) View.VISIBLE else View.GONE
+        color_button_red.visibility = if (isCapturing) View.VISIBLE else View.GONE
+        capture_button.visibility = if (isCapturing) View.VISIBLE else View.GONE
+        capture_button.isEnabled = isCapturing
+
+        // Statistics and send view.
+        back_group.visibility = if (isCapturing) View.GONE else View.VISIBLE
+        share_group.visibility = if (isCapturing) View.GONE else View.VISIBLE
+        statisticsViewPager.visibility = if (isCapturing) View.GONE else View.VISIBLE
     }
 
     private fun pauseSceneView(pause: Boolean) =
@@ -331,3 +373,13 @@ private inline fun View.waitForLayout(crossinline action: () -> Unit) {
         })
     }
 }
+
+private fun View.updateHeightWidth(size: Int) {
+    this.layoutParams = this.layoutParams.apply {
+        this.width = size
+        this.height = size
+    }
+}
+
+fun Float.toDips(resources: Resources): Int =
+    TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, resources.displayMetrics).toInt()

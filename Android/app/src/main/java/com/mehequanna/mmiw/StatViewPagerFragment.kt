@@ -3,6 +3,7 @@ package com.mehequanna.mmiw
 import android.content.Context
 import android.os.Bundle
 import android.transition.TransitionInflater
+import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,6 +60,7 @@ class StatViewPagerFragment : Fragment() {
         })
         progressIndicator.setPage(stat_pager.currentItem)
         nextButton.setOnClickListener {
+            it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
             onNextPressed()
         }
     }
