@@ -15,20 +15,20 @@ It is a single deploy application built with, node, expressjs, mongodb.
 Accept submission
 
 ```
-POST or PUT
-/submission
+POST
+/submissions
 params:
-name
-email
-image
+name - Name [String] for submission
+email - email address [String] for submission
+image - file <max 5 MB only png|jpeg|jpg|webp>
 ```
 
 Get submissions
 ```
 GET
-/submissions
+/submissions/random/:number
 params:
-number
+number - number of entries you would like to retrieve
 
 ```
 
