@@ -7,8 +7,9 @@ services:
       - DB_URL=mongodb://database:27017/mmiwg2s-submission-database
       - MAX_FILE_SIZE=5000000
       - STORAGE_LOCATION=/submission_images
+      # - BUCKET= # If spaces is used provide the bucket
     volumes:
-      - ./submission_images:/submission_images
+      - ./public/submission_images:/submission_images
     build:
       context: ./
     ports:

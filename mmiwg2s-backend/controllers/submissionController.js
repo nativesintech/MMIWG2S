@@ -12,6 +12,17 @@ const saveSubmission = function(submission, res) {
   });
 }
 
+const resolveLocation = function(submissions) {
+  if (process.env.BUCKET){
+    submissions.map(sub => sub.image_url = "https://"+process.env.BUCKET+"."+process.env.STORAGE_LOCATION+"/"+sub.image_url);
+  }
+  else {
+    const port = process.env.PORT || 3000;
+    submissions.map(sub => sub.image_url = "http://localhost:"+port+"/"+sub.image_url);
+  }
+  return submissions
+}
+
 /**
 * submissionController.js
 *
@@ -26,14 +37,13 @@ module.exports = {
     const count = parseInt(req.params.number);
     SubmissionModel.aggregate([{$sample: {size: count}}], function(err, submissions) {
       if (err) {
-        console.log(err);
         return res.status(500).json({
           message: 'Error when getting submission.',
           error: err
         });
       }
 
-      return res.json(submissions);
+      return res.json(resolveLocation(submissions));
     });
   },
 
@@ -57,7 +67,7 @@ module.exports = {
         });
       }
 
-      return res.json(submission);
+      return res.json(resolveLocation(submission));
     });
   },
 
@@ -77,41 +87,32 @@ module.exports = {
 
       if (!submission) {
         // no previous submission, creating new
-        var submission = new SubmissionModel({
-            name : req.body.name,
-            email : req.body.email,
-            image_url : req.body.image_url,
-            verified : req.body.verified
+        if (req.body.name && req.body.email && req.file.filename) {
+          var submission = new SubmissionModel({
+              name : req.body.name,
+              email : req.body.email,
+              image_url : req.file.filename,
+              verified : false
+            });
+
+          return saveSubmission(submission, res);
+        }
+        else {
+          return res.status(500).json({
+            message: 'Missing Fields!',
+            error: err
           });
-        return saveSubmission(submission, res);
+        }
       }
 
-      // found a submission, updating the entry with new image
+      // found a submission, updating the entry
       submission.name = req.body.name ? req.body.name : submission.name;
-      submission.image_url = req.body.image_url ? req.body.image_url : submission.image_url;
+      submission.image_url = req.file.filename ? req.file.filename : submission.image_url;
       submission.verified = req.body.verified ? req.body.verified : submission.verified;
 
       return saveSubmission(submission, res);
     });
   },
-  //   var submission = new SubmissionModel({
-  //     name : req.body.name,
-  //     email : req.body.email,
-  //     image_url : req.body.image_url,
-  //     verified : req.body.verified
-  //   });
-  //
-  //   submission.save(function (err, submission) {
-  //     if (err) {
-  //       return res.status(500).json({
-  //         message: 'Error when creating submission',
-  //         error: err
-  //       });
-  //     }
-  //
-  //     return res.status(201).json(submission);
-  //   });
-  // },
 
   /**
   * submissionController.update()

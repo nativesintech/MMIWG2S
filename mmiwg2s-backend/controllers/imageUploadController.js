@@ -5,6 +5,7 @@ const fs = require('fs').promises;
 const HttpException = require('http-exception');
 const HttpStatus = require('http-exception');
 var path = require('path');
+var crypto = require("crypto");
 
 const localStorage = multer.diskStorage({
   destination: async (req, file, cb) => {
@@ -20,7 +21,8 @@ const localStorage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     try {
-      cb(null, file.originalname);
+      var id = crypto.randomBytes(10).toString('hex');
+      cb(null, `${id}${path.extname(file.originalname)}`);
     } catch (error) {
       cb(new HttpException(`Could not save file`, HttpStatus.BAD_REQUEST), false);
     }
@@ -31,11 +33,16 @@ const spacesStorage = multerS3({
   s3: new aws.S3({
     endpoint: process.env.STORAGE_LOCATION
   }),
-  bucket: 'your-space-here',
+  bucket: process.env.BUCKET || "sf",
+  contentType: multerS3.AUTO_CONTENT_TYPE,
   acl: 'public-read',
   key: function (request, file, cb) {
-    console.log(file);
-    cb(null, file.originalname);
+    try {
+      var id = crypto.randomBytes(10).toString('hex');
+      cb(null, `${id}${path.extname(file.originalname)}`);
+    } catch (error) {
+      cb(new HttpException(`Could not save file`, HttpStatus.BAD_REQUEST), false);
+    }
   }
 })
 
