@@ -23,16 +23,6 @@ const resolveLocation = function(submissions) {
   return submissions
 }
 
-const randomSubmissions = function(count) {
-  SubmissionModel.aggregate([{$sample: {size: count}}], function(err, submissions) {
-    if (err) {
-      return
-    }
-    console.log(resolveLocation(submissions))
-    return resolveLocation(submissions);
-  });
-}
-
 /**
 * submissionController.js
 *
