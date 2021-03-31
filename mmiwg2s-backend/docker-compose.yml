@@ -1,22 +1,28 @@
 version: '3'
 
 services:
-  # mmiwg2s-service:
-  #   image: mmiwg2s-submissions:latest
-  #   build:
-  #     context: ./
-  #     ports:
-  #       - 3000:3000
-  #     depends_on:
-  #       - "database"
+  mmiwg2s-service:
+    image: mmiwg2s-submissions:latest
+    environment:
+      - DB_URL=mongodb://database:27017/mmiwg2s-submission-database
+      - MAX_FILE_SIZE=5000000
+      - STORAGE_LOCATION=/submission_images
+    volumes:
+      - ./submission_images:/submission_images
+    build:
+      context: ./
+    ports:
+      - 3000:3000
+    depends_on:
+      - "database"
 
   database:
-    image: mongo:3.6
+    image: mongo:4.0.9
     container_name: 'submission-database'
-    environment:
-      # - MONGO_INTIDB_DATABASE=mmiwg2s-submission-database
-      - MONGO_INITDB_ROOT_USERNAME=test
-      - MONGO_INITDB_ROOT_PASSWORD=secret
+    # environment:
+      # - MONGO_INITDB_DATABASE=mmiwg2s-submission-database
+      # - MONGO_INITDB_ROOT_USERNAME=test
+      # - MONGO_INITDB_ROOT_PASSWORD=secret
     volumes:
       # - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
       - ./mongo-volume:/data/db

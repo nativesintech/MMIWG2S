@@ -3,7 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 const helmet = require('helmet');
-var logger = require('morgan');
+const logger = require('morgan');
+const dotenv = require('dotenv');
+dotenv.config();
 
 var indexRouter = require('./routes/index');
 // var usersRouter = require('./routes/users');
@@ -20,7 +22,7 @@ app.set('view engine', 'pug');
 app.use(helmet());
 app.use(logger('dev'));
 app.use(express.json({ limit: '2MB' }));
-app.use(express.urlencoded({ extended: false, limit: '10MB' }));
+app.use(express.urlencoded({ extended: true, limit: '5MB' }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

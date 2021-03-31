@@ -4,6 +4,11 @@ mongo-volume
 # build
 build/
 
+# env
+.env
+
+# images - local
+submission_images/
 
 # Logs
 logs
