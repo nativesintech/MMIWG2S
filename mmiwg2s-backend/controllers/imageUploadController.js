@@ -10,7 +10,7 @@ var crypto = require("crypto");
 const localStorage = multer.diskStorage({
   destination: async (req, file, cb) => {
     try {
-      const uploadPath = process.env.STORAGE_LOCATION;
+      const uploadPath = "./public/"+process.env.STORAGE_LOCATION;
       await fs.mkdir(uploadPath, {
         recursive: true,
       });

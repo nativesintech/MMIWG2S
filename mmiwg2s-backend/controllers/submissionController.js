@@ -18,7 +18,7 @@ const resolveLocation = function(submissions) {
   }
   else {
     const port = process.env.PORT || 3000;
-    submissions.map(sub => sub.image_url = "http://localhost:"+port+"/"+sub.image_url);
+    submissions.map(sub => sub.image_url = "http://localhost:"+port+"/"+process.env.STORAGE_LOCATION+"/"+sub.image_url);
   }
   return submissions
 }
