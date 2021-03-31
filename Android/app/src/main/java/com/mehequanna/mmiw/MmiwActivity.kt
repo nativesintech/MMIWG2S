@@ -229,7 +229,15 @@ class MmiwActivity : AppCompatActivity() {
         val canvas = Canvas(combinedBitmap)
         canvas.drawBitmap(baseBitmap, Matrix(), null)
         canvas.drawBitmap(overlayBitmap, 0f, 0f, null)
-        return combinedBitmap
+
+        // After some rough testing, a bitmap height of 1300 gets us to around 1mb.
+        // So by dividing 1300 by the current bitmap height we get a percentage as a decimal.
+        // We can use that to scale height and width proportionally.
+        val modifier = 1300 / combinedBitmap.height.toDouble()
+        val width = (combinedBitmap.width * modifier).toInt()
+        val height = (combinedBitmap.height * modifier).toInt()
+
+        return Bitmap.createScaledBitmap(combinedBitmap, width, height, true)
     }
 
     private fun changeButtonVisibility(isCapturing: Boolean) {
@@ -305,7 +313,7 @@ class MmiwActivity : AppCompatActivity() {
 
         // TODO figure where to share.
         val intent: Intent = ShareCompat.IntentBuilder.from(this)
-            .setType("image/jpg")
+            .setType("image/png")
             .setSubject("MMIW Support Image") // TODO
             .setStream(photoURI)
             .setChooserTitle("R.string.share_title")
@@ -337,7 +345,7 @@ class MmiwActivity : AppCompatActivity() {
             if (!imagePath.exists()) {
                 imagePath.mkdir()
             }
-            val file = File(imagePath, "mmiw_photo.jpg")
+            val file = File(imagePath, "mmiw_photo.png")
 
             val stream = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
