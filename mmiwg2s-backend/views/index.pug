@@ -2,4 +2,12 @@ extends layout
 
 block content
   h1= title
-  p Welcome to #{title}
+  p Welcome to MMIW Project
+  .row
+  .col-12
+  each sub in subs
+    .card
+      h4.card-title Name: #{sub.name}
+      img(src=sub.image_url style='width:100px; height:100px;')
+      .card-block
+      p.card-text Email: #{sub.email}

@@ -5,9 +5,9 @@ const uploadContoller = require('../controllers/imageUploadController.js');
 
 /*
  * GET
- * Returns random <number> entries
+ * Returns random <number> entries default is 5
  */
-router.get('/random/:number', submissionController.list);
+router.get('/random/:number?', submissionController.list);
 
 /*
  * GET

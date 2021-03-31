@@ -23,6 +23,16 @@ const resolveLocation = function(submissions) {
   return submissions
 }
 
+const randomSubmissions = function(count) {
+  SubmissionModel.aggregate([{$sample: {size: count}}], function(err, submissions) {
+    if (err) {
+      return
+    }
+    console.log(resolveLocation(submissions))
+    return resolveLocation(submissions);
+  });
+}
+
 /**
 * submissionController.js
 *
@@ -31,10 +41,23 @@ const resolveLocation = function(submissions) {
 module.exports = {
 
   /**
+  * render random submissions
+  */
+  render: function (req, res) {
+    SubmissionModel.aggregate([{$sample: {size: 5}}], function(err, submissions) {
+      if (err) {
+        return
+      }
+      res.render('index', { subs: resolveLocation(submissions) });
+    });
+  },
+
+  /**
   * submissionController.list()
   */
   list: function (req, res) {
-    const count = parseInt(req.params.number);
+
+    const count = req.params.number ? parseInt(req.params.number) : 5;
     SubmissionModel.aggregate([{$sample: {size: count}}], function(err, submissions) {
       if (err) {
         return res.status(500).json({
