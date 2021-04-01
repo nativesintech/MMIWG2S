@@ -10,6 +10,8 @@ services:
       # - BUCKET= # If spaces is used provide the bucket
       - WINDOW_MS=60000 # 1 min rate limit
       - MAX_PER_WINDOW=10 # 10 per ip limit
+      - ACCESS_KEY=
+      - SECRET_KEY=
       - VIRTUAL_PORT=3000
       - VIRTUAL_HOST=asg.sample.com
       - LETSENCRYPT_HOST=sample.com

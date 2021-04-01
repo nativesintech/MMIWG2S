@@ -31,7 +31,9 @@ const localStorage = multer.diskStorage({
 
 const spacesStorage = multerS3({
   s3: new aws.S3({
-    endpoint: process.env.STORAGE_LOCATION
+    endpoint: process.env.STORAGE_LOCATION,
+    accessKeyId: process.env.ACCESS_KEY,
+    secretAccessKey: process.env.SECRET_KEY
   }),
   bucket: process.env.BUCKET || "sf",
   contentType: multerS3.AUTO_CONTENT_TYPE,

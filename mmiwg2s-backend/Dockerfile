@@ -7,6 +7,5 @@ WORKDIR /usr/app
 COPY . ./
 
 RUN yarn install --production
-ENV NODE_ENV=production
 
 CMD ["yarn", "start"]
