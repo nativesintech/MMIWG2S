@@ -10,6 +10,9 @@ build/
 # images - local
 submission_images/
 
+keys/
+docker-compose.prod.yml
+
 # Logs
 logs
 *.log
