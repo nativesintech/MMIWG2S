@@ -6,6 +6,7 @@ EXPOSE 3000
 WORKDIR /usr/app
 COPY . ./
 
-RUN yarn
+RUN yarn install --production
+ENV NODE_ENV=production
 
-CMD ["yarn", "dev"]
+CMD ["yarn", "start"]

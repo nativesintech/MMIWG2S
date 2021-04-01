@@ -1,0 +1,72 @@
+version: '3.1'
+
+services:
+  mmiwg2s-service:
+    image: mmiwg2s-submissions:latest
+    environment:
+      - DB_URL=mongodb://database:27017/mmiwg2s-submission-database
+      - MAX_FILE_SIZE=5000000
+      - STORAGE_LOCATION=submission_images
+      # - BUCKET= # If spaces is used provide the bucket
+      - WINDOW_MS=60000 # 1 min rate limit
+      - MAX_PER_WINDOW=10 # 10 per ip limit
+      - VIRTUAL_PORT=3000
+      - VIRTUAL_HOST=asg.sample.com
+      - LETSENCRYPT_HOST=sample.com
+      - LETSENCRYPT_EMAIL=pavan@streem.com
+    volumes:
+      - ./public/submission_images:/submission_images
+    build:
+      context: ./
+    ports:
+      - 3000:3000
+    depends_on:
+      - "database"
+
+  database:
+    image: mongo:4.0.9
+    container_name: 'submission-database'
+    # environment:
+      # - MONGO_INITDB_DATABASE=mmiwg2s-submission-database
+      # - MONGO_INITDB_ROOT_USERNAME=test
+      # - MONGO_INITDB_ROOT_PASSWORD=secret
+    volumes:
+      # - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./mongo-volume:/data/db
+    ports:
+      - 27017:27017
+
+  nginx-proxy:
+    restart: always
+    image: nginx-proxy:latest
+    build:
+      context: ./deploy_config
+      dockerfile: nginx.Dockerfile
+    labels:
+      com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy: "true"
+    ports:
+      - 443:443
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - certs:/etc/nginx/certs:ro
+      - vhostd:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+
+  letsencrypt-nginx-proxy-companion:
+    restart: always
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    environment:
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certs:/etc/nginx/certs:rw
+      - vhostd:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - dhparam:/etc/nginx/dhparam
+
+volumes:
+  certs:
+  vhostd:
+  html:
+  dhparam:
