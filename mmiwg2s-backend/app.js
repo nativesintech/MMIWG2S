@@ -25,6 +25,9 @@ app.use(express.urlencoded({ extended: true, limit: '5MB' }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// for rate limiter
+app.set('trust proxy', 1);
+
 app.use('/', indexRouter);
 app.use('/submissions', submissionsRouter);
 

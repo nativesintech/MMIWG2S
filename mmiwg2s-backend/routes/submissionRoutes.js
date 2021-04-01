@@ -2,6 +2,17 @@ const express = require('express');
 const router = express.Router();
 const submissionController = require('../controllers/submissionController.js');
 const uploadContoller = require('../controllers/imageUploadController.js');
+const rateLimit = require("express-rate-limit");
+
+const apiLimiter = rateLimit({
+   windowMs: process.env.WINDOW_MS,
+   max: process.env.MAX_PER_WINDOW,
+   statusCode: 200,
+   message: {
+    status: 429,
+    error: 'Please wait a minute before you try again!'
+   }
+});
 
 /*
  * GET
@@ -19,7 +30,7 @@ router.get('/:emailId', submissionController.show);
  * POST
  * Accepts a submission
  */
-router.post('/', uploadContoller.uploadImg.single("image"), submissionController.create);
+router.post('/', apiLimiter, uploadContoller.uploadImg.single("image"), submissionController.create);
 
 /*
  * PUT
