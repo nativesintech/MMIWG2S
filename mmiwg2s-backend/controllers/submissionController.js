@@ -1,4 +1,5 @@
 var SubmissionModel = require('../models/submissionModel.js');
+const deleteImg = require('../controllers/imageUploadController.js').deleteImg;
 
 const saveSubmission = function(submission, res) {
   submission.save(function (err, submission) {
@@ -80,7 +81,7 @@ module.exports = {
         });
       }
 
-      return res.json(resolveLocation(submission));
+      return res.json(resolveLocation([submission]));
     });
   },
 
@@ -100,11 +101,11 @@ module.exports = {
 
       if (!submission) {
         // no previous submission, creating new
-        if (req.body.name && req.body.email && req.file.filename) {
+        if (req.body.name && req.body.email && (req.file.filename || req.file.key)) {
           var submission = new SubmissionModel({
               name : req.body.name,
               email : req.body.email,
-              image_url : req.file.filename,
+              image_url : req.file.filename ? req.file.filename : req.file.key,
               verified : false
             });
 
@@ -119,11 +120,32 @@ module.exports = {
       }
 
       // found a submission, updating the entry
-      submission.name = req.body.name ? req.body.name : submission.name;
-      submission.image_url = req.file.filename ? req.file.filename : submission.image_url;
-      submission.verified = req.body.verified ? req.body.verified : submission.verified;
+      // only name or verified status is being updated?
+      if (req.file === undefined && req.body.name || req.body.verified) {
+        submission.name = req.body.name ? req.body.name : submission.name;
+        submission.verified = req.body.verified ? req.body.verified : submission.verified;
+        return saveSubmission(submission, res);
+      }
 
-      return saveSubmission(submission, res);
+      // only image is being updated
+      if (req.file !== undefined) {
+        // delete previous image
+        deleteImg(submission.image_url, function (status) {
+          console.log("Old file has been deleted", status);
+        });
+
+        submission.name = req.body.name ? req.body.name : submission.name; // if name is updated
+        submission.verified = req.body.verified ? req.body.verified : submission.verified; // if verified is updated
+        submission.image_url = req.file.filename ? req.file.filename : req.file.key; // if new image is uploaded
+
+        return saveSubmission(submission, res);
+      }
+
+      // some unknown error
+      return res.status(500).json({
+        message: 'Error when creating submission',
+        error: err
+      });
     });
   },
 

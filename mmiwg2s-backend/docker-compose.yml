@@ -6,14 +6,12 @@ services:
     environment:
       - DB_URL=mongodb://database:27017/mmiwg2s-submission-database
       - MAX_FILE_SIZE=5000000
-      - STORAGE_LOCATION=sfo3.digitaloceanspaces.com
-      - BUCKET=mmiw # If spaces is used provide the bucket
+      - STORAGE_LOCATION=submission_images
       - WINDOW_MS=60000 # 1 min rate limit
       - MAX_PER_WINDOW=10 # 10 per ip limit
-      - ACCESS_KEY=
-      - SECRET_KEY=
     volumes:
-      - ./public/submission_images:/submission_images
+      # Use this volume only if you want to save the images on the your host
+      - ./public/submission_images:/usr/app/public/submission_images
     build:
       context: ./
     ports:

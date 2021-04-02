@@ -7,5 +7,6 @@ WORKDIR /usr/app
 COPY . ./
 
 RUN yarn install --production
+RUN yarn global add pm2
 
-CMD ["yarn", "start"]
+CMD ["pm2-runtime", "./bin/www"]

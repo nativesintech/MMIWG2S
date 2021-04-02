@@ -29,12 +29,14 @@ const localStorage = multer.diskStorage({
   },
 });
 
+const s3 = new aws.S3({
+  endpoint: process.env.STORAGE_LOCATION,
+  accessKeyId: process.env.ACCESS_KEY,
+  secretAccessKey: process.env.SECRET_KEY
+});
+
 const spacesStorage = multerS3({
-  s3: new aws.S3({
-    endpoint: process.env.STORAGE_LOCATION,
-    accessKeyId: process.env.ACCESS_KEY,
-    secretAccessKey: process.env.SECRET_KEY
-  }),
+  s3: s3,
   bucket: process.env.BUCKET || "sf",
   contentType: multerS3.AUTO_CONTENT_TYPE,
   acl: 'public-read',
@@ -67,4 +69,21 @@ const uploadImg = multer({
   storage: getDestination()
 });
 
+const deleteImg = function (file_name, cb) {
+  // not handling deleting local images
+  // as storage is not a big deal locally
+  var params = {
+    Bucket: process.env.BUCKET || "sf",
+    Key: file_name
+  };
+  s3.deleteObject(params, function(err, data) {
+    if (err) {
+      cb(false);
+    } else {
+      cb(true);
+    }
+  });
+}
+
 exports.uploadImg = uploadImg;
+exports.deleteImg = deleteImg;
