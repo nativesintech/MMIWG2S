@@ -26,4 +26,3 @@ services:
       - ./mongo-volume:/data/db
     ports:
       - 27017:27017
-      

@@ -35,7 +35,7 @@ module.exports = {
   * render random submissions
   */
   render: function (req, res) {
-    SubmissionModel.aggregate([{$sample: {size: 5}}], function(err, submissions) {
+    SubmissionModel.aggregate([{$sample: {size: 20}}], function(err, submissions) {
       if (err) {
         return
       }
