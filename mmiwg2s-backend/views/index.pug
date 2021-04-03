@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  .header
+    h1 Welcome to MMIW project
+    p These are random submissions from users
+  ul
+    each sub in subs
+      li
+        p #{sub.name} - #{sub.email} 
+        img(src=sub.image_url loading='lazy')
+
