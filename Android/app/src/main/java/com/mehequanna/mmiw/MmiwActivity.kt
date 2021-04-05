@@ -13,6 +13,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
+import android.util.Log
 import android.util.TypedValue
 import android.view.HapticFeedbackConstants
 import android.view.PixelCopy
@@ -32,13 +33,18 @@ import com.google.ar.sceneform.rendering.Renderable
 import com.google.ar.sceneform.rendering.Texture
 import com.google.ar.sceneform.ux.AugmentedFaceNode
 import com.mehequanna.mmiw.adapter.StatisticsAdapter
+import com.mehequanna.mmiw.network.RetrofitEventListener
+import com.mehequanna.mmiw.network.Submission
+import com.mehequanna.mmiw.network.SubmissionRestClient
 import kotlinx.android.synthetic.main.activity_mmiw_ar.*
+import retrofit2.Call
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 
 class MmiwActivity : AppCompatActivity() {
+    private val TAG: String = MmiwActivity::class.java.name
     private lateinit var arFragment: FaceArFragment
     private var faceMeshTexture: Texture? = null
     private var faceNodeMap = HashMap<AugmentedFace, AugmentedFaceNode>()
@@ -229,7 +235,14 @@ class MmiwActivity : AppCompatActivity() {
         val canvas = Canvas(combinedBitmap)
         canvas.drawBitmap(baseBitmap, Matrix(), null)
         canvas.drawBitmap(overlayBitmap, 0f, 0f, null)
-        return combinedBitmap
+
+        // After some rough testing, a bitmap height of 1300 gets us to around 1mb.
+        // So by dividing 1300 by the current bitmap height we get a percentage as a decimal.
+        // We can use that to scale height and width proportionally.
+        val modifier = 1300 / combinedBitmap.height.toDouble()
+        val width = (combinedBitmap.width * modifier).toInt()
+        val height = (combinedBitmap.height * modifier).toInt()
+        return Bitmap.createScaledBitmap(combinedBitmap, width, height, true)
     }
 
     private fun changeButtonVisibility(isCapturing: Boolean) {
@@ -280,6 +293,13 @@ class MmiwActivity : AppCompatActivity() {
                     return@request
                 }
 
+                val newSubmission = Submission().apply {
+                    this.name = "Testing This"
+                    this.email = "upload_test6@gmail.com"
+                    this.image = file
+                }
+
+                sendPhotoToBackend(newSubmission)
                 sharePhoto(file)
             } else {
                 val toast = Toast.makeText(
@@ -305,7 +325,7 @@ class MmiwActivity : AppCompatActivity() {
 
         // TODO figure where to share.
         val intent: Intent = ShareCompat.IntentBuilder.from(this)
-            .setType("image/jpg")
+            .setType("image/png")
             .setSubject("MMIW Support Image") // TODO
             .setStream(photoURI)
             .setChooserTitle("R.string.share_title")
@@ -315,6 +335,20 @@ class MmiwActivity : AppCompatActivity() {
         grantReadUriPermission(intent, photoURI)
 
         startActivity(intent)
+    }
+
+    private fun sendPhotoToBackend(submission: Submission) {
+        SubmissionRestClient.instance.submitUserInfo(submission, object : RetrofitEventListener {
+            override fun onSuccess(call: Call<*>?, response: Any?) {
+                // TODO
+                Log.d(TAG, response.toString())
+            }
+
+            override fun onError(call: Call<*>?, t: Throwable?) {
+                // TODO
+                Log.d(TAG, "Image failed to upload to server with error: ${t.toString()}")
+            }
+        })
     }
 
     private fun grantReadUriPermission(intent: Intent, photoURI: Uri) {
@@ -337,7 +371,7 @@ class MmiwActivity : AppCompatActivity() {
             if (!imagePath.exists()) {
                 imagePath.mkdir()
             }
-            val file = File(imagePath, "mmiw_photo.jpg")
+            val file = File(imagePath, "mmiw_photo.png")
 
             val stream = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
