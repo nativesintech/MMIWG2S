@@ -49,7 +49,7 @@ class ARFaceViewerUI: UIView {
         
         let blackButton = SceneButton(diameter: SceneButton.smallerColorToggleWidth, color: .offBlack)
         blackButton.addTarget(self, action: #selector(blackButtonTapped), for: .touchUpInside)
-
+        
         toggleView.addSubview(blackButton)
         blackButton.translatesAutoresizingMaskIntoConstraints = false
         blackButton.leadingAnchor.constraint(equalTo: toggleView.leadingAnchor).isActive = true
@@ -69,6 +69,9 @@ class ARFaceViewerUI: UIView {
     
     @objc private func shareButtonTapped() {
         guard let imageToShare = delegate?.generateShareImage() else { return }
+        
+        // Use this to upload to the database. This will likely move :)
+//        let scaledDownImage = imageToShare.compress(to: 1000)
         
         let activityController = UIActivityViewController(activityItems: [imageToShare], applicationActivities: nil)
         activityController.completionWithItemsHandler = { [weak self] (activityType, completed:Bool, returnedItems:[Any]?, error: Error?) in
@@ -97,7 +100,7 @@ class ARFaceViewerUI: UIView {
     @objc private func redButtonTapped() {
         guard !redSelected else { return }
         UIView.animate(withDuration: 0.1, animations: { [weak self] in
-           guard let self = self else { return }
+            guard let self = self else { return }
             self.blackButton?.adjustDiameter(to: SceneButton.smallerColorToggleWidth)
             self.redButton?.adjustDiameter(to: SceneButton.largerColorToggleWidth)
         })

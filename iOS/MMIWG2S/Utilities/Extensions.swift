@@ -51,20 +51,20 @@ extension UIImage {
         // Trim off the extremely small float value to prevent core graphics from rounding it up
         newSize.width = floor(newSize.width)
         newSize.height = floor(newSize.height)
-
+        
         UIGraphicsBeginImageContextWithOptions(newSize, false, self.scale)
         let context = UIGraphicsGetCurrentContext()!
-
+        
         // Move origin to middle
         context.translateBy(x: newSize.width/2, y: newSize.height/2)
         // Rotate around middle
         context.rotate(by: CGFloat(radians))
         // Draw the image at its center
         self.draw(in: CGRect(x: -self.size.width/2, y: -self.size.height/2, width: self.size.width, height: self.size.height))
-
+        
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-
+        
         return newImage
     }
     
@@ -78,6 +78,40 @@ extension UIImage {
         UIGraphicsEndImageContext()
         
         return imageColored
+    }
+    
+    
+    // compress() and resize() are borrowed from: https://stackoverflow.com/a/63272794/7148271
+    func compress(to kb: Int, allowedMargin: CGFloat = 0.1) -> UIImage {
+        let bytes = kb * 1024
+        var compression: CGFloat = 1.0
+        let step: CGFloat = 0.1
+        var holderImage = self
+        var complete = false
+        while(!complete) {
+            guard let data = holderImage.pngData() else { break }
+            let ratio = data.count / bytes
+            if data.count < Int(CGFloat(bytes) * (1 + allowedMargin)) {
+                complete = true
+                return holderImage
+            } else {
+                let multiplier:CGFloat = CGFloat((ratio / 5) + 1)
+                compression -= (step * multiplier)
+            }
+            guard let newImage = holderImage.resize(withPercentage: compression) else { break }
+            holderImage = newImage
+        }
+        
+        return holderImage
+    }
+    
+    func resize(withPercentage percentage: CGFloat, isOpaque: Bool = true) -> UIImage? {
+        let canvas = CGSize(width: size.width * percentage, height: size.height * percentage)
+        let format = imageRendererFormat
+        format.opaque = isOpaque
+        return UIGraphicsImageRenderer(size: canvas, format: format).image {
+            _ in draw(in: CGRect(origin: .zero, size: canvas))
+        }
     }
 }
 
