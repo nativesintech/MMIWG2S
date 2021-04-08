@@ -71,6 +71,7 @@ class FacesARViewController: UIViewController {
     
     private func resetTracking() {
         guard ARFaceTrackingConfiguration.isSupported else { return }
+        log.info("Starting AR Session from ARKit")
         sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
     }
     
