@@ -11,6 +11,7 @@ import Foundation
 enum HttpContentType: String {
     case json = "application/json"
     case form = "application/x-www-form-urlencoded"
+    case multipartForm = "multipart/form-data; boundary="
     case all = "*/*"
 }
 
@@ -30,9 +31,10 @@ class Network {
         }
         log.debug("Attempting to make http request to \(fullUrl.absoluteString)")
         var request = URLRequest(url: fullUrl)
+        let boundary = contentType == .multipartForm ? UUID().uuidString : ""
         request.httpMethod = "POST"
         request.addValue(contentType.rawValue, forHTTPHeaderField: "Content-Type")
-        request.addValue(HttpContentType.json.rawValue, forHTTPHeaderField: "Accept")
+        request.addValue("\(HttpContentType.json.rawValue)\(boundary)", forHTTPHeaderField: "Accept")
         do {
             switch contentType {
             case .json:
@@ -43,6 +45,19 @@ class Network {
                     return
                 }
                 request.httpBody = parameterString.data(using: .utf8)
+            case .multipartForm:
+                var multiPartData = Data()
+                guard let data = data as? [String:(String,Data)] else {
+                    log.error("Incorrect format for multipart form")
+                    completionHandler("incorrect data format", nil)
+                    return
+                }
+                data.forEach {
+                    let ext = "\($0.value.0.split(separator: "/").last ?? "")"
+                    multiPartData.addMultiPart(boundary: boundary, name: $0.key, filename: "\($0.key).\(ext)", contentType: $0.value.0, data: $0.value.1)
+                }
+                multiPartData.addMultiPartEnd(boundary: boundary)
+                request.httpBody = multiPartData
             default:
                 break
             }
