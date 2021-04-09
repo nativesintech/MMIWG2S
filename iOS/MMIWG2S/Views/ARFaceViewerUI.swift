@@ -70,6 +70,32 @@ class ARFaceViewerUI: UIView {
     @objc private func shareButtonTapped() {
         guard let imageToShare = delegate?.generateShareImage() else { return }
         
+        // Just here for testing!
+        let image = imageToShare.compress(to: 1000)
+        let metadataJson = [
+            "name" : "iOS Test",
+            "email" : "PortlandTest@test.com"
+        ]
+        guard let metadata = try? JSONSerialization.data(withJSONObject: metadataJson, options: .prettyPrinted),
+              let imageData = image.pngData()
+        else { return }
+        Network.post(
+            url: "https://mmiw.mehequanna.com/submissions",
+            data: [
+                "metadata" : ("application/json", metadata),
+                "file" : ("image/png", imageData)
+            ],
+            header: [ "Authentication" : "Bearer: Not currently used." ],
+            contentType: .multipartForm,
+            completionHandler: { error, response in
+                
+                print("Something went wrong \(String(describing: error))?")
+                print("Something went right \(String(describing: response))?")
+                // handle response
+            }
+        )
+        // End of test code
+        
         let activityController = UIActivityViewController(activityItems: [imageToShare], applicationActivities: nil)
         activityController.completionWithItemsHandler = { [weak self] (activityType, completed:Bool, returnedItems:[Any]?, error: Error?) in
             self?.delegate?.resumeSessionOnceCaptured()
@@ -103,5 +129,41 @@ class ARFaceViewerUI: UIView {
         })
         redSelected = true
         delegate?.textureChanged(toRed: true)
+    }
+}
+
+// TODO Remove this
+extension UIImage {
+    // compress() and resize() are borrowed from: https://stackoverflow.com/a/63272794/7148271
+    func compress(to kb: Int, allowedMargin: CGFloat = 0.1) -> UIImage {
+        let bytes = kb * 1024
+        var compression: CGFloat = 1.0
+        let step: CGFloat = 0.1
+        var holderImage = self
+        var complete = false
+        while(!complete) {
+            guard let data = holderImage.pngData() else { break }
+            let ratio = data.count / bytes
+            if data.count < Int(CGFloat(bytes) * (1 + allowedMargin)) {
+                complete = true
+                return holderImage
+            } else {
+                let multiplier:CGFloat = CGFloat((ratio / 5) + 1)
+                compression -= (step * multiplier)
+            }
+            guard let newImage = holderImage.resize(withPercentage: compression) else { break }
+            holderImage = newImage
+        }
+        
+        return holderImage
+    }
+    
+    func resize(withPercentage percentage: CGFloat, isOpaque: Bool = true) -> UIImage? {
+        let canvas = CGSize(width: size.width * percentage, height: size.height * percentage)
+        let format = imageRendererFormat
+        format.opaque = isOpaque
+        return UIGraphicsImageRenderer(size: canvas, format: format).image {
+            _ in draw(in: CGRect(origin: .zero, size: canvas))
+        }
     }
 }
