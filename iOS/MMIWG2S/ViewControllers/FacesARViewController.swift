@@ -153,7 +153,4 @@ extension FacesARViewController: ARSCNViewDelegate {
         
         faceGeometry.update(from: faceAnchor.geometry)
     }
-    
 }
-
-

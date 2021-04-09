@@ -236,13 +236,7 @@ class MmiwActivity : AppCompatActivity() {
         canvas.drawBitmap(baseBitmap, Matrix(), null)
         canvas.drawBitmap(overlayBitmap, 0f, 0f, null)
 
-        // After some rough testing, a bitmap height of 1300 gets us to around 1mb.
-        // So by dividing 1300 by the current bitmap height we get a percentage as a decimal.
-        // We can use that to scale height and width proportionally.
-        val modifier = 1300 / combinedBitmap.height.toDouble()
-        val width = (combinedBitmap.width * modifier).toInt()
-        val height = (combinedBitmap.height * modifier).toInt()
-        return Bitmap.createScaledBitmap(combinedBitmap, width, height, true)
+        return combinedBitmap
     }
 
     private fun changeButtonVisibility(isCapturing: Boolean) {
@@ -278,11 +272,13 @@ class MmiwActivity : AppCompatActivity() {
         PixelCopy.request(arSceneView, arViewBitmap, { copyResult ->
             if (copyResult == PixelCopy.SUCCESS) {
                 val file: File?
+                val databaseFile: File?
                 try {
                     val screenElementsBitmap: Bitmap = takeScreenshot()
                     val combinedBitmap: Bitmap =
                         combineBitmaps(arViewBitmap, screenElementsBitmap)
 
+                    databaseFile = saveBitmapToDisk(combinedBitmap.compressBitmapForDatabase())
                     file = saveBitmapToDisk(combinedBitmap)
                 } catch (e: Exception) {
                     val toast: Toast = Toast.makeText(
@@ -295,8 +291,8 @@ class MmiwActivity : AppCompatActivity() {
 
                 val newSubmission = Submission().apply {
                     this.name = "Testing This"
-                    this.email = "upload_test6@gmail.com"
-                    this.image = file
+                    this.email = "upload_newtest@gmail.com"
+                    this.image = databaseFile
                 }
 
                 sendPhotoToBackend(newSubmission)
@@ -417,3 +413,13 @@ private fun View.updateHeightWidth(size: Int) {
 
 fun Float.toDips(resources: Resources): Int =
     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, resources.displayMetrics).toInt()
+
+// After some rough testing, a bitmap height of 1300 gets us to around 1mb.
+// So by dividing 1300 by the current bitmap height we get a percentage as a decimal.
+// We can use that to scale height and width proportionally.
+private fun Bitmap.compressBitmapForDatabase(): Bitmap {
+    val modifier = 1300 / this.height.toDouble()
+    val width = (this.width * modifier).toInt()
+    val height = (this.height * modifier).toInt()
+    return Bitmap.createScaledBitmap(this, width, height, true)
+}
