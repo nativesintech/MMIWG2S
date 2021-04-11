@@ -24,7 +24,7 @@ class Network {
      - error: HTTP Error or error if response is unable to be decoded
      - response: decoded JSON response from HTTP Request
      */
-    static func post(url: String, data: [AnyHashable : Any] = [:], header: [String : String] = [:], contentType: HttpContentType = .json, completionHandler: @escaping ((_ error: String?,_ response: Data?) -> Void)) {
+    static func post(url: String, metadata: [String : String] = [:], data: [AnyHashable : Any] = [:], header: [String : String] = [:], contentType: HttpContentType = .json, completionHandler: @escaping ((_ error: String?,_ response: Data?) -> Void)) {
         guard let fullUrl = URL(string: url) else {
             completionHandler("Error creating url", nil)
             return
@@ -33,8 +33,8 @@ class Network {
         var request = URLRequest(url: fullUrl)
         let boundary = contentType == .multipartForm ? UUID().uuidString : ""
         request.httpMethod = "POST"
-        request.addValue(contentType.rawValue, forHTTPHeaderField: "Content-Type")
-        request.addValue("\(HttpContentType.json.rawValue)\(boundary)", forHTTPHeaderField: "Accept")
+        request.addValue("\(contentType.rawValue)\(boundary)", forHTTPHeaderField: "Content-Type")
+        request.addValue(HttpContentType.json.rawValue, forHTTPHeaderField: "Accept")
         do {
             switch contentType {
             case .json:
@@ -51,6 +51,9 @@ class Network {
                     log.error("Incorrect format for multipart form")
                     completionHandler("incorrect data format", nil)
                     return
+                }
+                metadata.forEach {
+                    multiPartData.addMultiPart(boundary: boundary, name: $0.key, data: $0.value)
                 }
                 data.forEach {
                     let ext = "\($0.value.0.split(separator: "/").last ?? "")"
