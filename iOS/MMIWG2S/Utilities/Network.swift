@@ -24,7 +24,7 @@ class Network {
      - error: HTTP Error or error if response is unable to be decoded
      - response: decoded JSON response from HTTP Request
      */
-    static func post(url: String, metadata: [String : String] = [:], data: [AnyHashable : Any] = [:], header: [String : String] = [:], contentType: HttpContentType = .json, completionHandler: @escaping ((_ error: String?,_ response: Data?) -> Void)) {
+    static func post(url: String, data: [AnyHashable : Any] = [:], header: [String : String] = [:], contentType: HttpContentType = .json, completionHandler: @escaping ((_ error: String?,_ response: Data?) -> Void)) {
         guard let fullUrl = URL(string: url) else {
             completionHandler("Error creating url", nil)
             return
@@ -51,14 +51,11 @@ class Network {
                     completionHandler("incorrect data format", nil)
                     return
                 }
-                
                 data.forEach {
-
                     if ($0.value.0 == "text") {
                         multiPartData.addMultiPart(boundary: boundary,
                                                    key: $0.key,
                                                    value: String(decoding: $0.value.1, as: UTF8.self)  )
-
                     } else {
                         let ext = "\($0.value.0.split(separator: "/").last ?? "")"
                         multiPartData.addMultiPart(boundary: boundary,
