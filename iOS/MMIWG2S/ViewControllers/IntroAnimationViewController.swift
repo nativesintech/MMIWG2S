@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import ARKit
 
 class IntroAnimationViewController: UIViewController {
     private typealias ConstraintSet = (top: NSLayoutConstraint, leading: NSLayoutConstraint)
@@ -155,13 +154,6 @@ class IntroAnimationViewController: UIViewController {
     }
     
     private func transitionToIntroSlides() {
-        // TODO: Transition to intro slides once merged
-        let nextViewController: UIViewController
-        if ARFaceTrackingConfiguration.isSupported {
-            nextViewController = FacesARViewController()
-        } else {
-            nextViewController = FacesViewController()
-        }
-        navigationController?.pushViewController(nextViewController, animated: true)
+        navigationController?.pushViewController(PageViewController(), animated: true)
     }
 }
