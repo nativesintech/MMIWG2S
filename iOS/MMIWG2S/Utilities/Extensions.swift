@@ -157,27 +157,20 @@ public func * (size: CGSize, scalar: CGFloat) -> CGSize {
 
 /// Borrowed from https://stackoverflow.com/a/64642247/12470155
 extension Data {
-    mutating func addMultiPart(boundary: String, name: String, filename: String? = nil, contentType: String? = nil, data: Any) {
-        print("\r\n--\(boundary)\r\n")
+    mutating func addMultiPart(boundary: String, key: String, value: String, contentType: String? = nil, data: Data? = nil) {
+        log.info("adding boundary: \(boundary), key: \(key), value: \(value), contentType: \(contentType) data length: \(data?.count) ")
         self.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-        if let filename = filename, let contentType = contentType, let data = data as? Data {
-//            log.debug("adding boundary: \(boundary), name: \(name), filename: \(filename), contentType: \(contentType), data length: \(data.count) ")
-            print("Content-Disposition: form-data; name=\"\(name)\"; filename=\"\(filename)\"\r\n\r")
-            self.append("Content-Disposition: form-data; name=\"\(name)\"; filename=\"\(filename)\"\r\n\r".data(using: .utf8)!)
-            print("Content-Type: \(contentType)\r\n\r\n")
-            self.append("Content-Type: \(contentType)\r\n\r\n".data(using: .utf8)!)
-            self.append(data)
-            print("[length: \(data.count)]")
-        } else if let data = data as? String {
-//            log.debug("adding boundary: \(boundary), name: \(name), data content: \(data) ")
-            self.append("Content-Disposition: form-data; name=\"\(name)\"\r\n\r\n".data(using: .utf8)!)
-            print("Content-Disposition: form-data; name=\"\(name)\"\r\n\r\n")
-            self.append(data.data(using: .utf8)!)
-            print(data)
+        if (contentType != nil && data != nil) { // if file
+            self.append("Content-Disposition: form-data; name=\"\(key)\"; filename=\"\(value)\"\r\n".data(using: .utf8)!)
+            self.append("Content-Type: \(contentType!)\r\n\r\n".data(using: .utf8)!)
+            self.append(data!)
+        }
+        else { // else form parameters
+            self.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8)!)
+            self.append("\(value)".data(using: .utf8)!)
         }
     }
     mutating func addMultiPartEnd(boundary: String) {
         self.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
-        print("\r\n--\(boundary)--\r\n")
     }
 }
