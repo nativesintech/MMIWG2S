@@ -160,10 +160,10 @@ extension Data {
     mutating func addMultiPart(boundary: String, key: String, value: String, contentType: String? = nil, data: Data? = nil) {
         log.info("adding boundary: \(boundary), key: \(key), value: \(value), contentType: \(contentType) data length: \(data?.count) ")
         self.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
-        if (contentType != nil && data != nil) { // if file
+        if let contentType = contentType, let data = data { // if file
             self.append("Content-Disposition: form-data; name=\"\(key)\"; filename=\"\(value)\"\r\n".data(using: .utf8)!)
-            self.append("Content-Type: \(contentType!)\r\n\r\n".data(using: .utf8)!)
-            self.append(data!)
+            self.append("Content-Type: \(contentType)\r\n\r\n".data(using: .utf8)!)
+            self.append(data)
         }
         else { // else form parameters
             self.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8)!)
