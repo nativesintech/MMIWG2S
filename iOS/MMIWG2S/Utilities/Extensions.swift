@@ -195,3 +195,23 @@ extension UILabel {
 public func * (size: CGSize, scalar: CGFloat) -> CGSize {
     return CGSize(width: size.width * scalar, height: size.height * scalar)
 }
+
+/// Borrowed from https://stackoverflow.com/a/64642247/12470155
+extension Data {
+    mutating func addMultiPart(boundary: String, key: String, value: String, contentType: String? = nil, data: Data? = nil) {
+        log.info("adding boundary: \(boundary), key: \(key), value: \(value), contentType: \(contentType) data length: \(data?.count) ")
+        self.append("\r\n--\(boundary)\r\n".data(using: .utf8)!)
+        if let contentType = contentType, let data = data { // if file
+            self.append("Content-Disposition: form-data; name=\"\(key)\"; filename=\"\(value)\"\r\n".data(using: .utf8)!)
+            self.append("Content-Type: \(contentType)\r\n\r\n".data(using: .utf8)!)
+            self.append(data)
+        }
+        else { // else form parameters
+            self.append("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n".data(using: .utf8)!)
+            self.append("\(value)".data(using: .utf8)!)
+        }
+    }
+    mutating func addMultiPartEnd(boundary: String) {
+        self.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+    }
+}

@@ -127,7 +127,7 @@ public final class FacesViewController: UIViewController {
             AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front),
             let input = try? AVCaptureDeviceInput(device: device)
         else {
-            NSLog("Failed to create capture device from front camera.")
+            log.error("Failed to create capture device from front camera.")
             return
         }
 
@@ -147,13 +147,16 @@ public final class FacesViewController: UIViewController {
         cameraImageLayer.contentsGravity = .center
         cameraImageLayer.frame = self.view.bounds
         view.layer.insertSublayer(cameraImageLayer, at: 0)
+        
+        log.info("requesting video permissions")
 
         // Start capturing images from the capture session once permission is granted.
         getVideoPermission(permissionHandler: { [weak self] granted in
             guard granted else {
-                NSLog("Permission not granted to use camera.")
+                log.error("Permission not granted to use camera.")
                 return
             }
+            log.info("Permissions granted. Starting AR Session from ARCore")
             self?.captureSession?.startRunning()
         })
     }
@@ -161,7 +164,7 @@ public final class FacesViewController: UIViewController {
     /// Start receiving motion updates to determine device orientation for use in the face session.
     private func setupMotion() {
         guard motionManager.isDeviceMotionAvailable else {
-            NSLog("Device does not have motion sensors.")
+            log.error("Device does not have motion sensors.")
             return
         }
         motionManager.deviceMotionUpdateInterval = 0.01

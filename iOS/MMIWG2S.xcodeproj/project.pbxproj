@@ -11,7 +11,6 @@
 		5D5D0BE325465C9A0097BC25 /* ARFaceViewerUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5D0BE225465C9A0097BC25 /* ARFaceViewerUI.swift */; };
 		5D68E47325F891E100A81610 /* SlideviewImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D68E47125F891E100A81610 /* SlideviewImages.xcassets */; };
 		5D68E47425F891E100A81610 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D68E47225F891E100A81610 /* Roboto-Bold.ttf */; };
-		5D68E47925F8922C00A81610 /* FaceMeshGeometryConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D68E47625F8922C00A81610 /* FaceMeshGeometryConverter.swift */; };
 		5D68E47B25F8922C00A81610 /* DeviceUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D68E47825F8922C00A81610 /* DeviceUtility.swift */; };
 		5D68E48025F8924B00A81610 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D68E47E25F8924B00A81610 /* IntroViewController.swift */; };
 		5D68E48525F8934400A81610 /* PageIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D68E48425F8934400A81610 /* PageIndicator.swift */; };
@@ -21,6 +20,10 @@
 		5DA8A10724EA1904001D8E41 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5DA8A10624EA1904001D8E41 /* Localizable.strings */; };
 		5DA8A10D24EA199E001D8E41 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8A10C24EA199E001D8E41 /* Extensions.swift */; };
 		5DA8A11024ECD218001D8E41 /* SceneButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8A10F24ECD218001D8E41 /* SceneButton.swift */; };
+		5DC5A3B3261ED4F000BE0BE4 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC5A3B2261ED4F000BE0BE4 /* Network.swift */; };
+		5DC5A3B6261ED52E00BE0BE4 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC5A3B5261ED52E00BE0BE4 /* Logger.swift */; };
+		5DC5A3DF262A98CF00BE0BE4 /* FaceMeshGeometryConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC5A3DE262A98CF00BE0BE4 /* FaceMeshGeometryConverter.swift */; };
+		6933B02823172482007E1C28 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6933B02923172482007E1C28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6933B02023172481007E1C28 /* LaunchScreen.storyboard */; };
 		6933B02A23172482007E1C28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6933B02123172481007E1C28 /* Assets.xcassets */; };
 		6933B02B23172482007E1C28 /* FacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6933B02223172481007E1C28 /* FacesViewController.swift */; };
@@ -34,7 +37,6 @@
 		5D5D0BE225465C9A0097BC25 /* ARFaceViewerUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARFaceViewerUI.swift; sourceTree = "<group>"; };
 		5D68E47125F891E100A81610 /* SlideviewImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SlideviewImages.xcassets; sourceTree = "<group>"; };
 		5D68E47225F891E100A81610 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
-		5D68E47625F8922C00A81610 /* FaceMeshGeometryConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceMeshGeometryConverter.swift; sourceTree = "<group>"; };
 		5D68E47825F8922C00A81610 /* DeviceUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceUtility.swift; sourceTree = "<group>"; };
 		5D68E47E25F8924B00A81610 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		5D68E48425F8934400A81610 /* PageIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageIndicator.swift; sourceTree = "<group>"; };
@@ -44,6 +46,9 @@
 		5DA8A10624EA1904001D8E41 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		5DA8A10C24EA199E001D8E41 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		5DA8A10F24ECD218001D8E41 /* SceneButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneButton.swift; sourceTree = "<group>"; };
+		5DC5A3B2261ED4F000BE0BE4 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		5DC5A3B5261ED52E00BE0BE4 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		5DC5A3DE262A98CF00BE0BE4 /* FaceMeshGeometryConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaceMeshGeometryConverter.swift; sourceTree = "<group>"; };
 		692DB6DC22FCA472007A4EEF /* MMIWG2S.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MMIWG2S.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6933B02023172481007E1C28 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6933B02123172481007E1C28 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -112,9 +117,11 @@
 		5DA8A10A24EA192B001D8E41 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				5DC5A3DE262A98CF00BE0BE4 /* FaceMeshGeometryConverter.swift */,
 				5D68E47825F8922C00A81610 /* DeviceUtility.swift */,
-				5D68E47625F8922C00A81610 /* FaceMeshGeometryConverter.swift */,
+				5DC5A3B2261ED4F000BE0BE4 /* Network.swift */,
 				5DA8A10C24EA199E001D8E41 /* Extensions.swift */,
+				5DC5A3B5261ED52E00BE0BE4 /* Logger.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -315,11 +322,14 @@
 				5DA8A11024ECD218001D8E41 /* SceneButton.swift in Sources */,
 				5D5D0BD72546521F0097BC25 /* FacesARViewController.swift in Sources */,
 				5D68E48825F8943E00A81610 /* PageViewController.swift in Sources */,
+				6933B02823172482007E1C28 /* (null) in Sources */,
+				5DC5A3DF262A98CF00BE0BE4 /* FaceMeshGeometryConverter.swift in Sources */,
+				5DC5A3B6261ED52E00BE0BE4 /* Logger.swift in Sources */,
+				5DC5A3B3261ED4F000BE0BE4 /* Network.swift in Sources */,
 				6933B02B23172482007E1C28 /* FacesViewController.swift in Sources */,
 				5DA8A10D24EA199E001D8E41 /* Extensions.swift in Sources */,
 				5D5D0BE325465C9A0097BC25 /* ARFaceViewerUI.swift in Sources */,
 				6933B02D23172482007E1C28 /* AppDelegate.swift in Sources */,
-				5D68E47925F8922C00A81610 /* FaceMeshGeometryConverter.swift in Sources */,
 				6933B02B23172482007E1C28 /* FacesViewController.swift in Sources */,
 				5D68E48525F8934400A81610 /* PageIndicator.swift in Sources */,
 				6933B02B23172482007E1C28 /* FacesViewController.swift in Sources */,
