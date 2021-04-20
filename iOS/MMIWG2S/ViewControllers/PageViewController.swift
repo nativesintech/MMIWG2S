@@ -91,8 +91,7 @@ class PageViewController: UIPageViewController, UIPageViewControllerDataSource, 
                                direction:.forward,
                                animated:true,
                                completion:nil)
-        }
-        else {
+        } else {
             setViewControllers([viewControllerFaces],
                                direction:.forward,
                                animated:true,

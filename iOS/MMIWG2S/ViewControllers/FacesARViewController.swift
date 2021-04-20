@@ -35,8 +35,9 @@ class FacesARViewController: UIViewController {
         
         addSceneToView(sceneView)
         setupFaceViewer()
-        faceViewer.setupShareButton()
+        faceViewer.setupCaptureButton()
         faceViewer.setupColorToggle()
+        faceViewer.setupShareBackButtons()
     }
 
     override func viewDidAppear(_ animated: Bool) {

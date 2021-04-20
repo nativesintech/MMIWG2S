@@ -65,4 +65,11 @@ class SceneButton: UIButton {
         innerButton.topAnchor.constraint(equalTo: topAnchor, constant: outerStroke).isActive = true
         innerButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -outerStroke).isActive = true
     }
+
+    func changeInnerButtonColorOnTap(color: UIColor) {
+        innerButton.backgroundColor = color
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) { [weak self] in
+            self?.innerButton.backgroundColor = .white
+        }
+    }
 }
