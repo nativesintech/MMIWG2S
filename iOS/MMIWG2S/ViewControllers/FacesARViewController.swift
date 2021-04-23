@@ -35,6 +35,7 @@ class FacesARViewController: UIViewController {
         
         addSceneToView(sceneView)
         setupFaceViewer()
+        faceViewer.setupBannerAndStatViews()
         faceViewer.setupCaptureButton()
         faceViewer.setupColorToggle()
         faceViewer.setupShareBackButtons()

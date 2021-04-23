@@ -26,6 +26,10 @@ class ARFaceViewerUI: UIView {
     private var backButton: IconButton?
     private let iconButtonTopMargin: CGFloat = 32
     private let iconButtonSideMargin: CGFloat = 16
+
+    private let headerViewTopMargin: CGFloat = 20
+
+    private var imageToShare: UIImage?
     
     var redSelected = true
     private var blackButton: SceneButton?
@@ -76,43 +80,61 @@ class ARFaceViewerUI: UIView {
     }
 
     func setupShareBackButtons() {
-        if let shareIcon = UIImage(named: "share-icon"),
-           let backIcon = UIImage(named: "back-icon") {
-            
-            shareButton = IconButton(image: shareIcon, text: "Share")
-            backButton = IconButton(image: backIcon, text: "Back")
+        shareButton = setupButton(named: "share-icon", title: String.share, isTrailing: true)
+        backButton = setupButton(named: "back-icon", title: String.back, isTrailing: false)
+    }
 
-            if let shareButton = shareButton,
-               let backButton = backButton {
-                addSubview(shareButton)
-                shareButton.translatesAutoresizingMaskIntoConstraints = false
-                shareButton.isHidden = true
+    func setupButton(named: String, title: String, isTrailing: Bool) -> IconButton? {
+        if let buttonImage = UIImage(named: named) {
+            let iconButton = IconButton(image: buttonImage, text: title)
+            addSubview(iconButton)
+            iconButton.translatesAutoresizingMaskIntoConstraints = false
+            iconButton.isHidden = true
 
-                addSubview(backButton)
-                backButton.translatesAutoresizingMaskIntoConstraints = false
-                backButton.isHidden = true
-
-                NSLayoutConstraint.activate([
-                    shareButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: iconButtonTopMargin),
-                    shareButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -iconButtonSideMargin),
-                    backButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: iconButtonTopMargin),
-                    backButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: iconButtonSideMargin)
-                ])
-
-                let shareButtonGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.shareButtonTapped))
-                shareButton.isUserInteractionEnabled = true
-                shareButton.addGestureRecognizer(shareButtonGestureRecognizer)
-
-                let backButtonGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.backButtonTapped))
-                backButton.isUserInteractionEnabled = true
-                backButton.addGestureRecognizer(backButtonGestureRecognizer)
+            iconButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: iconButtonTopMargin).isActive = true
+            switch isTrailing {
+            case true:
+                iconButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -iconButtonSideMargin).isActive = true
+            case false:
+                iconButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: iconButtonSideMargin).isActive = true
             }
+
+            let buttonGestureRecognizer = UITapGestureRecognizer(
+                target: self,
+                action: isTrailing ? #selector(self.shareButtonTapped) : #selector(self.backButtonTapped)
+            )
+            iconButton.isUserInteractionEnabled = true
+            iconButton.addGestureRecognizer(buttonGestureRecognizer)
+
+            return iconButton
         }
+        return nil
+    }
+
+    func setupBannerAndStatViews() {
+        let gradientView = UIImageView(image: UIImage(named: "ar-background"))
+        let headerView = UILabel()
+        headerView.text = String.mmiw
+        headerView.font = .roboto48
+
+        addSubview(gradientView)
+        addSubview(headerView)
+        gradientView.translatesAutoresizingMaskIntoConstraints = false
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            gradientView.topAnchor.constraint(equalTo: topAnchor),
+            gradientView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            gradientView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            gradientView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            headerView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            headerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: headerViewTopMargin)
+        ])
     }
     
     @objc private func captureButtonTapped() {
         generateLightFeedback()
         captureButton?.changeInnerButtonColorOnTap(color: .black)
+        imageToShare = delegate?.generateShareImage()
         // Added a delay so the captureButton.changeInnerButtonColorOnTap animation can complete.
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15) { [weak self] in
             self?.changeViewVisibility(isCapturing: false)
@@ -145,26 +167,31 @@ class ARFaceViewerUI: UIView {
 
     @objc private func shareButtonTapped() {
         generateLightFeedback()
-        shareImage()
-        changeViewVisibility(isCapturing: false)
+        backButton?.isHidden = true
+        shareButton?.isHidden = true
+
+        // Add a pause to allow for previous views to disappear.
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15) { [weak self] in
+            self?.shareImage()
+        }
     }
 
     @objc private func backButtonTapped() {
         generateLightFeedback()
+        delegate?.resumeSessionOnceCaptured()
         changeViewVisibility(isCapturing: true)
     }
 
     private func generateLightFeedback() {
         let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .light)
-        impactFeedbackgenerator.prepare()
         impactFeedbackgenerator.impactOccurred()
     }
 
     private func shareImage() {
-        guard let imageToShare = delegate?.generateShareImage() else { return }
+        guard let imageToShare = imageToShare else { return }
 
         let activityController = UIActivityViewController(activityItems: [imageToShare], applicationActivities: nil)
-        activityController.completionWithItemsHandler = { [weak self] (activityType, completed:Bool, returnedItems:[Any]?, error: Error?) in
+        activityController.completionWithItemsHandler = { [weak self] (activityType, completed: Bool, returnedItems: [Any]?, error: Error?) in
             self?.delegate?.resumeSessionOnceCaptured()
             self?.changeViewVisibility(isCapturing: true)
         }

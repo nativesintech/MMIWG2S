@@ -62,6 +62,7 @@ public final class FacesViewController: UIViewController {
         setupCamera()
         setupMotion()
         setupFaceViewer()
+        faceViewer.setupBannerAndStatViews()
         faceViewer.setupCaptureButton()
         faceViewer.setupColorToggle()
         faceViewer.setupShareBackButtons()

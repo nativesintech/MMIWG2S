@@ -27,6 +27,10 @@ extension String {
         let fontAttributes = [NSAttributedString.Key.font: font]
         return (self as NSString).size(withAttributes: fontAttributes).width
     }
+
+    static let mmiw = NSLocalizedString("editview.header", comment: "#MMIW")
+    static let share = NSLocalizedString("iconbutton.share", comment: "Share")
+    static let back = NSLocalizedString("iconbutton.back", comment: "Back")
 }
 
 extension UIFont {
