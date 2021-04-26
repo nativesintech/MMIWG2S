@@ -14,6 +14,11 @@
 "intro.indigenous" = "Indigenous";
 "intro.women" = "Women";
 
+"acceptance.text" = "Please be respectful.\n
+This app’s sole purpose is to bring awareness about #MMIW.
+\nIf you would like to support the movement and add your voice, then this is the app for you.\n
+To learn more after you take your #MMIW photo. Thank you for your support.";
+
 "indicator.next" = "Next";
 "slideview.header" = "#MMIW";
 "slideview1.text" = "On some reservations, native women are murdered at a rate 10 times the national average.";

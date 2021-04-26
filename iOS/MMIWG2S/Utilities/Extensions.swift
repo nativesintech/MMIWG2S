@@ -18,6 +18,9 @@ extension String {
     static let indigenous = NSLocalizedString("intro.indigenous", comment: "Indigenous")
     static let women = NSLocalizedString("intro.women", comment: "Women")
     
+    // text for Acceptance page
+    static let acceptance = NSLocalizedString("acceptance.text", comment: "Acceptance")
+
     static var next: String { return NSLocalizedString("indicator.next", comment: "Next button title") }
     static var slideviewheader: String { return NSLocalizedString("slideview.header", comment: "Text") }
     static func slidetext(slidetext2: String) -> String {
