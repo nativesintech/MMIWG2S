@@ -62,8 +62,10 @@ public final class FacesViewController: UIViewController {
         setupCamera()
         setupMotion()
         setupFaceViewer()
-        faceViewer.setupShareButton()
+        faceViewer.setupBannerAndStatViews()
+        faceViewer.setupCaptureButton()
         faceViewer.setupColorToggle()
+        faceViewer.setupShareBackButtons()
 
         faceSession = try? GARAugmentedFaceSession(fieldOfView: videoFieldOfView)
     }

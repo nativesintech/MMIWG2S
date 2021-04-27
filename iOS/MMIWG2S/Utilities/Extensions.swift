@@ -27,10 +27,15 @@ extension String {
         let fontAttributes = [NSAttributedString.Key.font: font]
         return (self as NSString).size(withAttributes: fontAttributes).width
     }
+
+    static let mmiw = NSLocalizedString("editview.header", comment: "#MMIW")
+    static let share = NSLocalizedString("iconbutton.share", comment: "Share")
+    static let back = NSLocalizedString("iconbutton.back", comment: "Back")
 }
 
 extension UIFont {
     static var system17: UIFont { return .systemFont(ofSize: 17) }
+    static var roboto16: UIFont { return UIFont(name: "Roboto-Regular", size: 16) ?? .systemFont(ofSize: 16) }
     static var roboto24: UIFont { return UIFont(name: "Roboto-Regular", size: 24) ?? .systemFont(ofSize: 24) }
     static var roboto36: UIFont { return UIFont(name: "Roboto-Regular", size: 36) ?? .systemFont(ofSize: 36) }
     static var roboto48: UIFont { return UIFont(name: "Roboto-Regular", size: 48) ?? .systemFont(ofSize: 48) }
@@ -86,7 +91,6 @@ extension UIImage {
         
         return imageColored
     }
-    
     
     // compress() and resize() are borrowed from: https://stackoverflow.com/a/63272794/7148271
     func compress(to kb: Int, allowedMargin: CGFloat = 0.1) -> UIImage {
