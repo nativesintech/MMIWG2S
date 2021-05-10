@@ -38,7 +38,14 @@ class FacesARViewController: UIViewController {
         faceViewer.setupBannerAndStatViews()
         faceViewer.setupCaptureButton()
         faceViewer.setupColorToggle()
-        faceViewer.setupShareBackButtons()
+        faceViewer.setupShareBackButtons(shareAction: {
+            if let shareSheetVC = self.faceViewer.shareSheetViewController {
+                if #available(iOS 13.0, *) {
+                    shareSheetVC.isModalInPresentation = true
+                }
+                self.present(shareSheetVC, animated: true, completion: nil)
+            }
+        })
     }
 
     override func viewDidAppear(_ animated: Bool) {

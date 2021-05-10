@@ -24,3 +24,10 @@
 "editview.header" = "#MMIW";
 "iconbutton.share" = "Share";
 "iconbutton.back" = "Back";
+
+"sharepage.header" = "Will you share with us too?";
+"sharepage.message" = "We plan to use the image in a collage to show the support for MMIW. We will use the email and state to send you messages about community events, alerts for missing women in your area, and to let you know how you can make a difference in MMIW.";
+"sharepage.emailaddress" = "Email Address";
+"sharepage.name" = "Name";
+"sharepage.share" = "Share";
+"sharepage.skip" = "Skip";

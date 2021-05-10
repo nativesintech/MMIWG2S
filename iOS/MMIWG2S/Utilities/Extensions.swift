@@ -31,11 +31,19 @@ extension String {
     static let mmiw = NSLocalizedString("editview.header", comment: "#MMIW")
     static let share = NSLocalizedString("iconbutton.share", comment: "Share")
     static let back = NSLocalizedString("iconbutton.back", comment: "Back")
+
+    static let sharepageshare = NSLocalizedString("sharepage.share", comment: "Share")
+    static let sharepageskip = NSLocalizedString("sharepage.skip", comment: "Skip")
+    static let sharepagename = NSLocalizedString("sharepage.name", comment: "Name")
+    static let sharepageemail = NSLocalizedString("sharepage.emailaddress", comment: "Email Address")
+    static let sharepagetitle = NSLocalizedString("sharepage.header", comment: "Share with us?")
+    static let sharepagemessage = NSLocalizedString("sharepage.message", comment: "What we will do with the info")
 }
 
 extension UIFont {
-    static var system17: UIFont { return .systemFont(ofSize: 17) }
+    static var roboto14: UIFont { return UIFont(name: "Roboto-Regular", size: 14) ?? .systemFont(ofSize: 14) }
     static var roboto16: UIFont { return UIFont(name: "Roboto-Regular", size: 16) ?? .systemFont(ofSize: 16) }
+    static var roboto17: UIFont { return UIFont(name: "Roboto-Regular", size: 17) ?? .systemFont(ofSize: 17) }
     static var roboto24: UIFont { return UIFont(name: "Roboto-Regular", size: 24) ?? .systemFont(ofSize: 24) }
     static var roboto36: UIFont { return UIFont(name: "Roboto-Regular", size: 36) ?? .systemFont(ofSize: 36) }
     static var roboto48: UIFont { return UIFont(name: "Roboto-Regular", size: 48) ?? .systemFont(ofSize: 48) }
@@ -44,6 +52,7 @@ extension UIFont {
 extension UIColor {
     static var lightGray: UIColor { return UIColor(red: 248 / 255, green: 248 / 255, blue: 248 / 255, alpha: 1.0) }
     static var lightGrayHalfAlpha: UIColor { return UIColor(red: 248 / 255, green: 248 / 255, blue: 248 / 255, alpha: 0.5) }
+    static var lightGrayThirdAlpha: UIColor { return UIColor(red: 248 / 255, green: 248 / 255, blue: 248 / 255, alpha: 0.3) }
     static var offBlack: UIColor { return UIColor(red: 25 / 255, green: 25 / 255, blue: 25 / 255, alpha: 1.0) }
     static var offRed: UIColor { return UIColor(red: 177 / 255, green: 14 / 255, blue: 15 / 255, alpha: 1.0) }
 }
