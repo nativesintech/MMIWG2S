@@ -15,23 +15,25 @@ class AgreementViewController: UIViewController {
     
     private let labelTexts: [String] = [.acceptance]
     
-    private let initialAnimationDuration = 3.0
+    private let initialAnimationDuration = 6.0
     private let animationFullWordsDelay = 1.5
     private let labelsLeadingMargin: CGFloat = 36
     private let labelsTrailingMargin: CGFloat = -36
     private let labelsTopMargin: CGFloat = 47
     private let labelsVerticalDistance: CGFloat = 68
-    
+    private let animatedLabel = UILabel()
+
     private var animatedLabels: [LabelSet] = []
     private var backgroundHandView: UIImageView?
-    private var scrollingView: UIView?
-    
+    private var scrollingView: UIView = UIView()
+    private var confirmButton: UIButton = UIButton()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         backgroundHandView = addBackground()
         setupMMIWHashtag()
         setupView()
-        setupLabels()
+        //setupLabels()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -62,90 +64,86 @@ class AgreementViewController: UIViewController {
     private func setupView()
     {
         
-        labelTexts.forEach {
-            let animatedLabel = UILabel()
-            animatedLabel.text = $0
-            animatedLabel.font = .roboto24
-            animatedLabel.textColor = .white
-            animatedLabel.backgroundColor = .red
-            animatedLabel.numberOfLines = 0
-            //animatedLabel.lineBreakMode = .byClipping
-            
-            view.addSubview(animatedLabel)
-            animatedLabel.translatesAutoresizingMaskIntoConstraints = false
-            
-            let leadingConstraint = animatedLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: labelsLeadingMargin)
-            leadingConstraint.isActive = true
-            let trailingConstraint = animatedLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: labelsTrailingMargin)
-            trailingConstraint.isActive = true
-            let topConstraint = animatedLabel.topAnchor.constraint(equalTo: view.bottomAnchor)
-            topConstraint.isActive = true
-            let bottomConstraint = animatedLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -view.frame.height)
-            bottomConstraint.isActive = false
-            let heightConstraint = animatedLabel.heightAnchor.constraint(equalToConstant: 400)
-            heightConstraint.isActive = true
-            //let widthConstraint = animatedLabel.widthAnchor.constraint(equalToConstant: 150)
-            //widthConstraint.isActive = true
-            let centerxConstraint = animatedLabel.centerXAnchor.constraint(equalTo:self.view.centerXAnchor)
-            centerxConstraint.isActive = true
-            let labelSet = LabelSet(label: animatedLabel, constraints: ConstraintSet(top: topConstraint, leading: leadingConstraint, trailing: trailingConstraint, height: heightConstraint, bottom: bottomConstraint, centerx: centerxConstraint))
-            animatedLabels.append(labelSet)
+        animatedLabel.text = .acceptance
+        animatedLabel.font = .roboto24
+        animatedLabel.textColor = .white
+        //animatedLabel.backgroundColor = .red
+        animatedLabel.numberOfLines = 0
+        //animatedLabel.lineBreakMode = .byClipping
+
+        confirmButton.setTitle("I Agree", for: .normal)
+        confirmButton.backgroundColor = .red
+//        confirmButton.addTarget(self, action: #selector(self.transitionToFacesARView()), for: .touchUpInside)
+
+        view.addSubview(scrollingView)
+        scrollingView.addSubview(animatedLabel)
+        scrollingView.addSubview(confirmButton)
+
+        //let gesturerecognizer = UITapGestureRecognizer(target: self, action: #selector(self.transitionToFacesARVView()))
+
+        animatedLabel.translatesAutoresizingMaskIntoConstraints = false
+        confirmButton.translatesAutoresizingMaskIntoConstraints = false
+        scrollingView.translatesAutoresizingMaskIntoConstraints = false
+
+        //scrollingView constraints
+        let leadingScrollingConstraint = scrollingView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0)
+        leadingScrollingConstraint.isActive = true
+        let trailingScrollingConstraint = scrollingView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0)
+        trailingScrollingConstraint.isActive = true
+        let topScrollingConstraint = scrollingView.topAnchor.constraint(equalTo: view.bottomAnchor)
+        topScrollingConstraint.isActive = true
+        let bottomScrollingConstraint = scrollingView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -view.frame.height)
+        bottomScrollingConstraint.isActive = false
         
-        }
-        var confirmButton:UIButton
-        confirmButton = UIButton()
-        confirmButton.setTitle("Confirm", for: .normal)
-        scrollingView = UIView()
-        scrollingView?.addSubview(confirmButton)
+ //     label constraints
+        let leadingConstraint = animatedLabel.leadingAnchor.constraint(equalTo: scrollingView.leadingAnchor, constant: labelsLeadingMargin)
+        leadingConstraint.isActive = true
+        let trailingConstraint = animatedLabel.trailingAnchor.constraint(equalTo: scrollingView.trailingAnchor, constant: labelsTrailingMargin)
+        trailingConstraint.isActive = true
+        let topConstraint = animatedLabel.topAnchor.constraint(equalTo: scrollingView.topAnchor, constant: 255)
+        topConstraint.isActive = true
+
+        let bottomConstraint = animatedLabel.bottomAnchor.constraint(equalTo: confirmButton.topAnchor, constant:60)
+        bottomConstraint.isActive = false
+        let heightConstraint = animatedLabel.heightAnchor.constraint(equalToConstant:400)
+        heightConstraint.isActive = true
+        //let widthConstraint = animatedLabel.widthAnchor.constraint(equalToConstant: 70)
+        //widthConstraint.isActive = true
+        let centerxConstraint = animatedLabel.centerXAnchor.constraint(equalTo:scrollingView.centerXAnchor)
+        centerxConstraint.isActive = true
         
-    }
-    
-    private func setupLabels() {
-        labelTexts.forEach {
-            let animatedLabel = UILabel()
-            animatedLabel.text = $0
-            animatedLabel.font = .roboto24
-            animatedLabel.textColor = .white
-            animatedLabel.backgroundColor = .red
-            animatedLabel.numberOfLines = 0
-            //animatedLabel.lineBreakMode = .byClipping
-            
-            view.addSubview(animatedLabel)
-            animatedLabel.translatesAutoresizingMaskIntoConstraints = false
-            
-            let leadingConstraint = animatedLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: labelsLeadingMargin)
-            leadingConstraint.isActive = true
-            let trailingConstraint = animatedLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: labelsTrailingMargin)
-            trailingConstraint.isActive = true
-            let topConstraint = animatedLabel.topAnchor.constraint(equalTo: view.bottomAnchor)
-            topConstraint.isActive = true
-            let bottomConstraint = animatedLabel.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -view.frame.height)
-            bottomConstraint.isActive = false
-            let heightConstraint = animatedLabel.heightAnchor.constraint(equalToConstant: 400)
-            heightConstraint.isActive = true
-            //let widthConstraint = animatedLabel.widthAnchor.constraint(equalToConstant: 150)
-            //widthConstraint.isActive = true
-            let centerxConstraint = animatedLabel.centerXAnchor.constraint(equalTo:self.view.centerXAnchor)
-            centerxConstraint.isActive = true
-            let labelSet = LabelSet(label: animatedLabel, constraints: ConstraintSet(top: topConstraint, leading: leadingConstraint, trailing: trailingConstraint, height: heightConstraint, bottom: bottomConstraint, centerx: centerxConstraint))
-            animatedLabels.append(labelSet)
-        }
+        // button constraints
+        let leadingButtonConstraint = confirmButton.leadingAnchor.constraint(equalTo: scrollingView.leadingAnchor, constant: labelsLeadingMargin)
+        leadingButtonConstraint.isActive = true
+        let trailingButtonConstraint = confirmButton.trailingAnchor.constraint(equalTo: scrollingView.trailingAnchor, constant: labelsTrailingMargin)
+        trailingButtonConstraint.isActive = true
+ 
+        let topButtonConstraint = confirmButton.topAnchor.constraint(equalTo: animatedLabel.bottomAnchor, constant:60)
+        topButtonConstraint.isActive = true
+        let bottomButtonConstraint = confirmButton.bottomAnchor.constraint(equalTo: scrollingView.bottomAnchor, constant: 100)
+        bottomButtonConstraint.isActive = false
+        let heightButtonConstraint = confirmButton.heightAnchor.constraint(equalToConstant: 50)
+        heightButtonConstraint.isActive = true
+        //let widthButtonConstraint = confirmButton.widthAnchor.constraint(equalToConstant: 100)
+        //widthButtonConstraint.isActive = true
+        let centerxButtonConstraint = confirmButton.centerXAnchor.constraint(equalTo:scrollingView.centerXAnchor)
+        centerxButtonConstraint.isActive = true
+
+
     }
     
     private func startAnimation() {
-        //for (i, labelSet) in animatedLabels.enumerated() {
-        let labelSet = animatedLabels[0]
             UIView.animate(withDuration: initialAnimationDuration, delay: TimeInterval(0) * 0.2, animations: { [weak self] in
                 guard let self = self else { return }
                 
-                labelSet.constraints.top.isActive = false
-           //     let newTopConstraint = labelSet.label.topAnchor.constraint(equalTo: self.view.topAnchor, constant: self.labelsTopMargin + CGFloat(i) * self.labelsVerticalDistance)
-             /*   newTopConstraint.isActive = true
-                self.animatedLabels[i].constraints.top = newTopConstraint
- */
-                let newBottomConstraint = labelSet.label.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+           //     scrollingView.constraints.top.isActive = false
+                let newTopConstraint = self.scrollingView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 0)
+                newTopConstraint.isActive = true
+             //   self.animatedLabels[i].constraints.top = newTopConstraint
+ 
+                let newBottomConstraint = self.scrollingView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
                 newBottomConstraint.isActive = true
-                self.animatedLabels[0].constraints.bottom = newBottomConstraint
+                //self.animatedLabels[0].constraints.bottom = newBottomConstraint
 
                 self.view.layoutIfNeeded()
             }, completion: { [weak self] _ in
@@ -177,70 +175,7 @@ class AgreementViewController: UIViewController {
 
     }
     
-    private func animateToAcronym() {
-        let hashtagLabel = UILabel()
-        hashtagLabel.text = ""
-        hashtagLabel.font = .roboto48
-        hashtagLabel.textColor = .white
-        hashtagLabel.alpha = 0
-        
-        let hashtagString:String = "#MMIW"
-        let labelSummedWidth = hashtagString.width(for:.roboto48)
-/*
-        let labelSummedWidth = labelTexts
-            .flatMap { "\($0.first ?? Character(""))" }
-            .reduce("#", {"\($0)\($1)"})
-            .width(for: .roboto48)
-*/
-        view.addSubview(hashtagLabel)
-        hashtagLabel.translatesAutoresizingMaskIntoConstraints = false
-        hashtagLabel.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: -labelSummedWidth / 2).isActive = true
-        hashtagLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: labelsTopMargin).isActive = true
-        
-        let newBackground = addBackground(withTint: .offRed)
-        newBackground.alpha = 0
-        view.layoutIfNeeded()
-        
-        UIView.animate(withDuration: initialAnimationDuration, delay: animationFullWordsDelay, animations: { [weak self] in
-            self?.backgroundHandView?.alpha = 0
-            newBackground.alpha = 1
-        })
-        
-        UIView.animate(withDuration: initialAnimationDuration / 2, delay: animationFullWordsDelay + initialAnimationDuration, animations: {
-            hashtagLabel.alpha = 1
-        })
-        
-        var previousTrailingAnchor = hashtagLabel.trailingAnchor
-        
-        for (i, labelSet) in animatedLabels.enumerated() {
-            let widthConstraint = labelSet.label.widthAnchor.constraint(equalToConstant: labelSet.label.width)
-            widthConstraint.isActive = true
-            
-            UIView.animate(withDuration: initialAnimationDuration, delay: animationFullWordsDelay + TimeInterval(i) * 0.1, animations: { [weak self] in
-                guard let self = self, let firstLetter = labelSet.label.text?.first else { return }
-                
-                labelSet.constraints.top.constant = self.labelsTopMargin
-                widthConstraint.constant = "\(firstLetter)".width(for: .roboto48)
-                
-                labelSet.constraints.leading.isActive = false
-                let newLeadingConstraint = labelSet.label.leadingAnchor.constraint(equalTo: previousTrailingAnchor)
-                newLeadingConstraint.isActive = true
-                self.animatedLabels[i].constraints.leading = newLeadingConstraint
-                previousTrailingAnchor = labelSet.label.trailingAnchor
-                
-                self.view.layoutIfNeeded()
-            }, completion: { [weak self] _ in
-                guard let self = self else { return }
-                if i == self.animatedLabels.count - 1 {
-                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + self.initialAnimationDuration) { [weak self] in
-                        self?.transitionToIntroSlides()
-                    }
-                }
-            })
-        }
-    }
-    
-    private func transitionToIntroSlides() {
-        navigationController?.pushViewController(PageViewController(), animated: true)
+    @objc private func transitionToFacesARView() {
+        navigationController?.pushViewController(FacesARViewController(), animated: true)
     }
 }
