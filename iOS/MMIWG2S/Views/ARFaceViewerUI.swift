@@ -110,6 +110,43 @@ class ARFaceViewerUI: UIView {
         }
         return nil
     }
+    
+    private func uploadImage(_ compressedImage: UIImage, name: String, email: String) {
+        guard let nameData = name.data(using: .utf8),
+              let emailData = email.data(using: .utf8),
+              let verifiedData = "1".data(using: .utf8)
+        else { return }
+        
+        guard let imageData = compressedImage.pngData() else {
+            log.error("Unable to get image data. Posting user metadata without image")
+            Network.post(
+                url: "https://mmiw.mehequanna.com/submissions",
+                data: [
+                    "name" : ("text", nameData),
+                    "email" : ("text", emailData),
+                    "verified" : ("text", verifiedData)
+                ],
+                contentType: .multipartForm,
+                completionHandler: { error, response in
+                    log.info(String(data: response!, encoding: .utf8)!)
+                }
+            )
+            return
+        }
+        Network.post(
+            url: "https://mmiw.mehequanna.com/submissions",
+            data: [
+                "name" : ("text", nameData),
+                "email" : ("text", emailData),
+                "verified" : ("text", verifiedData),
+                "image" : ("image/png", imageData)
+            ],
+            contentType: .multipartForm,
+            completionHandler: { error, response in
+                log.info(String(data: response!, encoding: .utf8)!)
+            }
+        )
+    }
 
     func setupBannerAndStatViews() {
         let gradientView = UIImageView(image: UIImage(named: "ar-background"))
@@ -139,6 +176,29 @@ class ARFaceViewerUI: UIView {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15) { [weak self] in
             self?.changeViewVisibility(isCapturing: false)
         }
+    }
+    
+    private func shareWithUs() {
+        guard let imageToShare = imageToShare else { return }
+        
+        // Use this to upload to the database. This will likely move :)
+        let scaledDownImage = imageToShare.compress(to: 1000)
+        
+        // Test Alert. TODO: remove this
+        let alert = UIAlertController(title: "Please enter your name and email", message: "This will be uploaded with your picture", preferredStyle: .alert)
+        alert.addTextField { $0.placeholder = "Name" }
+        alert.addTextField {
+            $0.placeholder = "Email"
+            $0.keyboardType = .emailAddress
+        }
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+            let nameTextField = alert!.textFields![0]
+            let emailTextField = alert!.textFields![1]
+            self.uploadImage(scaledDownImage, name: nameTextField.text ?? "\(UUID().uuidString)", email: emailTextField.text ?? "email_\(UUID().uuidString)@email.com")
+            self.shareImage()
+        }))
+        
+        (delegate as! UIViewController).present(alert, animated: true, completion: nil)
     }
     
     @objc private func blackButtonTapped() {
@@ -172,7 +232,8 @@ class ARFaceViewerUI: UIView {
 
         // Add a pause to allow for previous views to disappear.
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15) { [weak self] in
-            self?.shareImage()
+//            self?.shareImage()
+            self?.shareWithUs()
         }
     }
 
