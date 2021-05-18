@@ -128,9 +128,7 @@ class MmiwActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SHARE_INTENT_CODE) {
-            if (resultCode == RESULT_OK) {
-                resetToCapturing()
-            } else if (resultCode == RESULT_CANCELED) {
+            if (resultCode == RESULT_OK || resultCode == RESULT_CANCELED) {
                 resetToCapturing()
             }
         }
