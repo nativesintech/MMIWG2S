@@ -118,6 +118,9 @@ class ShareSheetView: UIStackView {
         field.backgroundColor = .lightGrayThirdAlpha
         field.bounds.inset(by: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
         field.keyboardType = isEmail ? .emailAddress : .namePhonePad
+        if isEmail {
+            field.autocapitalizationType = .none
+        }
         field.tintColor = .lightGray
         field.setContentHuggingPriority(.required, for: .vertical)
         field.setContentCompressionResistancePriority(.required, for: .vertical)

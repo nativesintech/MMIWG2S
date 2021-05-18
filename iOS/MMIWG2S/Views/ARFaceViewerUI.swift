@@ -35,6 +35,7 @@ class ARFaceViewerUI: UIView {
     var redSelected = true
     private var blackButton: SceneButton?
     private var redButton: SceneButton?
+    private var captionPickerView: CaptionPickerView?
     
     var delegate: ARFaceViewerUIDelegate?
     var shareSheetViewController: ShareSheetViewController?
@@ -112,6 +113,20 @@ class ARFaceViewerUI: UIView {
             return iconButton
         }
         return nil
+    }
+    
+    func setupCaptionPickerView() {
+        let captionPickerView = CaptionPickerView()
+        
+        self.insertSubview(captionPickerView, at: 0)
+        captionPickerView.translatesAutoresizingMaskIntoConstraints = false
+        captionPickerView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        captionPickerView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        captionPickerView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        captionPickerView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        
+        captionPickerView.isHidden = true
+        self.captionPickerView = captionPickerView
     }
     
     private func uploadImage(_ compressedImage: UIImage, name: String, email: String) {
@@ -268,7 +283,7 @@ class ARFaceViewerUI: UIView {
 
         backButton?.isHidden = isCapturing
         shareButton?.isHidden = isCapturing
-        // TODO
-        // statisticsView?.isHidden = isCapturing
+        
+        captionPickerView?.isHidden = isCapturing
     }
 }

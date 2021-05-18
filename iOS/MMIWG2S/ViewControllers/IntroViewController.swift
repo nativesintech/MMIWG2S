@@ -107,7 +107,7 @@ class IntroViewController: UIViewController {
         labelMMIWInfo.numberOfLines = 0
         labelMMIWInfo.textColor = UIColor.white
         labelMMIWInfo.font = .roboto24
-        labelMMIWInfo.text = .slidetext(slidetext2:mmiwtext)
+        labelMMIWInfo.text = mmiwtext
         //initialize pcs
         
         pageControlViews[page].backgroundColor = .red
