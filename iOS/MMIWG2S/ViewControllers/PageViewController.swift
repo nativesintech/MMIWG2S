@@ -16,10 +16,10 @@ protocol NextPageDelegate {
 class PageViewController: UIPageViewController, UIPageViewControllerDataSource, NextPageDelegate {
     
     private var array: [IntroViewController] = [
-        IntroViewController(background: UIImage(named: "slide1") ?? UIImage(), gradient: UIImage(named: "gradient1.png") ?? UIImage(), mmiwtext:"slideview1.text", page: 0),
-        IntroViewController(background: UIImage(named: "slide2") ?? UIImage(), gradient: UIImage(named: "gradient2.png") ?? UIImage(), mmiwtext:"slideview2.text", page: 1),
-        IntroViewController(background: UIImage(named: "slide3") ?? UIImage(), gradient: UIImage(named: "gradient3.png") ?? UIImage(), mmiwtext:"slideview3.text", page: 2) ,
-        IntroViewController(background: UIImage(named: "slide4") ?? UIImage(), gradient: UIImage(named: "gradient4.png") ?? UIImage(), mmiwtext:"slideview4.text", page: 3)
+        IntroViewController(background: UIImage(named: "slide1") ?? UIImage(), gradient: UIImage(named: "gradient1") ?? UIImage(), mmiwtext: .statistic(number: 1), page: 0),
+        IntroViewController(background: UIImage(named: "slide2") ?? UIImage(), gradient: UIImage(named: "gradient2") ?? UIImage(), mmiwtext: .statistic(number: 2), page: 1),
+        IntroViewController(background: UIImage(named: "slide3") ?? UIImage(), gradient: UIImage(named: "gradient3") ?? UIImage(), mmiwtext: .statistic(number: 3), page: 2) ,
+        IntroViewController(background: UIImage(named: "slide4") ?? UIImage(), gradient: UIImage(named: "gradient4") ?? UIImage(), mmiwtext: .statistic(number: 4), page: 3)
     ]
     
     var viewControllerFaces: UIViewController {

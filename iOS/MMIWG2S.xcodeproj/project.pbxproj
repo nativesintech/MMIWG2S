@@ -20,6 +20,7 @@
 		5D68E48525F8934400A81610 /* PageIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D68E48425F8934400A81610 /* PageIndicator.swift */; };
 		5D68E48825F8943E00A81610 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D68E48725F8943E00A81610 /* PageViewController.swift */; };
 		5D68E49125F8987D00A81610 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DA8A10424EA18DB001D8E41 /* Roboto-Regular.ttf */; };
+		5D6E553C26352DA400490881 /* CaptionPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6E553B26352DA400490881 /* CaptionPickerView.swift */; };
 		5D77DABE25EF36EB00DA7009 /* IntroAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D77DABD25EF36EB00DA7009 /* IntroAnimationViewController.swift */; };
 		5DA8A10724EA1904001D8E41 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5DA8A10624EA1904001D8E41 /* Localizable.strings */; };
 		5DA8A10D24EA199E001D8E41 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8A10C24EA199E001D8E41 /* Extensions.swift */; };
@@ -48,6 +49,7 @@
 		5D68E47E25F8924B00A81610 /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		5D68E48425F8934400A81610 /* PageIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageIndicator.swift; sourceTree = "<group>"; };
 		5D68E48725F8943E00A81610 /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
+		5D6E553B26352DA400490881 /* CaptionPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionPickerView.swift; sourceTree = "<group>"; };
 		5D77DABD25EF36EB00DA7009 /* IntroAnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroAnimationViewController.swift; sourceTree = "<group>"; };
 		5DA8A10424EA18DB001D8E41 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		5DA8A10624EA1904001D8E41 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 				5D68E48425F8934400A81610 /* PageIndicator.swift */,
 				5D5D0BE225465C9A0097BC25 /* ARFaceViewerUI.swift */,
 				38B1AEFD26464E0D007A0616 /* ShareSheetView.swift */,
+				5D6E553B26352DA400490881 /* CaptionPickerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 				5D5D0BE325465C9A0097BC25 /* ARFaceViewerUI.swift in Sources */,
 				6933B02D23172482007E1C28 /* AppDelegate.swift in Sources */,
 				6933B02B23172482007E1C28 /* FacesViewController.swift in Sources */,
+				5D6E553C26352DA400490881 /* CaptionPickerView.swift in Sources */,
 				5D68E48525F8934400A81610 /* PageIndicator.swift in Sources */,
 				6933B02B23172482007E1C28 /* FacesViewController.swift in Sources */,
 			);

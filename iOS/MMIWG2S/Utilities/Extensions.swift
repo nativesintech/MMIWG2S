@@ -20,8 +20,8 @@ extension String {
     
     static var next: String { return NSLocalizedString("indicator.next", comment: "Next button title") }
     static var slideviewheader: String { return NSLocalizedString("slideview.header", comment: "Text") }
-    static func slidetext(slidetext2: String) -> String {
-        return NSLocalizedString(slidetext2, comment: "slidetext") }
+    static func statistic(number: Int) -> String {
+        return NSLocalizedString("statistic.\(number).text", comment: "text for a statistic used on the title slides or in the caption picker") }
     
     func width(for font: UIFont) -> CGFloat {
         let fontAttributes = [NSAttributedString.Key.font: font]
