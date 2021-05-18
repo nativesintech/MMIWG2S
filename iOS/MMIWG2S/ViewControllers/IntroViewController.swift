@@ -117,7 +117,7 @@ class IntroViewController: UIViewController {
         
         buttonNext.imageEdgeInsets = .zero
         buttonNext.contentEdgeInsets = .zero
-        buttonNext.titleLabel?.font = .system17
+        buttonNext.titleLabel?.font = .roboto17
         buttonNext.setTitle(String.next, for:.normal)
         
         buttonNext.addTarget(self, action: #selector(self.changePage(sender:)), for: .touchUpInside)

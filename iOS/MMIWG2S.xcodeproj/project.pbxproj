@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		20BE072950C36763A9B1C1C0 /* libPods-MMIWG2S.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA51542FCB746050E55BB960 /* libPods-MMIWG2S.a */; };
 		3804F15A262B42D700B50DC2 /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3804F159262B42D700B50DC2 /* IconButton.swift */; };
+		38B1AEFC26464DDA007A0616 /* ShareSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B1AEFB26464DDA007A0616 /* ShareSheetViewController.swift */; };
+		38B1AEFE26464E0D007A0616 /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B1AEFD26464E0D007A0616 /* ShareSheetView.swift */; };
 		5D5D0BD72546521F0097BC25 /* FacesARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5D0BD62546521F0097BC25 /* FacesARViewController.swift */; };
 		5D5D0BE325465C9A0097BC25 /* ARFaceViewerUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5D0BE225465C9A0097BC25 /* ARFaceViewerUI.swift */; };
 		5D68E47325F891E100A81610 /* SlideviewImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D68E47125F891E100A81610 /* SlideviewImages.xcassets */; };
@@ -36,6 +38,8 @@
 /* Begin PBXFileReference section */
 		0864E7415A059A565A2BCCDD /* Pods-MMIWG2S.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MMIWG2S.release.xcconfig"; path = "Target Support Files/Pods-MMIWG2S/Pods-MMIWG2S.release.xcconfig"; sourceTree = "<group>"; };
 		3804F159262B42D700B50DC2 /* IconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
+		38B1AEFB26464DDA007A0616 /* ShareSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetViewController.swift; sourceTree = "<group>"; };
+		38B1AEFD26464E0D007A0616 /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
 		5D5D0BD62546521F0097BC25 /* FacesARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacesARViewController.swift; sourceTree = "<group>"; };
 		5D5D0BE225465C9A0097BC25 /* ARFaceViewerUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARFaceViewerUI.swift; sourceTree = "<group>"; };
 		5D68E47125F891E100A81610 /* SlideviewImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = SlideviewImages.xcassets; sourceTree = "<group>"; };
@@ -87,6 +91,7 @@
 			children = (
 				5D68E48425F8934400A81610 /* PageIndicator.swift */,
 				5D5D0BE225465C9A0097BC25 /* ARFaceViewerUI.swift */,
+				38B1AEFD26464E0D007A0616 /* ShareSheetView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -112,6 +117,7 @@
 				6933B02223172481007E1C28 /* FacesViewController.swift */,
 				5D5D0BD62546521F0097BC25 /* FacesARViewController.swift */,
 				5D77DABD25EF36EB00DA7009 /* IntroAnimationViewController.swift */,
+				38B1AEFB26464DDA007A0616 /* ShareSheetViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -326,10 +332,12 @@
 				5DA8A11024ECD218001D8E41 /* SceneButton.swift in Sources */,
 				5D5D0BD72546521F0097BC25 /* FacesARViewController.swift in Sources */,
 				5D68E48825F8943E00A81610 /* PageViewController.swift in Sources */,
+				38B1AEFC26464DDA007A0616 /* ShareSheetViewController.swift in Sources */,
 				6933B02823172482007E1C28 /* (null) in Sources */,
 				5DC5A3DF262A98CF00BE0BE4 /* FaceMeshGeometryConverter.swift in Sources */,
 				5DC5A3B6261ED52E00BE0BE4 /* Logger.swift in Sources */,
 				5DC5A3B3261ED4F000BE0BE4 /* Network.swift in Sources */,
+				38B1AEFE26464E0D007A0616 /* ShareSheetView.swift in Sources */,
 				6933B02B23172482007E1C28 /* FacesViewController.swift in Sources */,
 				5DA8A10D24EA199E001D8E41 /* Extensions.swift in Sources */,
 				5D5D0BE325465C9A0097BC25 /* ARFaceViewerUI.swift in Sources */,

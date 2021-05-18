@@ -23,6 +23,7 @@ class ARFaceViewerUI: UIView {
     private let toggleViewBottomPadding: CGFloat = 75
 
     private var shareButton: IconButton?
+    private var shareButtonAction: (() -> Void)?
     private var backButton: IconButton?
     private let iconButtonTopMargin: CGFloat = 32
     private let iconButtonSideMargin: CGFloat = 16
@@ -36,6 +37,7 @@ class ARFaceViewerUI: UIView {
     private var redButton: SceneButton?
     
     var delegate: ARFaceViewerUIDelegate?
+    var shareSheetViewController: ShareSheetViewController?
     
     func setupCaptureButton() {
         captureButton = SceneButton(diameter: captureButtonDiameter, color: .lightGray)
@@ -79,7 +81,8 @@ class ARFaceViewerUI: UIView {
         self.redButton = redButton
     }
 
-    func setupShareBackButtons() {
+    func setupShareBackButtons(shareAction: @escaping (() -> Void)) {
+        shareButtonAction = shareAction
         shareButton = setupButton(named: "share-icon", title: String.share, isTrailing: true)
         backButton = setupButton(named: "back-icon", title: String.back, isTrailing: false)
     }
@@ -178,27 +181,14 @@ class ARFaceViewerUI: UIView {
         }
     }
     
-    private func shareWithUs() {
+    private func shareWithUs(name: String, email: String) {
         guard let imageToShare = imageToShare else { return }
         
         // Use this to upload to the database. This will likely move :)
         let scaledDownImage = imageToShare.compress(to: 1000)
-        
-        // Test Alert. TODO: remove this
-        let alert = UIAlertController(title: "Please enter your name and email", message: "This will be uploaded with your picture", preferredStyle: .alert)
-        alert.addTextField { $0.placeholder = "Name" }
-        alert.addTextField {
-            $0.placeholder = "Email"
-            $0.keyboardType = .emailAddress
-        }
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
-            let nameTextField = alert!.textFields![0]
-            let emailTextField = alert!.textFields![1]
-            self.uploadImage(scaledDownImage, name: nameTextField.text ?? "\(UUID().uuidString)", email: emailTextField.text ?? "email_\(UUID().uuidString)@email.com")
-            self.shareImage()
-        }))
-        
-        (delegate as! UIViewController).present(alert, animated: true, completion: nil)
+
+        self.uploadImage(scaledDownImage, name: name, email: email)
+        self.shareImage()
     }
     
     @objc private func blackButtonTapped() {
@@ -230,14 +220,19 @@ class ARFaceViewerUI: UIView {
         backButton?.isHidden = true
         shareButton?.isHidden = true
 
-        // Add a pause to allow for previous views to disappear.
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15) { [weak self] in
-//            self?.shareImage()
-            self?.shareWithUs()
-        }
+        shareSheetViewController = ShareSheetViewController(image: imageToShare, title: .sharepagetitle, message: .sharepagemessage)
+        shareSheetViewController?.setupButtonActions(back: { self.backButtonsAction() }, share: { name, email in
+            self.shareWithUs(name: name, email: email)
+        }, skip: { self.shareImage() })
+
+        shareButtonAction?()
     }
 
     @objc private func backButtonTapped() {
+        backButtonsAction()
+    }
+
+    private func backButtonsAction() {
         generateLightFeedback()
         delegate?.resumeSessionOnceCaptured()
         changeViewVisibility(isCapturing: true)
