@@ -196,6 +196,12 @@ extension UIView {
         CATransaction.commit()
     }
     
+    func asImage() -> UIImage {
+        let renderer = UIGraphicsImageRenderer(bounds: bounds)
+        return renderer.image { rendererContext in
+            layer.render(in: rendererContext.cgContext)
+        }
+    }
 }
 
 extension UILabel {
@@ -207,6 +213,10 @@ extension UILabel {
 
 public func * (size: CGSize, scalar: CGFloat) -> CGSize {
     return CGSize(width: size.width * scalar, height: size.height * scalar)
+}
+
+public func * (point: CGPoint, scalar: CGFloat) -> CGPoint {
+    return CGPoint(x: point.x * scalar, y: point.y * scalar)
 }
 
 /// Borrowed from https://stackoverflow.com/a/64642247/12470155

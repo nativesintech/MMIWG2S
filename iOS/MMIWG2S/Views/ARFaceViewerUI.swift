@@ -36,6 +36,7 @@ class ARFaceViewerUI: UIView {
     private var blackButton: SceneButton?
     private var redButton: SceneButton?
     private var captionPickerView: CaptionPickerView?
+    private var headerView: UIView?
     
     var delegate: ARFaceViewerUIDelegate?
     var shareSheetViewController: ShareSheetViewController?
@@ -169,7 +170,7 @@ class ARFaceViewerUI: UIView {
     func setupBannerAndStatViews() {
         let gradientView = UIImageView(image: UIImage(named: "ar-background"))
         let headerView = UILabel()
-        headerView.text = String.mmiw
+        headerView.text = .mmiw
         headerView.font = .roboto48
 
         addSubview(gradientView)
@@ -184,6 +185,7 @@ class ARFaceViewerUI: UIView {
             headerView.centerXAnchor.constraint(equalTo: centerXAnchor),
             headerView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: headerViewTopMargin)
         ])
+        self.headerView = headerView
     }
     
     @objc private func captureButtonTapped() {
@@ -234,11 +236,32 @@ class ARFaceViewerUI: UIView {
         generateLightFeedback()
         backButton?.isHidden = true
         shareButton?.isHidden = true
+        
+        guard let imageToShare = imageToShare,
+              let gradientView = UIImage(named: "gradient1"),
+              let captionPicker = captionPickerView?.asImageWithoutPaginationIndicator(),
+              let headerView = headerView
+        else {
+            log.error("Missing share image or caption picker view")
+            return
+        }
+        
+        let pixelToUnitRatio = imageToShare.size.width / frame.width
+        
+        UIGraphicsBeginImageContextWithOptions(imageToShare.size, true, 0.0)
+        imageToShare.draw(in: CGRect(origin: .zero, size: imageToShare.size))
+        gradientView.draw(in: CGRect(origin: .zero, size: imageToShare.size))
+        captionPicker.draw(in: CGRect(origin: .zero, size: imageToShare.size))
+        headerView.asImage().draw(in: CGRect(origin: headerView.frame.origin * pixelToUnitRatio, size: headerView.frame.size * pixelToUnitRatio))
+        let imageWithContent = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
 
-        shareSheetViewController = ShareSheetViewController(image: imageToShare, title: .sharepagetitle, message: .sharepagemessage)
+        shareSheetViewController = ShareSheetViewController(image: imageWithContent, title: .sharepagetitle, message: .sharepagemessage)
         shareSheetViewController?.setupButtonActions(back: { self.backButtonsAction() }, share: { name, email in
             self.shareWithUs(name: name, email: email)
         }, skip: { self.shareImage() })
+        
+        self.imageToShare = imageWithContent
 
         shareButtonAction?()
     }

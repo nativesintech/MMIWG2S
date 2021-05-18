@@ -26,6 +26,20 @@ class CaptionPickerView: UIView {
         setupContent()
     }
     
+    func asImageWithoutPaginationIndicator() -> UIImage {
+        if Thread.isMainThread {
+            pageControl.isHidden = true
+        } else {
+            DispatchQueue.main.sync {
+                pageControl.isHidden = true
+            }
+        }
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1, execute: { [weak self] in
+            self?.pageControl.isHidden = false
+        })
+        return asImage()
+    }
+    
     private func addBackground() {
         let background = UIImageView(image: UIImage(named: "gradient1"))
         background.autoresizingMask = [.flexibleWidth, .flexibleHeight]
