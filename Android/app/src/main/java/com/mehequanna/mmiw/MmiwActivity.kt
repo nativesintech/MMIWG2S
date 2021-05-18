@@ -1,5 +1,7 @@
 package com.mehequanna.mmiw
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.app.ActivityManager
 import android.content.Context
 import android.content.Intent
@@ -37,6 +39,7 @@ import com.mehequanna.mmiw.network.RetrofitEventListener
 import com.mehequanna.mmiw.network.Submission
 import com.mehequanna.mmiw.network.SubmissionRestClient
 import kotlinx.android.synthetic.main.activity_mmiw_ar.*
+import kotlinx.android.synthetic.main.share_with_us_layout.*
 import retrofit2.Call
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -54,6 +57,11 @@ class MmiwActivity : AppCompatActivity() {
     private lateinit var redHand: Texture
     private lateinit var blackHand: Texture
     private var changeColor = false
+
+    private var imagesObtained = false
+    private lateinit var combinedBitmap: Bitmap
+    private lateinit var imageFile: File
+    private lateinit var databaseImageFile: File
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,6 +123,17 @@ class MmiwActivity : AppCompatActivity() {
         setupStatisticsViewPager()
 
         setViewOnClickerListeners()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == SHARE_INTENT_CODE) {
+            if (resultCode == RESULT_OK) {
+                resetToCapturing()
+            } else if (resultCode == RESULT_CANCELED) {
+                resetToCapturing()
+            }
+        }
     }
 
     private fun checkIsSupportedDeviceOrFinish(): Boolean {
@@ -255,6 +274,15 @@ class MmiwActivity : AppCompatActivity() {
     private fun pauseSceneView(pause: Boolean) =
         if (pause) sceneView.pause() else sceneView.resume()
 
+    // this sets all the views back to how they should be when capturing as if it were the first time
+    private fun resetToCapturing() {
+        pauseSceneView(false)
+        changeButtonVisibility(true)
+        statisticsCaptureView.visibility = View.INVISIBLE
+        share_button.isEnabled = true
+        imagesObtained = false
+    }
+
     private fun takePhoto() {
         val arSceneView: ArSceneView = arFragment.arSceneView
 
@@ -273,13 +301,13 @@ class MmiwActivity : AppCompatActivity() {
             if (copyResult == PixelCopy.SUCCESS) {
                 val file: File?
                 val databaseFile: File?
+                val bitmap: Bitmap?
                 try {
                     val screenElementsBitmap: Bitmap = takeScreenshot()
-                    val combinedBitmap: Bitmap =
-                        combineBitmaps(arViewBitmap, screenElementsBitmap)
-
-                    databaseFile = saveBitmapToDisk(combinedBitmap.compressBitmapForDatabase())
-                    file = saveBitmapToDisk(combinedBitmap)
+                    bitmap = combineBitmaps(arViewBitmap, screenElementsBitmap)
+                    databaseFile = saveBitmapToDisk(bitmap.compressBitmapForDatabase())
+                    file = saveBitmapToDisk(bitmap)
+                    saveImageFiles(bitmap, file, databaseFile)
                 } catch (e: Exception) {
                     val toast: Toast = Toast.makeText(
                         this, e.toString(),
@@ -288,15 +316,6 @@ class MmiwActivity : AppCompatActivity() {
                     toast.show()
                     return@request
                 }
-
-                val newSubmission = Submission().apply {
-                    this.name = "Testing This"
-                    this.email = "upload_newtest@gmail.com"
-                    this.image = databaseFile
-                }
-
-                sendPhotoToBackend(newSubmission)
-                sharePhoto(file)
             } else {
                 val toast = Toast.makeText(
                     this,
@@ -307,13 +326,48 @@ class MmiwActivity : AppCompatActivity() {
 
             // Re-enable capture_button even if the PixelCopy fails.
             runOnUiThread {
-                changeButtonVisibility(true)
-                statisticsCaptureView.visibility = View.INVISIBLE
-                share_button.isEnabled = true
+                if (!imagesObtained) {
+                    changeButtonVisibility(true)
+                    statisticsCaptureView.visibility = View.INVISIBLE
+                    share_button.isEnabled = true
+                }
+                if (imagesObtained) {
+                    showShareWithUs()
+                }
             }
 
             handlerThread.quitSafely()
         }, Handler(handlerThread.looper))
+    }
+
+    private fun saveImageFiles(bitmap: Bitmap, file: File, databaseFile: File) {
+        combinedBitmap = bitmap
+        imageFile = file
+        databaseImageFile = databaseFile
+        imagesObtained = true
+    }
+
+    private fun showShareWithUs() {
+        swu_photo.setImageBitmap(combinedBitmap)
+        fadeInView(share_with_us_layout)
+
+        swu_skip_button.setOnClickListener {
+            fadeOutView(share_with_us_layout) { sharePhoto(imageFile) }
+        }
+        swu_back_button.setOnClickListener {
+            fadeOutView(share_with_us_layout)
+            resetToCapturing()
+        }
+        swu_share_button.setOnClickListener {
+            val newSubmission = Submission().apply {
+                this.name = swu_name_edit_text.text.toString()
+                this.email = swu_email_edit_text.text.toString()
+                this.image = databaseImageFile
+            }
+            sendPhotoToBackend(newSubmission)
+            share_with_us_layout.visibility = View.GONE
+            sharePhoto(imageFile)
+        }
     }
 
     private fun sharePhoto(file: File) {
@@ -324,13 +378,13 @@ class MmiwActivity : AppCompatActivity() {
             .setType("image/png")
             .setSubject("MMIW Support Image") // TODO
             .setStream(photoURI)
-            .setChooserTitle("R.string.share_title")
+            .setChooserTitle(getString(R.string.share_title))
             .createChooserIntent()
             .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
         grantReadUriPermission(intent, photoURI)
 
-        startActivity(intent)
+        startActivityForResult(intent, 12)
     }
 
     private fun sendPhotoToBackend(submission: Submission) {
@@ -383,8 +437,38 @@ class MmiwActivity : AppCompatActivity() {
         }
     }
 
+    private fun fadeInView(view: View) {
+        if (view.visibility != View.VISIBLE) {
+            view.alpha = 0f
+            view.visibility = View.VISIBLE
+            view
+                .animate()
+                .alpha(1f)
+                .setDuration(200)
+                .setListener(null)
+                .start()
+        }
+    }
+
+    private fun fadeOutView(view: View?, onAnimationEnd: (() -> Unit)? = null) {
+        if (view != null && view.visibility != View.GONE) {
+            view
+                .animate()
+                .alpha(0f)
+                .setDuration(200)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        view.visibility = View.GONE
+                        onAnimationEnd?.invoke()
+                    }
+                })
+                .start()
+        }
+    }
+
     companion object {
         const val MIN_OPENGL_VERSION = 3.0
+        private const val SHARE_INTENT_CODE = 12
     }
 }
 

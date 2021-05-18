@@ -9,6 +9,7 @@
     <color name="black">#000000</color>
     <color name="black_button">#191919</color>
     <color name="semi_transparent_black">#E6000000</color>
+    <color name="black_background_95">#F2000000</color>
 
     <!--  Might be used in the future.  -->
     <color name="colorPrimary">#008577</color>
