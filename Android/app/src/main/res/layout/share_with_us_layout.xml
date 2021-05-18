@@ -58,57 +58,45 @@
         android:textSize="16sp"
         android:text="@string/share_with_us_description"/>
 
-    <TextView
-        android:id="@+id/email_title"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="viewStart"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/share_with_us_description"
-        android:textSize="14sp"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintTop_toBottomOf="@id/share_with_us_description">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email_edit_text"
+            android:layout_width="match_parent"
+            android:textColor="@color/white_100"
+            android:textSize="14sp"
+            android:hint="@string/email_field_title"
+            android:textColorHint="@color/white_100"
+            android:layout_height="wrap_content"
+            android:autofillHints="emailAddress"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/state_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:labelFor="@id/email_edit_text"
-        android:textColor="@color/white_100"
-        android:text="@string/email_field_title" />
-
-    <EditText
-        android:id="@+id/email_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:inputType="textEmailAddress"
-        android:layout_marginTop="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toBottomOf="@id/email_title"
-        android:autofillHints="emailAddress" />
+        app:layout_constraintTop_toBottomOf="@id/email_layout" >
 
-    <TextView
-        android:id="@+id/state_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAlignment="viewStart"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/email_edit_text"
-        android:textSize="14sp"
-        android:layout_marginTop="8dp"
-        android:labelFor="@id/state_edit_text"
-        android:textColor="@color/white_100"
-        android:text="@string/state_field_title" />
-
-    <EditText
-        android:id="@+id/state_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:inputType="text"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toBottomOf="@id/state_title"
-        android:autofillHints="state" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/state_edit_text"
+            android:layout_width="match_parent"
+            android:textSize="14sp"
+            android:textColor="@color/white_100"
+            android:hint="@string/state_field_title"
+            android:textColorHint="@color/white_100"
+            android:layout_height="wrap_content"
+            android:autofillHints="emailAddress"/>
+    </com.google.android.material.textfield.TextInputLayout>
     
     <com.google.android.material.button.MaterialButton
         android:id="@+id/share_button"
