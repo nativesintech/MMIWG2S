@@ -116,7 +116,6 @@
         android:backgroundTint="@color/red"
         android:clickable="true"
         android:focusable="true"
-        android:focusableInTouchMode="true"
         android:minHeight="48dp"
         android:text="@string/share_with_us_share_button"
         android:textColor="@color/white_100"
