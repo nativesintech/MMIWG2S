@@ -14,4 +14,9 @@
     <style name="MaterialButtonTheme" parent="Theme.MaterialComponents">
         <item name="colorOnPrimary">@color/white_100</item>
     </style>
+
+    <style name="MaterialButtonThemeTransparent" parent="Theme.MaterialComponents">
+        <item name="background">@null</item>
+        <item name="android:textColor">@color/white_100</item>
+    </style>
 </resources>

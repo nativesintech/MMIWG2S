@@ -128,7 +128,7 @@
         android:id="@+id/back_button_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:labelFor="@+id/back_button"
+        android:labelFor="@+id/swu_back_button"
         android:text="@string/back"
         app:layout_constraintEnd_toEndOf="@+id/back_button"
         app:layout_constraintStart_toStartOf="@+id/back_button"
@@ -173,4 +173,9 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:constraint_referenced_ids="share_button,send_button_text_view" />
+
+    <include
+        android:id="@+id/share_with_us_layout"
+        layout="@layout/share_with_us_layout"
+        android:visibility="gone" />
 </androidx.constraintlayout.widget.ConstraintLayout>
