@@ -147,7 +147,9 @@ class ARFaceViewerUI: UIView {
                 ],
                 contentType: .multipartForm,
                 completionHandler: { error, response in
-                    log.info(String(data: response!, encoding: .utf8)!)
+                    if let response = response {
+                        log.info(String(data: response, encoding: .utf8) ?? "[unable to decode]")
+                    }
                 }
             )
             return
@@ -162,7 +164,9 @@ class ARFaceViewerUI: UIView {
             ],
             contentType: .multipartForm,
             completionHandler: { error, response in
-                log.info(String(data: response!, encoding: .utf8)!)
+                if let response = response {
+                    log.info(String(data: response, encoding: .utf8) ?? "[unable to decode]")
+                }
             }
         )
     }
@@ -255,13 +259,13 @@ class ARFaceViewerUI: UIView {
         headerView.asImage().draw(in: CGRect(origin: headerView.frame.origin * pixelToUnitRatio, size: headerView.frame.size * pixelToUnitRatio))
         let imageWithContent = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
+        
+        self.imageToShare = imageWithContent
 
         shareSheetViewController = ShareSheetViewController(image: imageWithContent, title: .sharepagetitle, message: .sharepagemessage)
         shareSheetViewController?.setupButtonActions(back: { self.backButtonsAction() }, share: { name, email in
             self.shareWithUs(name: name, email: email)
         }, skip: { self.shareImage() })
-        
-        self.imageToShare = imageWithContent
 
         shareButtonAction?()
     }
