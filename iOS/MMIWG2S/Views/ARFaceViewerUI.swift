@@ -176,6 +176,7 @@ class ARFaceViewerUI: UIView {
         let headerView = UILabel()
         headerView.text = .mmiw
         headerView.font = .roboto48
+        headerView.textColor = .white
 
         addSubview(gradientView)
         addSubview(headerView)
