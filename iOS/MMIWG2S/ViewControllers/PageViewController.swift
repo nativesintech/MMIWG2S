@@ -22,14 +22,6 @@ class PageViewController: UIPageViewController, UIPageViewControllerDataSource, 
         IntroViewController(background: UIImage(named: "slide4") ?? UIImage(), gradient: UIImage(named: "gradient4.png") ?? UIImage(), mmiwtext:"slideview4.text", page: 3)
     ]
     
-    var viewControllerFaces: UIViewController {
-        if ARFaceTrackingConfiguration.isSupported {
-            return FacesARViewController()
-        } else {
-            return FacesViewController()
-        }
-    }
-    
     override init(transitionStyle: UIPageViewController.TransitionStyle, navigationOrientation: UIPageViewController.NavigationOrientation,
                   options: [UIPageViewController.OptionsKey : Any]?) {
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: options)
@@ -39,7 +31,7 @@ class PageViewController: UIPageViewController, UIPageViewControllerDataSource, 
         fatalError("init(coder:) has not been implemented")
     }
     
-    private(set) lazy var orderedViewControllers: [UIViewController] = { array + [viewControllerFaces] }()
+    private(set) lazy var orderedViewControllers: [UIViewController] = { array + [AgreementViewController()] }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,12 +83,13 @@ class PageViewController: UIPageViewController, UIPageViewControllerDataSource, 
                                direction:.forward,
                                animated:true,
                                completion:nil)
-        }
-        else {
-            setViewControllers([viewControllerFaces],
-                               direction:.forward,
-                               animated:true,
-                               completion:nil)
+        } else {
+            let termsAccepted = MmiwUtility.getUserDefaultBool(defaultType: MmiwUtility.UserDefaultKeys.accepted)
+
+            setViewControllers(termsAccepted ? [MmiwUtility.faceViewController] : [AgreementViewController()],
+                               direction: .forward,
+                               animated: true,
+                               completion: nil)
         }
     }
 }
