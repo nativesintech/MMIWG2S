@@ -17,7 +17,8 @@
 "acceptance.text" = "Please be respectful.\n
 This app’s sole purpose is to bring awareness about #MMIW.
 \nIf you would like to support the movement and add your voice, then this is the app for you.\n
-To learn more after you take your #MMIW photo. Thank you for your support.";
+There will be an opportunity for you to learn more after you share your photo. Thank you for your support.";
+"acceptance.agree" = "I Agree";
 
 "indicator.next" = "Next";
 "slideview.header" = "#MMIW";

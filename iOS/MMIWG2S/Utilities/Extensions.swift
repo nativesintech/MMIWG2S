@@ -20,6 +20,7 @@ extension String {
     
     // text for Acceptance page
     static let acceptance = NSLocalizedString("acceptance.text", comment: "Acceptance")
+    static let agree = NSLocalizedString("acceptance.agree", comment: "I Agree")
 
     static var next: String { return NSLocalizedString("indicator.next", comment: "Next button title") }
     static var slideviewheader: String { return NSLocalizedString("slideview.header", comment: "Text") }
