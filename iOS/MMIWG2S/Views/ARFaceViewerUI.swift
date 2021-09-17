@@ -287,9 +287,11 @@ class ARFaceViewerUI: UIView {
     }
 
     private func shareImage() {
-        guard let imageToShare = imageToShare else { return }
+        guard let imageToShare = imageToShare,
+              let jpgImage = imageToShare.jpegData(compressionQuality: 0.9)
+        else { return }
 
-        let activityController = UIActivityViewController(activityItems: [imageToShare], applicationActivities: nil)
+        let activityController = UIActivityViewController(activityItems: [jpgImage], applicationActivities: nil)
         activityController.completionWithItemsHandler = { [weak self] (activityType, completed: Bool, returnedItems: [Any]?, error: Error?) in
             self?.delegate?.resumeSessionOnceCaptured()
             self?.changeViewVisibility(isCapturing: true)
