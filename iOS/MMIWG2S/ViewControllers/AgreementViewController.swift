@@ -18,6 +18,7 @@ class AgreementViewController: UIViewController {
 
     private let agreementLabel = UILabel()
     private var agreeButton: UIButton = UIButton()
+    let hashtagLabel = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +29,7 @@ class AgreementViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        startAnimation()
+//        startAnimation()
     }
     
     private func addBackground(withTint tint: UIColor? = nil) {
@@ -40,6 +41,7 @@ class AgreementViewController: UIViewController {
         }
         let backgroundView = UIImageView(image: handImage)
         backgroundView.contentMode = .scaleAspectFill
+        backgroundView.clipsToBounds = true
         
         view.addSubview(backgroundView)
         backgroundView.translatesAutoresizingMaskIntoConstraints = false
@@ -51,48 +53,43 @@ class AgreementViewController: UIViewController {
     }
 
     private func setupMMIWHashtag() {
-        let labelsTopMargin: CGFloat = 48
+        let labelsTopMargin: CGFloat = 24
 
-        let hashtagLabel = UILabel()
-        hashtagLabel.font = .roboto48
+        hashtagLabel.font = .roboto36
         hashtagLabel.textColor = .white
         hashtagLabel.alpha = 1
 
         let hashtagString: String = .slideviewheader
-        let labelSummedWidth = hashtagString.width(for: .roboto48)
         hashtagLabel.text = hashtagString
         view.addSubview(hashtagLabel)
-
         hashtagLabel.translatesAutoresizingMaskIntoConstraints = false
-        hashtagLabel.leadingAnchor.constraint(equalTo: view.centerXAnchor, constant: -labelSummedWidth / 2).isActive = true
-        hashtagLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: labelsTopMargin).isActive = true
+
+        hashtagLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
+        hashtagLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: labelsTopMargin).isActive = true
         view.layoutIfNeeded()
     }
 
     private func setupView() {
         let trailingLeadingMargin: CGFloat = 42
         let confirmationButtonHeight: CGFloat = 50
-        let confirmationButtonTopMargin: CGFloat = 36
+        let confirmationButtonTopMargin: CGFloat = 16
 
         view.addSubview(agreementView)
         agreementView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             agreementView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: trailingLeadingMargin),
             agreementView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -trailingLeadingMargin),
-            agreementView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            agreementView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
+            agreementView.topAnchor.constraint(equalTo: hashtagLabel.bottomAnchor, constant: 16)
         ])
-        agreementViewHeightConstraint = agreementView.heightAnchor.constraint(equalToConstant: 0)
-        agreementViewHeightConstraint?.isActive = true
 
         agreementLabel.text = .acceptance
         agreementLabel.font = .roboto24
         agreementLabel.textColor = .white
         agreementLabel.numberOfLines = 0
-        agreementLabel.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
         agreementView.addSubview(agreementLabel)
         agreementLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            agreementLabel.topAnchor.constraint(equalTo: agreementView.topAnchor),
             agreementLabel.leadingAnchor.constraint(equalTo: agreementView.leadingAnchor),
             agreementLabel.trailingAnchor.constraint(equalTo: agreementView.trailingAnchor)
         ])
@@ -106,18 +103,19 @@ class AgreementViewController: UIViewController {
             agreeButton.heightAnchor.constraint(equalToConstant: confirmationButtonHeight),
             agreeButton.topAnchor.constraint(equalTo: agreementLabel.bottomAnchor, constant: confirmationButtonTopMargin),
             agreeButton.leadingAnchor.constraint(equalTo: agreementView.leadingAnchor),
-            agreeButton.trailingAnchor.constraint(equalTo: agreementView.trailingAnchor)
+            agreeButton.trailingAnchor.constraint(equalTo: agreementView.trailingAnchor),
+            agreeButton.bottomAnchor.constraint(equalTo: agreementView.bottomAnchor)
         ])
     }
 
-    private func startAnimation() {
-        UIView.animate(withDuration: initialAnimationDuration, delay: TimeInterval(0) * 0.2, animations: { [weak self] in
-            guard let self = self else { return }
-            self.agreementViewHeightConstraint?.constant = (UIDevice.current.userInterfaceIdiom == .pad) ? 360 : 480
-
-            self.view.layoutIfNeeded()
-        })
-    }
+//    private func startAnimation() {
+//        UIView.animate(withDuration: initialAnimationDuration, delay: TimeInterval(0) * 0.2, animations: { [weak self] in
+//            guard let self = self else { return }
+//            self.agreementViewHeightConstraint?.constant = (UIDevice.current.userInterfaceIdiom == .pad) ? 360 : 480
+//
+//            self.view.layoutIfNeeded()
+//        })
+//    }
 
     @objc private func transitionToFacesARView() {
         navigationController?.pushViewController(MmiwUtility.faceViewController, animated: true)
