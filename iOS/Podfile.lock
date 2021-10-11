@@ -1,35 +1,54 @@
 PODS:
-  - ARCore/AugmentedFaces (1.16.0):
-    - ARCore/Base (~> 1.16)
+  - ARCore/AugmentedFaces (1.27.0):
+    - ARCore/Base (~> 1.27)
+    - nanopb (~> 2.30908.0)
+  - ARCore/Base (1.27.0):
+    - GoogleDataTransport (~> 9.0)
     - GoogleToolboxForMac/Logger (~> 2.1)
     - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
     - GTMSessionFetcher/Core (~> 1.2)
-    - Protobuf (~> 3.5)
-  - ARCore/Base (1.16.0)
-  - GoogleToolboxForMac/Defines (2.2.2)
-  - GoogleToolboxForMac/Logger (2.2.2):
-    - GoogleToolboxForMac/Defines (= 2.2.2)
-  - "GoogleToolboxForMac/NSData+zlib (2.2.2)":
-    - GoogleToolboxForMac/Defines (= 2.2.2)
-  - GTMSessionFetcher/Core (1.4.0)
-  - Protobuf (3.11.4)
+    - nanopb (~> 2.30908.0)
+  - GoogleDataTransport (9.1.0):
+    - GoogleUtilities/Environment (~> 7.2)
+    - nanopb (~> 2.30908.0)
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleToolboxForMac/Defines (2.3.2)
+  - GoogleToolboxForMac/Logger (2.3.2):
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+  - "GoogleToolboxForMac/NSData+zlib (2.3.2)":
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+  - GoogleUtilities/Environment (7.5.2):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GTMSessionFetcher/Core (1.7.0)
+  - nanopb (2.30908.0):
+    - nanopb/decode (= 2.30908.0)
+    - nanopb/encode (= 2.30908.0)
+  - nanopb/decode (2.30908.0)
+  - nanopb/encode (2.30908.0)
+  - PromisesObjC (2.0.0)
 
 DEPENDENCIES:
-  - ARCore/AugmentedFaces (~> 1.16.0)
+  - ARCore/AugmentedFaces (~> 1.27.0)
 
 SPEC REPOS:
   trunk:
     - ARCore
+    - GoogleDataTransport
     - GoogleToolboxForMac
+    - GoogleUtilities
     - GTMSessionFetcher
-    - Protobuf
+    - nanopb
+    - PromisesObjC
 
 SPEC CHECKSUMS:
-  ARCore: 9bfd67f62fd66aa5f157726fd3aed135b5ac041e
-  GoogleToolboxForMac: 800648f8b3127618c1b59c7f97684427630c5ea3
-  GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
-  Protobuf: 176220c526ad8bd09ab1fb40a978eac3fef665f7
+  ARCore: f40778f22af86e8fb3c0e2bb1532f7cc9462f100
+  GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
+  GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34
+  GoogleUtilities: 8de2a97a17e15b6b98e38e8770e2d129a57c0040
+  GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
+  nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
 
-PODFILE CHECKSUM: 16ed730a53716bf25258301132003396be88b4a4
+PODFILE CHECKSUM: 7cd90880df46fcc4865aadca8f989aca65ccd71a
 
 COCOAPODS: 1.10.1
