@@ -18,12 +18,10 @@ class AgreementViewController: UIViewController {
 
     private let agreementLabel = UILabel()
     private var agreeButton: UIButton = UIButton()
-    let hashtagLabel = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         addBackground()
-        setupMMIWHashtag()
         setupView()
     }
     
@@ -52,23 +50,6 @@ class AgreementViewController: UIViewController {
         ])
     }
 
-    private func setupMMIWHashtag() {
-        let labelsTopMargin: CGFloat = 24
-
-        hashtagLabel.font = .roboto36
-        hashtagLabel.textColor = .white
-        hashtagLabel.alpha = 1
-
-        let hashtagString: String = .slideviewheader
-        hashtagLabel.text = hashtagString
-        view.addSubview(hashtagLabel)
-        hashtagLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        hashtagLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-        hashtagLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: labelsTopMargin).isActive = true
-        view.layoutIfNeeded()
-    }
-
     private func setupView() {
         let trailingLeadingMargin: CGFloat = 42
         let confirmationButtonHeight: CGFloat = 50
@@ -80,7 +61,7 @@ class AgreementViewController: UIViewController {
             agreementView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: trailingLeadingMargin),
             agreementView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -trailingLeadingMargin),
             agreementView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
-            agreementView.topAnchor.constraint(equalTo: hashtagLabel.bottomAnchor, constant: 16)
+            agreementView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
         ])
 
         agreementLabel.text = .acceptance
