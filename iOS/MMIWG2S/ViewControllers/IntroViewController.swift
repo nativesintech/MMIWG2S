@@ -98,7 +98,6 @@ class IntroViewController: UIViewController {
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
-        
         labelMMIW.textAlignment = .center
         labelMMIW.text = .slideviewheader
         labelMMIW.textColor = .white
@@ -138,7 +137,7 @@ class IntroViewController: UIViewController {
         
         let constraints = [
             labelMMIW.heightAnchor.constraint(equalToConstant: 50),
-            labelMMIW.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 50),
+            labelMMIW.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 24),
             labelMMIW.centerXAnchor.constraint(equalTo:self.view.centerXAnchor),
             labelMMIWInfo.heightAnchor.constraint(equalToConstant: 150),
             labelMMIWInfo.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant:25),
