@@ -29,6 +29,7 @@ class ARFaceViewerUI: UIView {
     private let iconButtonSideMargin: CGFloat = 16
 
     private let headerViewTopMargin: CGFloat = 20
+    let gradientView = UIImageView(image: UIImage(named: "ar-background"))
 
     private var imageToShare: UIImage?
     
@@ -172,7 +173,6 @@ class ARFaceViewerUI: UIView {
     }
 
     func setupBannerAndStatViews() {
-        let gradientView = UIImageView(image: UIImage(named: "ar-background"))
         let headerView = UILabel()
         headerView.text = .mmiw
         headerView.font = .roboto48
@@ -243,7 +243,7 @@ class ARFaceViewerUI: UIView {
         shareButton?.isHidden = true
         
         guard let imageToShare = imageToShare,
-              let gradientView = UIImage(named: "gradient1"),
+              let gradientView = UIImage(named: "gradient-short"),
               let captionPicker = captionPickerView?.asImageWithoutPaginationIndicator(),
               let headerView = headerView
         else {
@@ -315,5 +315,6 @@ class ARFaceViewerUI: UIView {
         shareButton?.isHidden = isCapturing
         
         captionPickerView?.isHidden = isCapturing
+        gradientView.isHidden = !isCapturing
     }
 }
