@@ -14,10 +14,10 @@
 "intro.indigenous" = "Indigenous";
 "intro.women" = "Women";
 
-"acceptance.text" = "Please be respectful.\n
-This app’s sole purpose is to bring awareness about #MMIW.
-\nIf you would like to support the movement and add your voice, then this is the app for you.\n
-There will be an opportunity for you to learn more after you share your photo. Thank you for your support.";
+"acceptance.1.text" = "Please be respectful.";
+"acceptance.2.text" = "This app’s sole purpose is to bring awareness about #MMIW.";
+"acceptance.3.text" = "If you would like to support the movement and add your voice, then this is the app for you.";
+"acceptance.4.text" = "There will be an opportunity for you to learn more after you share your photo. Thank you for your support.";
 "acceptance.agree" = "I Agree";
 
 "indicator.next" = "Next";
