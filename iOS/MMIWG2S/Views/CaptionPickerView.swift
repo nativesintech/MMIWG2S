@@ -41,12 +41,13 @@ class CaptionPickerView: UIView {
     }
     
     private func addBackground() {
-        let background = UIImageView(image: UIImage(named: "gradient1"))
+        let background = UIImageView(image: UIImage(named: "gradient-short"))
         background.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        background.contentMode = .scaleToFill
+        background.contentMode = .scaleAspectFill
         background.clipsToBounds = true
-        
+
         addSubview(background)
+        background.translatesAutoresizingMaskIntoConstraints = false
         background.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         background.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         background.topAnchor.constraint(equalTo: topAnchor).isActive = true
