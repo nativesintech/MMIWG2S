@@ -9,7 +9,7 @@
 import UIKit
 
 class CaptionPickerView: UIView {
-    private let titles: [String] = (1...4).compactMap { .statistic(number: $0) }
+    private let titles: [String] = (1...5).compactMap { .statistic(number: $0) }
     private let pageControlBottomPadding: CGFloat = 20
     private let labelViewBottomPadding: CGFloat = 40
     private let labelViewHeight: CGFloat = 130
@@ -60,7 +60,7 @@ class CaptionPickerView: UIView {
             let label = UILabel()
             label.text = $0
             label.textAlignment = .center
-            label.numberOfLines = 3
+            label.numberOfLines = 0
             label.lineBreakMode = .byWordWrapping
             label.font = .roboto24
             label.textColor = .white
