@@ -65,6 +65,7 @@ public final class FacesViewController: UIViewController {
         faceViewer.setupBannerAndStatViews()
         faceViewer.setupCaptureButton()
         faceViewer.setupColorToggle()
+        faceViewer.setupCaptionPickerView()
         faceViewer.setupShareBackButtons(shareAction: {
             if let shareSheetVC = self.faceViewer.shareSheetViewController {
                 if #available(iOS 13.0, *) {
