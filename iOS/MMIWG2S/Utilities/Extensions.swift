@@ -44,6 +44,11 @@ extension String {
     static let sharepageemail = NSLocalizedString("sharepage.emailaddress", comment: "Email Address")
     static let sharepagetitle = NSLocalizedString("sharepage.header", comment: "Share with us?")
     static let sharepagemessage = NSLocalizedString("sharepage.message", comment: "What we will do with the info")
+
+    static let unsupporteddevicetitle = NSLocalizedString("unsupporteddevice.title", comment: "Unsupported Device Title")
+    static let unsupporteddevicebody = NSLocalizedString("unsupporteddevice.body", comment: "Unsupported Device Body")
+    static let camerapermissionstitle = NSLocalizedString("camerapermissions.title", comment: "Camera Permissions Needed Title")
+    static let camerapermissionsbody = NSLocalizedString("camerapermissions.body", comment: "Camera Permissions Needed Body")
 }
 
 extension UIFont {
@@ -61,6 +66,12 @@ extension UIColor {
     static var lightGrayThirdAlpha: UIColor { return UIColor(red: 248 / 255, green: 248 / 255, blue: 248 / 255, alpha: 0.3) }
     static var offBlack: UIColor { return UIColor(red: 25 / 255, green: 25 / 255, blue: 25 / 255, alpha: 1.0) }
     static var offRed: UIColor { return UIColor(red: 177 / 255, green: 14 / 255, blue: 15 / 255, alpha: 1.0) }
+}
+
+extension Int {
+    static func toDeviceFormattedCGFloat(ipad: Int, iphone: Int) -> CGFloat {
+        return CGFloat(MmiwUtility.isPad ? ipad : iphone)
+    }
 }
 
 extension UIImage {

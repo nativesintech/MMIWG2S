@@ -14,8 +14,12 @@ class MmiwUtility {
         if ARFaceTrackingConfiguration.isSupported {
             return FacesARViewController()
         } else {
-            return FacesViewController()
+            return InfoSheetViewController(image: UIImage(named: "unsupported-device"), title: .unsupporteddevicetitle, message: .unsupporteddevicebody)
         }
+    }
+
+    static var isPad: Bool {
+        UIDevice.current.userInterfaceIdiom == .pad ? true : false
     }
 
     // MARK: UserDefault Helper methods

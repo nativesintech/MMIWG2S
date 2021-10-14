@@ -9,8 +9,7 @@
 import UIKit
 
 class ShareSheetViewController: UIViewController, UITextFieldDelegate {
-    private let sheetViewWidth: CGFloat =
-        UIDevice.current.userInterfaceIdiom == .pad ? 440 : 350
+    private let sheetViewWidth: CGFloat = Int.toDeviceFormattedCGFloat(ipad: 440, iphone: 350)
 
     private var shareSheetView = ShareSheetView()
     private var keyboardIsUp = false

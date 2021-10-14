@@ -297,7 +297,7 @@ class ARFaceViewerUI: UIView {
             self?.changeViewVisibility(isCapturing: true)
         }
 
-        if UIDevice.current.userInterfaceIdiom == .pad {
+        if MmiwUtility.isPad {
             activityController.popoverPresentationController?.sourceView = self
             activityController.popoverPresentationController?.sourceRect = CGRect(x: self.frame.size.width / 2 , y: self.frame.size.height / 4, width: 0, height: 0)
         }
