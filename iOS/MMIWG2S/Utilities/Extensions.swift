@@ -19,7 +19,9 @@ extension String {
     static let women = NSLocalizedString("intro.women", comment: "Women")
     
     // text for Acceptance page
-    static let acceptance = NSLocalizedString("acceptance.text", comment: "Acceptance")
+    static func acceptance(number: Int) -> String {
+        return NSLocalizedString("acceptance.\(number).text", comment: "Acceptance")
+    }
     static let agree = NSLocalizedString("acceptance.agree", comment: "I Agree")
 
     static var next: String { return NSLocalizedString("indicator.next", comment: "Next button title") }
