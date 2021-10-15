@@ -8,11 +8,10 @@
 
 import UIKit
 
-class InfoSheetViewController: UIViewController, UITextFieldDelegate {
+class InfoSheetViewController: UIViewController {
     private let sheetViewWidth: CGFloat = Int.toDeviceFormattedCGFloat(ipad: 440, iphone: 350)
 
     private var infoSheetView = InfoSheetView()
-    private var keyboardIsUp = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
