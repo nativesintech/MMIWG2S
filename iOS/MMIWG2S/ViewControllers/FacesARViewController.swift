@@ -118,17 +118,32 @@ extension FacesARViewController: ARSessionDelegate {
     
     func session(_ session: ARSession, didFailWithError error: Error) {
         guard error is ARError else { return }
-        
-        let errorWithInfo = error as NSError
-        let messages = [
-            errorWithInfo.localizedDescription,
-            errorWithInfo.localizedFailureReason,
-            errorWithInfo.localizedRecoverySuggestion
-        ]
-        let errorMessage = messages.compactMap({ $0 }).joined(separator: "\n")
-        
-        DispatchQueue.main.async { [weak self] in
-            self?.displayError(.errorARSessionTitle, message: errorMessage, completion: self?.resetTracking)
+
+        if let arError = error as? ARError,
+           arError.code == .cameraUnauthorized {
+
+            DispatchQueue.main.async { [weak self] in
+                let cameraInfoViewController = InfoSheetViewController(image: UIImage(named: "camera-permissions"), title: .camerapermissionstitle, message: .camerapermissionsbody)
+                cameraInfoViewController.setupButtonActions { [weak self] in
+
+                    // ADD THANK YOU PAGE HERE
+                    self?.navigationController?.pushViewController(InfoSheetViewController(image: UIImage.init(named: "ar-background"), title: "TESTING !@#", message: "aldskjfhlaksjdhfahsldf lkajsdlf alskdjhf lkajshdlf asldfhlaskjdhflas dhfla sdlfjh asdjhfhl akjdshf "), animated: true)
+                }
+
+                self?.navigationController?.pushViewController(cameraInfoViewController, animated: true)
+            }
+        } else  {
+            let errorWithInfo = error as NSError
+            let messages = [
+                errorWithInfo.localizedDescription,
+                errorWithInfo.localizedFailureReason,
+                errorWithInfo.localizedRecoverySuggestion
+            ]
+            let errorMessage = messages.compactMap({ $0 }).joined(separator: "\n")
+
+            DispatchQueue.main.async { [weak self] in
+                self?.displayError(.errorARSessionTitle, message: errorMessage, completion: self?.resetTracking)
+            }
         }
     }
     

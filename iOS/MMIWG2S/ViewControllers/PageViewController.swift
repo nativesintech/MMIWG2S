@@ -41,8 +41,9 @@ class PageViewController: UIPageViewController, UIPageViewControllerDataSource {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private(set) lazy var orderedViewControllers: [UIViewController] = { array + [AgreementViewController()] }()
+
+    // TODO: Adding AgreementViewConrtoller here makes it always show up when swiping.
+    private(set) lazy var orderedViewControllers: [UIViewController] = array + [AgreementViewController()]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,7 +133,7 @@ extension PageViewController {
         let labelFont: UIFont = .roboto17
         for (index,item) in pageControlViews.enumerated() {
             if index == 0 {
-                item.backgroundColor = .red
+                item.backgroundColor = .offRed
             } else {
                 item.backgroundColor = .white
             }
@@ -167,7 +168,23 @@ extension PageViewController {
 
             labelMMIW.isHidden = termsAccepted
             nextButtonStackView.isHidden = true
-            setViewControllers(termsAccepted ? [MmiwUtility.faceViewController] : [AgreementViewController()],
+
+            var nextViewController: UIViewController {
+                if let infoSheetViewController = MmiwUtility.faceViewController as? InfoSheetViewController {
+                    infoSheetViewController.setupButtonActions { [weak self] in
+                        // TODO use Thank You view controller.
+                        self?.setViewControllers([InfoSheetViewController(image: UIImage.init(named: "ar-background"), title: "TESTING !@#", message: "aldskjfhlaksjdhfahsldf lkajsdlf alskdjhf lkajshdlf asldfhlaskjdhflas dhfla sdlfjh asdjhfhl akjdshf ")],
+                                                 direction: .forward,
+                                                 animated: true,
+                                                 completion: nil)
+                    }
+                    return infoSheetViewController
+                } else {
+                    return MmiwUtility.faceViewController
+                }
+            }
+
+            setViewControllers(termsAccepted ? [nextViewController] : [AgreementViewController()],
                                direction: .forward,
                                animated: true,
                                completion: nil)
@@ -179,7 +196,7 @@ extension PageViewController {
     private func setNextButtonIndicatorColors(with currentViewControllerIndex: Int) {
         for (index,item) in pageControlViews.enumerated() {
             if index == currentViewControllerIndex {
-                item.backgroundColor = .red
+                item.backgroundColor = .offRed
             } else {
                 item.backgroundColor = .white
             }

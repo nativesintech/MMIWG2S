@@ -39,3 +39,9 @@
 "statistic.3.text" = "84% of Native women have experienced violence in their lifetime.";
 "statistic.4.text" = "96% of sexual violence against Native women is perpetrated by non-natives.";
 "statistic.5.text" = "No more stolen sisters!";
+
+// MARK: Info Sheet
+"unsupporteddevice.title" = "Your Device is Unsupported";
+"unsupporteddevice.body" = "This app only works on phones and tablets with FaceID:\niPhone X or newer (Not the SE)\niPad Pro 11 inch (All generations)\niPad Pro 12.9 inch (3rd generation or newer)\n\nWe hope you will still support the work for MMIW. Press next to learn more.";
+"camerapermissions.title" = "Camera Permissions Needed";
+"camerapermissions.body" = "This app needs camera permissions to work properly.\nPlease go to your iOS settings and allow camera permissions for MMIW.\nOnce that is completed, please restart the app.\n\nThank you!";

@@ -14,9 +14,9 @@ class AgreementViewController: UIViewController {
     private let labelsVerticalDistance: CGFloat = 68
     private let trailingLeadingMargin: CGFloat = UIScreen.main.bounds.width > 360 ? 42 : 12
     private let confirmationButtonHeight: CGFloat = 50
-    private var bottomMargin: CGFloat { return UIDevice.current.userInterfaceIdiom == .pad ? -self.trailingLeadingMargin : -8 }
-    private let topMargin: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 120 : 100
-    private let spacing: CGFloat = UIDevice.current.userInterfaceIdiom == .pad ? 60 : 40
+    private var bottomMargin: CGFloat { return MmiwUtility.isPad ? -self.trailingLeadingMargin : -8 }
+    private let topMargin: CGFloat = Int.toDeviceFormattedCGFloat(ipad: 120, iphone: 100)
+    private let spacing: CGFloat = Int.toDeviceFormattedCGFloat(ipad: 60, iphone: 40)
     
     private let agreementParagraphCount = 4
 
@@ -129,7 +129,20 @@ class AgreementViewController: UIViewController {
     }
 
     @objc private func transitionToFacesARView() {
-        navigationController?.pushViewController(MmiwUtility.faceViewController, animated: true)
+        var nextViewController: UIViewController {
+            if let infoSheetViewController = MmiwUtility.faceViewController as? InfoSheetViewController {
+                infoSheetViewController.setupButtonActions { [weak self] in
+                    // TODO use Thank You view controller.
+                    self?.navigationController?.pushViewController(InfoSheetViewController(image: UIImage.init(named: "ar-background"), title: "TESTING !@#", message: "aldskjfhlaksjdhfahsldf lkajsdlf alskdjhf lkajshdlf asldfhlaskjdhflas dhfla sdlfjh asdjhfhl akjdshf "), animated: true)
+                }
+                return infoSheetViewController
+            } else {
+                return MmiwUtility.faceViewController
+            }
+        }
+
+        navigationController?.pushViewController(nextViewController, animated: true)
+
         MmiwUtility.saveUserDefaultBool(defaultType: MmiwUtility.UserDefaultKey.accepted, with: true)
     }
 }
