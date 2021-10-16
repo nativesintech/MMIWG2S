@@ -22,6 +22,15 @@ class MmiwUtility {
         UIDevice.current.userInterfaceIdiom == .pad ? true : false
     }
 
+    static func thankYouViewController(showBackButton: Bool) -> ThankYouSheetViewController { ThankYouSheetViewController(
+        showBackButton: showBackButton,
+        header: .mmiw,
+        videoDescription: .thankyouvideodescription,
+        videoUrl: "https://www.youtube-nocookie.com/embed/NscqDqT0L18",
+        subheader: .thankyousubheader,
+        thankYouBody: .thankyoubody)
+    }
+
     // MARK: UserDefault Helper methods
     enum UserDefaultKey: String {
         case accepted

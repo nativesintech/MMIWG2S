@@ -49,12 +49,17 @@ extension String {
     static let unsupporteddevicebody = NSLocalizedString("unsupporteddevice.body", comment: "Unsupported Device Body")
     static let camerapermissionstitle = NSLocalizedString("camerapermissions.title", comment: "Camera Permissions Needed Title")
     static let camerapermissionsbody = NSLocalizedString("camerapermissions.body", comment: "Camera Permissions Needed Body")
+
+    static let thankyouvideodescription = NSLocalizedString("thankyou.videodesciption", comment: "Video description")
+    static let thankyousubheader = NSLocalizedString("thankyou.subheader", comment: "Thank you subheader")
+    static let thankyoubody = NSLocalizedString("thankyou.body", comment: "Thank you body")
 }
 
 extension UIFont {
     static var roboto14: UIFont { return UIFont(name: "Roboto-Regular", size: 14) ?? .systemFont(ofSize: 14) }
     static var roboto16: UIFont { return UIFont(name: "Roboto-Regular", size: 16) ?? .systemFont(ofSize: 16) }
     static var roboto17: UIFont { return UIFont(name: "Roboto-Regular", size: 17) ?? .systemFont(ofSize: 17) }
+    static var roboto18: UIFont { return UIFont(name: "Roboto-Regular", size: 18) ?? .systemFont(ofSize: 18) }
     static var roboto24: UIFont { return UIFont(name: "Roboto-Regular", size: 24) ?? .systemFont(ofSize: 24) }
     static var roboto36: UIFont { return UIFont(name: "Roboto-Regular", size: 36) ?? .systemFont(ofSize: 36) }
     static var roboto48: UIFont { return UIFont(name: "Roboto-Regular", size: 48) ?? .systemFont(ofSize: 48) }

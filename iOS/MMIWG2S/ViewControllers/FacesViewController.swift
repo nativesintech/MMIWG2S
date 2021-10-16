@@ -232,7 +232,6 @@ public final class FacesViewController: UIViewController {
 // MARK: - ARFaceViewerUIDelegate
 
 extension FacesViewController: ARFaceViewerUIDelegate {
-    
     func textureChanged(toRed: Bool) {
         if toRed {
             self.faceTextureMaterial.diffuse.contents = UIImage(named: "Face.scnassets/red_hand_full_mouth.png")
@@ -271,7 +270,16 @@ extension FacesViewController: ARFaceViewerUIDelegate {
         view.layoutIfNeeded()
         isCapturing = false
     }
-    
+
+    func presentThankYouPage() {
+        let viewController = MmiwUtility.thankYouViewController(showBackButton: true)
+        viewController.setupButtonActions { [weak self] in
+            self?.resumeSessionOnceCaptured()
+            self?.faceViewer.changeViewVisibility(isCapturing: true)
+            self?.navigationController?.popViewController(animated: true)
+        }
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 // MARK: - Camera delegate

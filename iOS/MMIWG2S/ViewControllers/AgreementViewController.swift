@@ -132,8 +132,7 @@ class AgreementViewController: UIViewController {
         var nextViewController: UIViewController {
             if let infoSheetViewController = MmiwUtility.faceViewController as? InfoSheetViewController {
                 infoSheetViewController.setupButtonActions { [weak self] in
-                    // TODO use Thank You view controller.
-                    self?.navigationController?.pushViewController(InfoSheetViewController(image: UIImage.init(named: "ar-background"), title: "TESTING !@#", message: "aldskjfhlaksjdhfahsldf lkajsdlf alskdjhf lkajshdlf asldfhlaskjdhflas dhfla sdlfjh asdjhfhl akjdshf "), animated: true)
+                    self?.navigationController?.pushViewController(MmiwUtility.thankYouViewController(showBackButton: false), animated: true)
                 }
                 return infoSheetViewController
             } else {

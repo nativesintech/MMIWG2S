@@ -41,7 +41,12 @@
 "statistic.5.text" = "No more stolen sisters!";
 
 // MARK: Info Sheet
-"unsupporteddevice.title" = "Your Device is Unsupported";
-"unsupporteddevice.body" = "This app only works on phones and tablets with FaceID:\niPhone X or newer (Not the SE)\niPad Pro 11 inch (All generations)\niPad Pro 12.9 inch (3rd generation or newer)\n\nWe hope you will still support the work for MMIW. Press next to learn more.";
+"unsupporteddevice.title" = "This Device is Unsupported";
+"unsupporteddevice.body" = "This app only works on iOS devices with FaceID:\n • iPhone X or newer (Not SE)\n • iPad Pro 11 inch (All generations)\n • iPad Pro 12.9 inch (3rd generation or newer)\n\nPress 'Next' to learn more about how you can support this project in other ways.";
 "camerapermissions.title" = "Camera Permissions Needed";
-"camerapermissions.body" = "This app needs camera permissions to work properly.\nPlease go to your iOS settings and allow camera permissions for MMIW.\nOnce that is completed, please restart the app.\n\nThank you!";
+"camerapermissions.body" = "To continue:\n • Please go the iOS settings\n • Find and tap MMIW then allow camera permissions\n • Once updated, please restart the app for best results\n\nThank you!";
+
+// MARK: Thank You Sheet
+"thankyou.videodesciption" = "To learn more, watch this Somebody’s Daughter trailer:";
+"thankyou.subheader" = "Huge thank you to";
+"thankyou.body" = "Our Supporters:\nGlobal Indigenous Council\nCoushatta Tribe of Louisiana\n\nDevelopment Team:\nRachel, Teressa, Kaitlyn, Callum, Hằng, Pavan, Mark, Caleb, Jessica, Pete, Nicole, Joshua, Nathan, Chase\n\nPhotographers, Subjects:\nSlide 1: Lorie Shaull, Asia Johnson\nSlide 2: Reid Williams, Nick Wakos\nSlide 3: Aaron Tambour, Michelle Bauchman\nSlide 4: Supplied by the Global Indigenous Council";

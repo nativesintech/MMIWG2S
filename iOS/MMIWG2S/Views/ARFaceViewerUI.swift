@@ -13,6 +13,7 @@ protocol ARFaceViewerUIDelegate {
     func textureChanged(toRed: Bool)
     func generateShareImage() -> UIImage?
     func resumeSessionOnceCaptured()
+    func presentThankYouPage()
 }
 
 class ARFaceViewerUI: UIView {
@@ -293,8 +294,7 @@ class ARFaceViewerUI: UIView {
 
         let activityController = UIActivityViewController(activityItems: [jpgImage], applicationActivities: nil)
         activityController.completionWithItemsHandler = { [weak self] (activityType, completed: Bool, returnedItems: [Any]?, error: Error?) in
-            self?.delegate?.resumeSessionOnceCaptured()
-            self?.changeViewVisibility(isCapturing: true)
+            self?.delegate?.presentThankYouPage()
         }
 
         if MmiwUtility.isPad {

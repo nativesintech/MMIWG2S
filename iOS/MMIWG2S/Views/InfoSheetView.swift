@@ -71,35 +71,12 @@ class InfoSheetView: UIStackView {
         label.font = font
         label.textColor = .lightGray
         label.numberOfLines = numberOfLines
-        label.textAlignment = .center
+        label.textAlignment = .left
         label.adjustsFontSizeToFitWidth = true
         label.setContentHuggingPriority(.required, for: .vertical)
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         addArrangedSubview(label)
         setCustomSpacing(customSpacing, after: label)
-    }
-
-    private func setupField(with label: UILabel, field: UITextField, text: String, fieldCustomSpacing: CGFloat, isEmail: Bool) {
-        label.text = text
-        label.textColor = .lightGray
-        label.font = .roboto14
-        label.setContentHuggingPriority(.required, for: .vertical)
-        label.setContentCompressionResistancePriority(.required, for: .vertical)
-        addArrangedSubview(label)
-        setCustomSpacing(16, after: label)
-
-        field.textColor = .lightGray
-        field.backgroundColor = .lightGrayThirdAlpha
-        field.bounds.inset(by: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
-        field.keyboardType = isEmail ? .emailAddress : .namePhonePad
-        if isEmail {
-            field.autocapitalizationType = .none
-        }
-        field.tintColor = .lightGray
-        field.setContentHuggingPriority(.required, for: .vertical)
-        field.setContentCompressionResistancePriority(.required, for: .vertical)
-        addArrangedSubview(field)
-        setCustomSpacing(fieldCustomSpacing, after: field)
     }
 
     private func setupButton(button: UIButton, backgroundColor: UIColor, buttonTitle: String, selector: Selector) {
@@ -125,4 +102,3 @@ class InfoSheetView: UIStackView {
         nextButtonAction = nextAction
     }
 }
-

@@ -90,7 +90,6 @@ class FacesARViewController: UIViewController {
 // MARK: - ARFaceViewerUIDelegate
 
 extension FacesARViewController: ARFaceViewerUIDelegate {
-    
     func textureChanged(toRed: Bool) {
         guard let contentNode = sceneView.scene.rootNode.childNode(withName: faceNodeName, recursively: true) else { return }
         if toRed {
@@ -109,7 +108,16 @@ extension FacesARViewController: ARFaceViewerUIDelegate {
     func resumeSessionOnceCaptured() {
         resetTracking()
     }
-    
+
+    func presentThankYouPage() {
+        let viewController = MmiwUtility.thankYouViewController(showBackButton: true)
+        viewController.setupButtonActions { [weak self] in
+            self?.resumeSessionOnceCaptured()
+            self?.faceViewer.changeViewVisibility(isCapturing: true)
+            self?.navigationController?.popViewController(animated: true)
+        }
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 // MARK: - ARSessionDelegate

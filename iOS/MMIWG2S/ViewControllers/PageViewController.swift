@@ -172,8 +172,7 @@ extension PageViewController {
             var nextViewController: UIViewController {
                 if let infoSheetViewController = MmiwUtility.faceViewController as? InfoSheetViewController {
                     infoSheetViewController.setupButtonActions { [weak self] in
-                        // TODO use Thank You view controller.
-                        self?.setViewControllers([InfoSheetViewController(image: UIImage.init(named: "ar-background"), title: "TESTING !@#", message: "aldskjfhlaksjdhfahsldf lkajsdlf alskdjhf lkajshdlf asldfhlaskjdhflas dhfla sdlfjh asdjhfhl akjdshf ")],
+                        self?.setViewControllers([MmiwUtility.thankYouViewController(showBackButton: false)],
                                                  direction: .forward,
                                                  animated: true,
                                                  completion: nil)
