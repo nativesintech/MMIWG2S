@@ -22,8 +22,10 @@ class ShareSheetView: UIStackView {
     private let messageLabel = UILabel()
     private let nameFieldLabel = UILabel()
     private let nameField = ShareSheetViewTextField()
+    private let nameErrorLabel = UILabel()
     private let emailFieldLabel = UILabel()
     private let emailField = ShareSheetViewTextField()
+    private let emailErrorLabel = UILabel()
     private let shareButton = UIButton()
     private let skipButton = UIButton()
     private var backButtonAction: (() -> Void)?
@@ -54,11 +56,26 @@ class ShareSheetView: UIStackView {
         setupLabel(with: titleLabel, text: viewConfig.title, font: .roboto24, customSpacing: 12)
         setupLabel(with: messageLabel, text: viewConfig.message, font: .roboto16, customSpacing: 20)
 
-        setupField(with: nameFieldLabel, field: nameField, text: .sharepagename, fieldCustomSpacing: 16, isEmail: false)
-        setupField(with: emailFieldLabel, field: emailField, text: .sharepageemail, fieldCustomSpacing: 40, isEmail: true)
+        setupField(with: nameFieldLabel, field: nameField, text: .sharepagename, fieldCustomSpacing: 8, isEmail: false)
+        setupErrorLabel(with: nameErrorLabel, customSpacing: 16)
+
+        setupField(with: emailFieldLabel, field: emailField, text: .sharepageemail, fieldCustomSpacing: 16, isEmail: true)
+        setupErrorLabel(with: emailErrorLabel, customSpacing: 16)
 
         setupButton(button: shareButton, backgroundColor: .offRed, buttonTitle: .sharepageshare, selector: #selector(shareButtonTapped))
         setupButton(button: skipButton, backgroundColor: .clear, buttonTitle: .sharepageskip, selector: #selector(skipButtonTapped))
+    }
+
+    private func setupErrorLabel(with label: UILabel, customSpacing: CGFloat) {
+        label.text = .sharepageerrorlabel
+        label.isHidden = true
+        label.font = .roboto14
+        label.textColor = .systemRed
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
+        label.setContentHuggingPriority(.required, for: .vertical)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        addArrangedSubview(label)
+        setCustomSpacing(customSpacing, after: label)
     }
 
     private func setupBackButton() {
@@ -112,7 +129,7 @@ class ShareSheetView: UIStackView {
         label.setContentHuggingPriority(.required, for: .vertical)
         label.setContentCompressionResistancePriority(.required, for: .vertical)
         addArrangedSubview(label)
-        setCustomSpacing(16, after: label)
+        setCustomSpacing(8, after: label)
 
         field.textColor = .lightGray
         field.backgroundColor = .lightGrayThirdAlpha
@@ -138,6 +155,7 @@ class ShareSheetView: UIStackView {
         button.setContentHuggingPriority(.required, for: .vertical)
         button.setContentCompressionResistancePriority(.required, for: .vertical)
         addArrangedSubview(button)
+        setCustomSpacing(16, after: button)
     }
 
     @objc private func skipButtonTapped() {
@@ -149,9 +167,29 @@ class ShareSheetView: UIStackView {
     }
 
     @objc private func shareButtonTapped() {
-        if let email = emailField.text,
-           let name = nameField.text {
-            shareButtonAction?(name, email)
+        guard let nameFieldText = nameField.text,
+              let emailFieldText = emailField.text else {
+                  print("Error sharing image: Name or Email field text was nil")
+                  return
+              }
+
+        let nameFieldTextIsValid = !nameFieldText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        let emailFieldTextIsValid = emailFieldText.trimmingCharacters(in: .whitespacesAndNewlines).isValidEmail()
+
+        if nameFieldTextIsValid {
+            setError(fieldLabel: nameFieldLabel, field: nameField, errorLabel: nameErrorLabel, show: false)
+        } else {
+            setError(fieldLabel: nameFieldLabel, field: nameField, errorLabel: nameErrorLabel, show: true)
+        }
+
+        if emailFieldTextIsValid {
+            setError(fieldLabel: emailFieldLabel, field: emailField, errorLabel: emailErrorLabel, show: false)
+        } else {
+            setError(fieldLabel: emailFieldLabel, field: emailField, errorLabel: emailErrorLabel, show: true)
+        }
+
+        if nameFieldTextIsValid && emailFieldTextIsValid {
+            shareButtonAction?(nameFieldText, emailFieldText)
         }
     }
 
@@ -174,6 +212,13 @@ class ShareSheetView: UIStackView {
             emailField.resignFirstResponder()
             nameField.becomeFirstResponder()
         }
+    }
+
+    func setError(fieldLabel: UILabel, field: UITextField, errorLabel: UILabel, show: Bool) {
+        let color = show ? UIColor.systemRed : .white
+        fieldLabel.textColor = color
+        errorLabel.isHidden = !show
+        layoutIfNeeded()
     }
 }
 

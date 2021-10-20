@@ -11,6 +11,13 @@ import UIKit
 import VideoToolbox
 
 extension String {
+    func isValidEmail() -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+
+        let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        return emailPred.evaluate(with: self)
+    }
+
     static let ok = NSLocalizedString("error.ok", comment: "Ok")
     static let errorARSessionTitle = NSLocalizedString("error.arsessionfailure", comment: "Title for error message when AR session fails")
     static let missing = NSLocalizedString("intro.missing", comment: "Missing")
@@ -44,6 +51,7 @@ extension String {
     static let sharepageemail = NSLocalizedString("sharepage.emailaddress", comment: "Email Address")
     static let sharepagetitle = NSLocalizedString("sharepage.header", comment: "Share with us?")
     static let sharepagemessage = NSLocalizedString("sharepage.message", comment: "What we will do with the info")
+    static let sharepageerrorlabel = NSLocalizedString("sharepage.errorlabel", comment: "Field required error.")
 
     static let unsupporteddevicetitle = NSLocalizedString("unsupporteddevice.title", comment: "Unsupported Device Title")
     static let unsupporteddevicebody = NSLocalizedString("unsupporteddevice.body", comment: "Unsupported Device Body")

@@ -33,6 +33,7 @@
 "sharepage.name" = "Name";
 "sharepage.share" = "Share";
 "sharepage.skip" = "Skip";
+"sharepage.errorlabel" = "This field is required.";
 
 "statistic.1.text" = "On some reservations, native women are murdered at a rate 10 times the national average.";
 "statistic.2.text" = "Between 2005-2009, U.S. attorneys declined to prosecute 67% of Native community matters involving sexual abuse.";
