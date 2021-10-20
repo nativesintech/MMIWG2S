@@ -17,7 +17,7 @@ class InfoSheetViewController: UIViewController {
         super.viewDidLoad()
     }
 
-    convenience init(image: UIImage?, title: String, message: String) {
+    convenience init(image: UIImage?, title: String, message: String, buttonName: String) {
         self.init()
 
         view.backgroundColor = .offBlack
@@ -29,7 +29,8 @@ class InfoSheetViewController: UIViewController {
                 viewConfig: InfoSheetView.InfoSheetViewConfig(
                     image: image,
                     title: title,
-                    message: message
+                    message: message,
+                    buttonName: buttonName
                 )
             )
         }

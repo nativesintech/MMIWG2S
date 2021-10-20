@@ -131,11 +131,9 @@ extension FacesARViewController: ARSessionDelegate {
            arError.code == .cameraUnauthorized {
 
             DispatchQueue.main.async { [weak self] in
-                let cameraInfoViewController = InfoSheetViewController(image: UIImage(named: "camera-permissions"), title: .camerapermissionstitle, message: .camerapermissionsbody)
+                let cameraInfoViewController = InfoSheetViewController(image: UIImage(named: "camera-permissions"), title: .camerapermissionstitle, message: .camerapermissionsbody, buttonName: .camerapermissionsbuttonname)
                 cameraInfoViewController.setupButtonActions { [weak self] in
-
-                    // ADD THANK YOU PAGE HERE
-                    self?.navigationController?.pushViewController(InfoSheetViewController(image: UIImage.init(named: "ar-background"), title: "TESTING !@#", message: "aldskjfhlaksjdhfahsldf lkajsdlf alskdjhf lkajshdlf asldfhlaskjdhflas dhfla sdlfjh asdjhfhl akjdshf "), animated: true)
+                    self?.navigationController?.pushViewController(MmiwUtility.thankYouViewController(showBackButton: false), animated: true)
                 }
 
                 self?.navigationController?.pushViewController(cameraInfoViewController, animated: true)

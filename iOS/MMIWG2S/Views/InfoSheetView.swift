@@ -23,6 +23,7 @@ class InfoSheetView: UIStackView {
         let image: UIImage
         let title: String
         let message: String
+        let buttonName: String
     }
 
     convenience init(viewConfig: InfoSheetViewConfig) {
@@ -47,7 +48,7 @@ class InfoSheetView: UIStackView {
                    font: MmiwUtility.isPad ? .roboto24 : .roboto16,
                    customSpacing: 20)
 
-        setupButton(button: nextButton, backgroundColor: .offRed, buttonTitle: .next, selector: #selector(nextButtonTapped))
+        setupButton(button: nextButton, backgroundColor: .offRed, buttonTitle: viewConfig.buttonName, selector: #selector(nextButtonTapped))
     }
 
     private func setupImageView(with image: UIImage) {

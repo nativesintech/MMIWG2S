@@ -45,6 +45,7 @@
 "unsupporteddevice.body" = "This app only works on iOS devices with FaceID:\n • iPhone X or newer (Not SE)\n • iPad Pro 11 inch (All generations)\n • iPad Pro 12.9 inch (3rd generation or newer)\n\nPress 'Next' to learn more about how you can support this project in other ways.";
 "camerapermissions.title" = "Camera Permissions Needed";
 "camerapermissions.body" = "To continue:\n • Please go the iOS settings\n • Find and tap MMIW then allow camera permissions\n • Once updated, please restart the app for best results\n\nThank you!";
+"camerapermissions.button.name" = "Learn More";
 
 // MARK: Thank You Sheet
 "thankyou.videodesciption" = "To learn more, watch this Somebody’s Daughter trailer:";

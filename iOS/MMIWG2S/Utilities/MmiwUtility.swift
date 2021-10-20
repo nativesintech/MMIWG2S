@@ -14,7 +14,7 @@ class MmiwUtility {
         if ARFaceTrackingConfiguration.isSupported {
             return FacesARViewController()
         } else {
-            return InfoSheetViewController(image: UIImage(named: "unsupported-device"), title: .unsupporteddevicetitle, message: .unsupporteddevicebody)
+            return InfoSheetViewController(image: UIImage(named: "unsupported-device"), title: .unsupporteddevicetitle, message: .unsupporteddevicebody, buttonName: .next)
         }
     }
 

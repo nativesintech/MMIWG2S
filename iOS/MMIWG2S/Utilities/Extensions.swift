@@ -49,6 +49,7 @@ extension String {
     static let unsupporteddevicebody = NSLocalizedString("unsupporteddevice.body", comment: "Unsupported Device Body")
     static let camerapermissionstitle = NSLocalizedString("camerapermissions.title", comment: "Camera Permissions Needed Title")
     static let camerapermissionsbody = NSLocalizedString("camerapermissions.body", comment: "Camera Permissions Needed Body")
+    static let camerapermissionsbuttonname = NSLocalizedString("camerapermissions.button.name", comment: "Camera Permissions Button Name")
 
     static let thankyouvideodescription = NSLocalizedString("thankyou.videodesciption", comment: "Video description")
     static let thankyousubheader = NSLocalizedString("thankyou.subheader", comment: "Thank you subheader")
