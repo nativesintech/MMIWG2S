@@ -39,15 +39,17 @@ import com.mehequanna.mmiw.network.RetrofitEventListener
 import com.mehequanna.mmiw.network.Submission
 import com.mehequanna.mmiw.network.SubmissionRestClient
 import kotlinx.android.synthetic.main.activity_mmiw_ar.*
+import kotlinx.android.synthetic.main.final_page_layout.*
 import kotlinx.android.synthetic.main.share_with_us_layout.*
 import retrofit2.Call
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.util.*
 
 class MmiwActivity : AppCompatActivity() {
-    private val TAG: String = MmiwActivity::class.java.name
+    private val TAG: String = MmiwActivity.javaClass.name
     private lateinit var arFragment: FaceArFragment
     private var faceMeshTexture: Texture? = null
     private var faceNodeMap = HashMap<AugmentedFace, AugmentedFaceNode>()
@@ -68,9 +70,9 @@ class MmiwActivity : AppCompatActivity() {
         if (!checkIsSupportedDeviceOrFinish()) {
             return
         }
-
         setContentView(R.layout.activity_mmiw_ar)
         arFragment = face_fragment as FaceArFragment
+        lifecycle.addObserver(youtubePlayerContainer)
         Texture.builder()
             .setSource(this, R.drawable.hand_red_solid)
             .build()
@@ -125,12 +127,29 @@ class MmiwActivity : AppCompatActivity() {
         setViewOnClickerListeners()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        youtubePlayerContainer.release()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SHARE_INTENT_CODE) {
             if (resultCode == RESULT_OK || resultCode == RESULT_CANCELED) {
                 resetToCapturing()
+                showFinalPage()
             }
+        }
+    }
+
+    override fun onBackPressed() {
+        if (back_button.visibility != View.GONE) {
+            backButtonPressed()
+        }
+        else if (final_page_layout.visibility == View.GONE) {
+            showFinalPage()
+        } else {
+            super.onBackPressed()
         }
     }
 
@@ -190,7 +209,7 @@ class MmiwActivity : AppCompatActivity() {
     private fun setViewOnClickerListeners() {
         capture_button.setOnClickListener {
             it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-            changeButtonVisibility(false)
+            changeButtonVisibility(ButtonState.IMAGE_CAPTURED)
             pauseSceneView(true)
         }
 
@@ -210,9 +229,7 @@ class MmiwActivity : AppCompatActivity() {
         }
 
         back_button.setOnClickListener {
-            it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-            changeButtonVisibility(true)
-            pauseSceneView(false)
+            backButtonPressed()
         }
 
         color_button_black.setOnClickListener { blackButton ->
@@ -232,6 +249,12 @@ class MmiwActivity : AppCompatActivity() {
             faceMeshTexture = redHand
             changeColor = true
         }
+    }
+
+    private fun backButtonPressed() {
+        back_button.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+        changeButtonVisibility(ButtonState.CAPTURING)
+        pauseSceneView(false)
     }
 
     private fun takeScreenshot(): Bitmap =
@@ -256,17 +279,36 @@ class MmiwActivity : AppCompatActivity() {
         return combinedBitmap
     }
 
-    private fun changeButtonVisibility(isCapturing: Boolean) {
-        // Capture and hand option view
-        color_button_black.visibility = if (isCapturing) View.VISIBLE else View.GONE
-        color_button_red.visibility = if (isCapturing) View.VISIBLE else View.GONE
-        capture_button.visibility = if (isCapturing) View.VISIBLE else View.GONE
-        capture_button.isEnabled = isCapturing
-
-        // Statistics and send view.
-        back_group.visibility = if (isCapturing) View.GONE else View.VISIBLE
-        share_group.visibility = if (isCapturing) View.GONE else View.VISIBLE
-        statisticsViewPager.visibility = if (isCapturing) View.GONE else View.VISIBLE
+    private fun changeButtonVisibility(buttonVisbility: ButtonState) {
+        when (buttonVisbility) {
+            ButtonState.CAPTURING -> {
+                color_button_black.visibility = View.VISIBLE
+                color_button_red.visibility = View.VISIBLE
+                capture_button.visibility = View.VISIBLE
+                capture_button.isEnabled = true
+                back_group.visibility = View.GONE
+                share_group.visibility = View.GONE
+                statisticsViewPager.visibility = View.GONE
+            }
+            ButtonState.IMAGE_CAPTURED -> {
+                color_button_black.visibility = View.GONE
+                color_button_red.visibility = View.GONE
+                capture_button.visibility = View.GONE
+                capture_button.isEnabled = false
+                back_group.visibility = View.VISIBLE
+                share_group.visibility = View.VISIBLE
+                statisticsViewPager.visibility = View.VISIBLE
+            }
+            ButtonState.HIDE_ALL -> {
+                color_button_black.visibility = View.GONE
+                color_button_red.visibility = View.GONE
+                capture_button.visibility = View.GONE
+                capture_button.isEnabled = false
+                back_group.visibility = View.GONE
+                share_group.visibility = View.GONE
+                statisticsViewPager.visibility = View.GONE
+            }
+        }
     }
 
     private fun pauseSceneView(pause: Boolean) =
@@ -275,7 +317,7 @@ class MmiwActivity : AppCompatActivity() {
     // this sets all the views back to how they should be when capturing as if it were the first time
     private fun resetToCapturing() {
         pauseSceneView(false)
-        changeButtonVisibility(true)
+        changeButtonVisibility(ButtonState.CAPTURING)
         statisticsCaptureView.visibility = View.INVISIBLE
         share_button.isEnabled = true
         imagesObtained = false
@@ -325,7 +367,7 @@ class MmiwActivity : AppCompatActivity() {
             // Re-enable capture_button even if the PixelCopy fails.
             runOnUiThread {
                 if (!imagesObtained) {
-                    changeButtonVisibility(true)
+                    changeButtonVisibility(ButtonState.CAPTURING)
                     statisticsCaptureView.visibility = View.INVISIBLE
                     share_button.isEnabled = true
                 }
@@ -366,6 +408,11 @@ class MmiwActivity : AppCompatActivity() {
             share_with_us_layout.visibility = View.GONE
             sharePhoto(imageFile)
         }
+    }
+
+    private fun showFinalPage() {
+        changeButtonVisibility(ButtonState.HIDE_ALL)
+        fadeInView(final_page_layout)
     }
 
     private fun sharePhoto(file: File) {
@@ -467,6 +514,11 @@ class MmiwActivity : AppCompatActivity() {
     companion object {
         const val MIN_OPENGL_VERSION = 3.0
         private const val SHARE_INTENT_CODE = 12
+        private enum class ButtonState {
+            CAPTURING,
+            IMAGE_CAPTURED,
+            HIDE_ALL
+        }
     }
 }
 
