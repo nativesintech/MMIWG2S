@@ -4,4 +4,3 @@ project './MMIWG2S.xcodeproj'
 
 target 'MMIWG2S'
 platform :ios, '11.0'
-pod 'ARCore/AugmentedFaces', '~> 1.27.0'
