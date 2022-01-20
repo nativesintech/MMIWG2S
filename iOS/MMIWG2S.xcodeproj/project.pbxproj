@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -34,7 +34,7 @@
 		5DC5A3B3261ED4F000BE0BE4 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC5A3B2261ED4F000BE0BE4 /* Network.swift */; };
 		5DC5A3B6261ED52E00BE0BE4 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC5A3B5261ED52E00BE0BE4 /* Logger.swift */; };
 		5DC5A3DF262A98CF00BE0BE4 /* FaceMeshGeometryConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC5A3DE262A98CF00BE0BE4 /* FaceMeshGeometryConverter.swift */; };
-		6933B02823172482007E1C28 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		6933B02823172482007E1C28 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		6933B02923172482007E1C28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6933B02023172481007E1C28 /* LaunchScreen.storyboard */; };
 		6933B02A23172482007E1C28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6933B02123172481007E1C28 /* Assets.xcassets */; };
 		6933B02B23172482007E1C28 /* FacesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6933B02223172481007E1C28 /* FacesViewController.swift */; };
@@ -93,13 +93,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5D5D0BDA2546595D0097BC25 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		5D5D0BE125465C820097BC25 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,7 +186,6 @@
 		6933B01E23172481007E1C28 /* MMIWG2S */ = {
 			isa = PBXGroup;
 			children = (
-				5D5D0BDA2546595D0097BC25 /* Model */,
 				5DA8A10A24EA192B001D8E41 /* Utilities */,
 				5D5D0BE125465C820097BC25 /* Views */,
 				5DA8A10E24ECD19A001D8E41 /* Components */,
@@ -336,7 +328,7 @@
 				5D5D0BD72546521F0097BC25 /* FacesARViewController.swift in Sources */,
 				5D68E48825F8943E00A81610 /* PageViewController.swift in Sources */,
 				38B1AEFC26464DDA007A0616 /* ShareSheetViewController.swift in Sources */,
-				6933B02823172482007E1C28 /* BuildFile in Sources */,
+				6933B02823172482007E1C28 /* (null) in Sources */,
 				5DC5A3DF262A98CF00BE0BE4 /* FaceMeshGeometryConverter.swift in Sources */,
 				5DC5A3B6261ED52E00BE0BE4 /* Logger.swift in Sources */,
 				5DC5A3B3261ED4F000BE0BE4 /* Network.swift in Sources */,
