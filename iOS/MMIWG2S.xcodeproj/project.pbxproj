@@ -53,6 +53,8 @@
 		38875EF9269D05F40018AD81 /* MmiwUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MmiwUtility.swift; sourceTree = "<group>"; };
 		38B1AEFB26464DDA007A0616 /* ShareSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetViewController.swift; sourceTree = "<group>"; };
 		38B1AEFD26464E0D007A0616 /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
+		38C57AD42799E35500D93A62 /* Test Hands.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Test Hands.xcassets"; sourceTree = "<group>"; };
+		38C57AD62799E3B200D93A62 /* Test Hands.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = "Test Hands.scnassets"; sourceTree = "<group>"; };
 		3D9B33E3028E2352E2DCC2B8 /* Pods-MMIWG2S.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MMIWG2S.release.xcconfig"; path = "Target Support Files/Pods-MMIWG2S/Pods-MMIWG2S.release.xcconfig"; sourceTree = "<group>"; };
 		5D5D0BD62546521F0097BC25 /* FacesARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacesARViewController.swift; sourceTree = "<group>"; };
 		5D5D0BE225465C9A0097BC25 /* ARFaceViewerUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARFaceViewerUI.swift; sourceTree = "<group>"; };
@@ -115,6 +117,8 @@
 				5DA8A10424EA18DB001D8E41 /* Roboto-Regular.ttf */,
 				5D68E47225F891E100A81610 /* Roboto-Bold.ttf */,
 				5DA8A10624EA1904001D8E41 /* Localizable.strings */,
+				38C57AD42799E35500D93A62 /* Test Hands.xcassets */,
+				38C57AD62799E3B200D93A62 /* Test Hands.scnassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
