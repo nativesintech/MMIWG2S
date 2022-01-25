@@ -43,7 +43,12 @@ class PageViewController: UIPageViewController, UIPageViewControllerDataSource {
     }
 
     // TODO: Adding AgreementViewConrtoller here makes it always show up when swiping.
+    
+#if APPCLIP
+    private(set) lazy var orderedViewControllers: [UIViewController] = array + [UIViewController()]
+#else
     private(set) lazy var orderedViewControllers: [UIViewController] = array + [AgreementViewController()]
+#endif
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -164,11 +169,18 @@ extension PageViewController {
                                animated:true,
                                completion:nil)
         } else {
+#if APPCLIP
+//            setViewControllers([ThankYouSheetViewController()],
+//                               direction: .forward,
+//                               animated: true,
+//                               completion: nil)
+#else
+            
             let termsAccepted = MmiwUtility.getUserDefaultBool(defaultType: MmiwUtility.UserDefaultKey.accepted)
-
+            
             labelMMIW.isHidden = termsAccepted
             nextButtonStackView.isHidden = true
-
+            
             var nextViewController: UIViewController {
                 if let infoSheetViewController = MmiwUtility.faceViewController as? InfoSheetViewController {
                     infoSheetViewController.setupButtonActions { [weak self] in
@@ -182,11 +194,13 @@ extension PageViewController {
                     return MmiwUtility.faceViewController
                 }
             }
-
+            
             setViewControllers(termsAccepted ? [nextViewController] : [AgreementViewController()],
                                direction: .forward,
                                animated: true,
                                completion: nil)
+            
+#endif
         }
     }
 

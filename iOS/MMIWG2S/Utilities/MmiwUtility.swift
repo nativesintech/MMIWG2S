@@ -11,17 +11,22 @@ import ARKit
 
 class MmiwUtility {
     static var faceViewController: UIViewController {
+#if APPCLIP
+        return InfoSheetViewController(image: UIImage(named: "unsupported-device"), title: .unsupporteddevicetitle, message: .unsupporteddevicebody, buttonName: .next)
+#else
         if ARFaceTrackingConfiguration.isSupported {
             return FacesARViewController()
         } else {
             return InfoSheetViewController(image: UIImage(named: "unsupported-device"), title: .unsupporteddevicetitle, message: .unsupporteddevicebody, buttonName: .next)
         }
+#endif
     }
 
     static var isPad: Bool {
         UIDevice.current.userInterfaceIdiom == .pad ? true : false
     }
 
+#if !APPCLIP
     static func thankYouViewController(showBackButton: Bool) -> ThankYouSheetViewController { ThankYouSheetViewController(
         showBackButton: showBackButton,
         header: .mmiw,
@@ -30,6 +35,7 @@ class MmiwUtility {
         subheader: .thankyousubheader,
         thankYouBody: .thankyoubody)
     }
+#endif
 
     // MARK: UserDefault Helper methods
     enum UserDefaultKey: String {

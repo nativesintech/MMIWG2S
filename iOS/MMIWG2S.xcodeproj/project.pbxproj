@@ -17,6 +17,23 @@
 		38875EFA269D05F40018AD81 /* MmiwUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38875EF9269D05F40018AD81 /* MmiwUtility.swift */; };
 		38B1AEFC26464DDA007A0616 /* ShareSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B1AEFB26464DDA007A0616 /* ShareSheetViewController.swift */; };
 		38B1AEFE26464E0D007A0616 /* ShareSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B1AEFD26464E0D007A0616 /* ShareSheetView.swift */; };
+		38C57AE0279A1CBB00D93A62 /* MMIWG2SAppClipApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C57ADF279A1CBB00D93A62 /* MMIWG2SAppClipApp.swift */; };
+		38C57AE2279A1CBB00D93A62 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C57AE1279A1CBB00D93A62 /* ContentView.swift */; };
+		38C57AE7279A1CBD00D93A62 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 38C57AE6279A1CBD00D93A62 /* Preview Assets.xcassets */; };
+		38C57AEC279A1CBD00D93A62 /* MMIWG2SAppClip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = 38C57ADD279A1CBB00D93A62 /* MMIWG2SAppClip.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		38C57AF1279A1CDF00D93A62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6933B02123172481007E1C28 /* Assets.xcassets */; };
+		38C57AF2279A205900D93A62 /* SlideviewImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D68E47125F891E100A81610 /* SlideviewImages.xcassets */; };
+		38C57AF4279A206500D93A62 /* IntroAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D77DABD25EF36EB00DA7009 /* IntroAnimationViewController.swift */; };
+		38C57AF5279A208000D93A62 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA8A10C24EA199E001D8E41 /* Extensions.swift */; };
+		38C57AF6279A209A00D93A62 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DC5A3B5261ED52E00BE0BE4 /* Logger.swift */; };
+		38C57AF7279A209D00D93A62 /* MmiwUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38875EF9269D05F40018AD81 /* MmiwUtility.swift */; };
+		38C57AF8279A20A200D93A62 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D68E48725F8943E00A81610 /* PageViewController.swift */; };
+		38C57AF9279A20B700D93A62 /* InfoSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387F8A9D27179739009D86E2 /* InfoSheetViewController.swift */; };
+		38C57AFA279A20CD00D93A62 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D68E47E25F8924B00A81610 /* IntroViewController.swift */; };
+		38C57AFB279A210700D93A62 /* InfoSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387F8A9F27179881009D86E2 /* InfoSheetView.swift */; };
+		38C57AFC279A2D8D00D93A62 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D68E47225F891E100A81610 /* Roboto-Bold.ttf */; };
+		38C57AFD279A2D8D00D93A62 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5DA8A10424EA18DB001D8E41 /* Roboto-Regular.ttf */; };
+		38C57AFE279A2D9000D93A62 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5DA8A10624EA1904001D8E41 /* Localizable.strings */; };
 		5D5D0BD72546521F0097BC25 /* FacesARViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5D0BD62546521F0097BC25 /* FacesARViewController.swift */; };
 		5D5D0BE325465C9A0097BC25 /* ARFaceViewerUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5D0BE225465C9A0097BC25 /* ARFaceViewerUI.swift */; };
 		5D68E47325F891E100A81610 /* SlideviewImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5D68E47125F891E100A81610 /* SlideviewImages.xcassets */; };
@@ -42,6 +59,30 @@
 		6933B02D23172482007E1C28 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6933B02423172481007E1C28 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		38C57AEA279A1CBD00D93A62 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 692DB6D422FCA472007A4EEF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 38C57ADC279A1CBB00D93A62;
+			remoteInfo = MMIWG2SAppClip;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		38C57AED279A1CBD00D93A62 /* Embed App Clips */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/AppClips";
+			dstSubfolderSpec = 16;
+			files = (
+				38C57AEC279A1CBD00D93A62 /* MMIWG2SAppClip.app in Embed App Clips */,
+			);
+			name = "Embed App Clips";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		0904D3A942CABB86A39EB50A /* libPods-MMIWG2S.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MMIWG2S.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		22F604DC262F182C00B694AD /* AgreementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AgreementViewController.swift; sourceTree = "<group>"; };
@@ -53,8 +94,13 @@
 		38875EF9269D05F40018AD81 /* MmiwUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MmiwUtility.swift; sourceTree = "<group>"; };
 		38B1AEFB26464DDA007A0616 /* ShareSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetViewController.swift; sourceTree = "<group>"; };
 		38B1AEFD26464E0D007A0616 /* ShareSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheetView.swift; sourceTree = "<group>"; };
-		38C57AD42799E35500D93A62 /* Test Hands.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Test Hands.xcassets"; sourceTree = "<group>"; };
 		38C57AD62799E3B200D93A62 /* Test Hands.scnassets */ = {isa = PBXFileReference; lastKnownFileType = wrapper.scnassets; path = "Test Hands.scnassets"; sourceTree = "<group>"; };
+		38C57ADD279A1CBB00D93A62 /* MMIWG2SAppClip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MMIWG2SAppClip.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		38C57ADF279A1CBB00D93A62 /* MMIWG2SAppClipApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MMIWG2SAppClipApp.swift; sourceTree = "<group>"; };
+		38C57AE1279A1CBB00D93A62 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		38C57AE6279A1CBD00D93A62 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		38C57AE8279A1CBD00D93A62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		38C57AE9279A1CBD00D93A62 /* MMIWG2SAppClip.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MMIWG2SAppClip.entitlements; sourceTree = "<group>"; };
 		3D9B33E3028E2352E2DCC2B8 /* Pods-MMIWG2S.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MMIWG2S.release.xcconfig"; path = "Target Support Files/Pods-MMIWG2S/Pods-MMIWG2S.release.xcconfig"; sourceTree = "<group>"; };
 		5D5D0BD62546521F0097BC25 /* FacesARViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FacesARViewController.swift; sourceTree = "<group>"; };
 		5D5D0BE225465C9A0097BC25 /* ARFaceViewerUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARFaceViewerUI.swift; sourceTree = "<group>"; };
@@ -84,6 +130,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		38C57ADA279A1CBB00D93A62 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		692DB6D922FCA472007A4EEF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -95,6 +148,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		38C57ADE279A1CBB00D93A62 /* MMIWG2SAppClip */ = {
+			isa = PBXGroup;
+			children = (
+				38C57ADF279A1CBB00D93A62 /* MMIWG2SAppClipApp.swift */,
+				38C57AE1279A1CBB00D93A62 /* ContentView.swift */,
+				38C57AE8279A1CBD00D93A62 /* Info.plist */,
+				38C57AE9279A1CBD00D93A62 /* MMIWG2SAppClip.entitlements */,
+				38C57AE5279A1CBD00D93A62 /* Preview Content */,
+			);
+			path = MMIWG2SAppClip;
+			sourceTree = "<group>";
+		};
+		38C57AE5279A1CBD00D93A62 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				38C57AE6279A1CBD00D93A62 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
 		5D5D0BE125465C820097BC25 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -117,7 +190,6 @@
 				5DA8A10424EA18DB001D8E41 /* Roboto-Regular.ttf */,
 				5D68E47225F891E100A81610 /* Roboto-Bold.ttf */,
 				5DA8A10624EA1904001D8E41 /* Localizable.strings */,
-				38C57AD42799E35500D93A62 /* Test Hands.xcassets */,
 				38C57AD62799E3B200D93A62 /* Test Hands.scnassets */,
 			);
 			path = Resources;
@@ -173,6 +245,7 @@
 			isa = PBXGroup;
 			children = (
 				6933B01E23172481007E1C28 /* MMIWG2S */,
+				38C57ADE279A1CBB00D93A62 /* MMIWG2SAppClip */,
 				692DB6DD22FCA472007A4EEF /* Products */,
 				96AE2E2B17F4EF661A6BFC2A /* Pods */,
 				C7F9B6DD0DE97A7D72539700 /* Frameworks */,
@@ -183,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				692DB6DC22FCA472007A4EEF /* MMIWG2S.app */,
+				38C57ADD279A1CBB00D93A62 /* MMIWG2SAppClip.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -222,6 +296,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		38C57ADC279A1CBB00D93A62 /* MMIWG2SAppClip */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 38C57AF0279A1CBD00D93A62 /* Build configuration list for PBXNativeTarget "MMIWG2SAppClip" */;
+			buildPhases = (
+				38C57AD9279A1CBB00D93A62 /* Sources */,
+				38C57ADA279A1CBB00D93A62 /* Frameworks */,
+				38C57ADB279A1CBB00D93A62 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MMIWG2SAppClip;
+			productName = MMIWG2SAppClip;
+			productReference = 38C57ADD279A1CBB00D93A62 /* MMIWG2SAppClip.app */;
+			productType = "com.apple.product-type.application.on-demand-install-capable";
+		};
 		692DB6DB22FCA472007A4EEF /* MMIWG2S */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 692DB6EE22FCA472007A4EEF /* Build configuration list for PBXNativeTarget "MMIWG2S" */;
@@ -230,10 +321,12 @@
 				692DB6D822FCA472007A4EEF /* Sources */,
 				692DB6D922FCA472007A4EEF /* Frameworks */,
 				692DB6DA22FCA472007A4EEF /* Resources */,
+				38C57AED279A1CBD00D93A62 /* Embed App Clips */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				38C57AEB279A1CBD00D93A62 /* PBXTargetDependency */,
 			);
 			name = MMIWG2S;
 			productName = FacesSample;
@@ -246,10 +339,13 @@
 		692DB6D422FCA472007A4EEF /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
+				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1300;
 				ORGANIZATIONNAME = "Google LLC";
 				TargetAttributes = {
+					38C57ADC279A1CBB00D93A62 = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
 					692DB6DB22FCA472007A4EEF = {
 						CreatedOnToolsVersion = 10.2.1;
 						LastSwiftMigration = 1020;
@@ -270,11 +366,25 @@
 			projectRoot = "";
 			targets = (
 				692DB6DB22FCA472007A4EEF /* MMIWG2S */,
+				38C57ADC279A1CBB00D93A62 /* MMIWG2SAppClip */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		38C57ADB279A1CBB00D93A62 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				38C57AE7279A1CBD00D93A62 /* Preview Assets.xcassets in Resources */,
+				38C57AFE279A2D9000D93A62 /* Localizable.strings in Resources */,
+				38C57AF1279A1CDF00D93A62 /* Assets.xcassets in Resources */,
+				38C57AFD279A2D8D00D93A62 /* Roboto-Regular.ttf in Resources */,
+				38C57AFC279A2D8D00D93A62 /* Roboto-Bold.ttf in Resources */,
+				38C57AF2279A205900D93A62 /* SlideviewImages.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		692DB6DA22FCA472007A4EEF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -317,6 +427,23 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		38C57AD9279A1CBB00D93A62 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				38C57AF5279A208000D93A62 /* Extensions.swift in Sources */,
+				38C57AF9279A20B700D93A62 /* InfoSheetViewController.swift in Sources */,
+				38C57AF7279A209D00D93A62 /* MmiwUtility.swift in Sources */,
+				38C57AFB279A210700D93A62 /* InfoSheetView.swift in Sources */,
+				38C57AF6279A209A00D93A62 /* Logger.swift in Sources */,
+				38C57AF4279A206500D93A62 /* IntroAnimationViewController.swift in Sources */,
+				38C57AFA279A20CD00D93A62 /* IntroViewController.swift in Sources */,
+				38C57AE2279A1CBB00D93A62 /* ContentView.swift in Sources */,
+				38C57AE0279A1CBB00D93A62 /* MMIWG2SAppClipApp.swift in Sources */,
+				38C57AF8279A20A200D93A62 /* PageViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		692DB6D822FCA472007A4EEF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -351,7 +478,87 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		38C57AEB279A1CBD00D93A62 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 38C57ADC279A1CBB00D93A62 /* MMIWG2SAppClip */;
+			targetProxy = 38C57AEA279A1CBD00D93A62 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		38C57AEE279A1CBD00D93A62 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = MMIWG2SAppClip/MMIWG2SAppClip.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MMIWG2SAppClip/Preview Content\"";
+				DEVELOPMENT_TEAM = 5J2KURWAZ9;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MMIWG2SAppClip/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MMIWG2S;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "-D APPCLIP";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mmiw.app.Clip;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		38C57AEF279A1CBD00D93A62 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_ENTITLEMENTS = MMIWG2SAppClip/MMIWG2SAppClip.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"MMIWG2SAppClip/Preview Content\"";
+				DEVELOPMENT_TEAM = 5J2KURWAZ9;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = MMIWG2SAppClip/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = MMIWG2S;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "-D APPCLIP";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mmiw.app.Clip;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		692DB6EC22FCA472007A4EEF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -408,6 +615,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -464,6 +672,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				OTHER_SWIFT_FLAGS = "";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -476,6 +685,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 89F2F32E02420C6971E55E35 /* Pods-MMIWG2S.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -503,6 +713,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3D9B33E3028E2352E2DCC2B8 /* Pods-MMIWG2S.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -528,6 +739,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		38C57AF0279A1CBD00D93A62 /* Build configuration list for PBXNativeTarget "MMIWG2SAppClip" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				38C57AEE279A1CBD00D93A62 /* Debug */,
+				38C57AEF279A1CBD00D93A62 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		692DB6D722FCA472007A4EEF /* Build configuration list for PBXProject "MMIWG2S" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
