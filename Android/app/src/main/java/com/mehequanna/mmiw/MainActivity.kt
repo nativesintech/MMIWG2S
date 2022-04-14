@@ -22,21 +22,21 @@ class MainActivity : AppCompatActivity(), StatViewPagerFragment.OnStatsCompleted
     }
 
     private fun launchIntroFragment() {
-        hashtag_text.visibility = View.GONE
+        hashtagText.visibility = View.GONE
         val introFragment = IntroFragment()
         fragmentManager
             .beginTransaction()
-            .add(R.id.fragment_intro_container, introFragment)
+            .add(R.id.introFragmentContainer, introFragment)
             .addToBackStack(null)
             .commit()
     }
 
     private fun launchStatsFragment() {
-        hashtag_text.visibility = View.VISIBLE
+        hashtagText.visibility = View.VISIBLE
         val statsFragment = StatViewPagerFragment()
         fragmentManager
             .beginTransaction()
-            .add(R.id.fragment_stats_container, statsFragment)
+            .add(R.id.statsFragmentContainer, statsFragment)
             .commit()
     }
 
@@ -44,14 +44,13 @@ class MainActivity : AppCompatActivity(), StatViewPagerFragment.OnStatsCompleted
         val respectFragment = TermsFragment()
         fragmentManager
             .beginTransaction()
-            .add(R.id.fragment_terms_container, respectFragment)
-            .addToBackStack(null)
+            .add(R.id.termsFragmentContainer, respectFragment)
             .commit()
     }
 
     override fun onBackPressed() {
-        val statsFragment = fragmentManager.findFragmentById(R.id.fragment_stats_container)
-        val termsFragment = fragmentManager.findFragmentById(R.id.fragment_terms_container)
+        val statsFragment = fragmentManager.findFragmentById(R.id.statsFragmentContainer)
+        val termsFragment = fragmentManager.findFragmentById(R.id.termsFragmentContainer)
         when {
             termsFragment != null -> {
                 fragmentManager.popBackStackImmediate()
@@ -66,7 +65,12 @@ class MainActivity : AppCompatActivity(), StatViewPagerFragment.OnStatsCompleted
     }
 
     private fun openArActivity() {
-        startActivity(Intent(this, MmiwActivity::class.java))
+        startActivity(
+            Intent(
+                this,
+                MmiwActivity::class.java
+            ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        )
     }
 
     override fun onStatsCompleted() {
