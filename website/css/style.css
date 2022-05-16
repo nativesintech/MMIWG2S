@@ -1,0 +1,40 @@
+body {
+    text-align: center;
+    margin: 0 64px 32px 64px;
+}
+
+.app-image {
+    max-width: 90%;
+}
+
+.install-images img {
+    max-height: 100px;
+    max-width: 70%;
+    padding: 12px;
+}
+
+img {
+    -webkit-filter: drop-shadow(5px 5px 5px #000);
+    filter: drop-shadow(5px 5px 5px #000);
+}
+
+a:link {
+    text-decoration: none;
+    color: #890002;
+}
+
+a:visited {
+    text-decoration: none;
+    color: #890002;
+}
+
+a:hover {
+    text-decoration: none;
+    color: #890002;
+}
+
+a:active {
+    text-decoration: none;
+    color: #890002;
+}
+
