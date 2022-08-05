@@ -132,13 +132,17 @@ class ARFaceViewerUI: UIView {
         self.captionPickerView = captionPickerView
     }
     
-    private func uploadImage(_ compressedImage: UIImage, name: String, email: String) {
+    private func uploadImage(_ compressedImage: Data?, name: String, email: String) {
         guard let nameData = name.data(using: .utf8),
               let emailData = email.data(using: .utf8),
               let verifiedData = "1".data(using: .utf8)
         else { return }
         
-        guard let imageData = compressedImage.pngData() else {
+        if let logImageData = compressedImage?.count {
+            print("INFO: Size of image in KB: %f ", Double(logImageData) / 1000.0)
+        }
+        
+        guard let imageData = compressedImage else {
             log.error("Unable to get image data. Posting user metadata without image")
             Network.post(
                 url: "https://mmiw.mehequanna.com/submissions",
@@ -162,7 +166,7 @@ class ARFaceViewerUI: UIView {
                 "name" : ("text", nameData),
                 "email" : ("text", emailData),
                 "verified" : ("text", verifiedData),
-                "image" : ("image/png", imageData)
+                "image" : ("image/jpeg", imageData)
             ],
             contentType: .multipartForm,
             completionHandler: { error, response in
@@ -208,7 +212,7 @@ class ARFaceViewerUI: UIView {
         guard let imageToShare = imageToShare else { return }
         
         // Use this to upload to the database. This will likely move :)
-        let scaledDownImage = imageToShare.compress(to: 1000)
+        let scaledDownImage = imageToShare.compress(maxKb: 990)
 
         self.uploadImage(scaledDownImage, name: name, email: email)
         self.shareImage()
