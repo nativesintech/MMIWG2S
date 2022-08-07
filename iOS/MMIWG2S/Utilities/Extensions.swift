@@ -132,37 +132,13 @@ extension UIImage {
         return imageColored
     }
     
-    // compress() and resize() are borrowed from: https://stackoverflow.com/a/63272794/7148271
-    func compress(to kb: Int, allowedMargin: CGFloat = 0.1) -> UIImage {
-        let bytes = kb * 1024
-        var compression: CGFloat = 1.0
-        let step: CGFloat = 0.1
-        var holderImage = self
-        var complete = false
-        while(!complete) {
-            guard let data = holderImage.pngData() else { break }
-            let ratio = data.count / bytes
-            if data.count < Int(CGFloat(bytes) * (1 + allowedMargin)) {
-                complete = true
-                return holderImage
-            } else {
-                let multiplier:CGFloat = CGFloat((ratio / 5) + 1)
-                compression -= (step * multiplier)
-            }
-            guard let newImage = holderImage.resize(withPercentage: compression) else { break }
-            holderImage = newImage
-        }
-        
-        return holderImage
+    func compress(maxKb: Double) -> Data? {
+        let quality: CGFloat = maxKb / self.sizeAsKb()
+        return self.jpegData(compressionQuality: quality)
     }
     
-    func resize(withPercentage percentage: CGFloat, isOpaque: Bool = true) -> UIImage? {
-        let canvas = CGSize(width: size.width * percentage, height: size.height * percentage)
-        let format = imageRendererFormat
-        format.opaque = isOpaque
-        return UIGraphicsImageRenderer(size: canvas, format: format).image {
-            _ in draw(in: CGRect(origin: .zero, size: canvas))
-        }
+    func sizeAsKb() -> Double {
+        Double(self.pngData()?.count ?? 0 / 1024)
     }
 }
 
