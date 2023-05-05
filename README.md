@@ -1,5 +1,12 @@
 # MMIW AR Face Mesh App
 
+## Download Now
+
+[![App Store](app-store.png)](https://apps.apple.com/us/app/mmiw/id1556958860)
+
+[![Play Store](play-store.png)](https://play.google.com/store/apps/details?id=com.mehequanna.mmiw&hl=en_US&gl=US)
+
+
 ## Project
 Our goal is to bring awareness to MMIW through the use of augmented reality face meshing technology. Users will learn about MMIW and then be able to take a picture with the iconic red hand over their face. They will then be able to share that picture with whatever social media or device they choose.  
 [Project Specs](PROJECT_SPECS.md)
