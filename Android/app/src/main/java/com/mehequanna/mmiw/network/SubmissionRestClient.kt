@@ -29,14 +29,14 @@ class SubmissionRestClient {
         val name: RequestBody = submission.name.toRequestBody("text/plain".toMediaType())
 
         apiSubmission?.submitInfo(name, email, fileRequestBody)?.enqueue(object : Callback<Submission> {
-            override fun onResponse(call: Call<Submission>?, response: Response<Submission>?) {
+            override fun onResponse(call: Call<Submission>, response: Response<Submission>) {
                 // This is the success callback. Though the response type is JSON, with Retrofit we get the response in the form of Response POJO class
-                if (response?.body() != null) {
+                if (response.body() != null) {
                     retrofitEventListener.onSuccess(call, response.body())
                 }
             }
 
-            override fun onFailure(call: Call<Submission>?, throwable: Throwable?) {
+            override fun onFailure(call: Call<Submission>, throwable: Throwable) {
                 // Error callback
                 retrofitEventListener.onError(call, throwable)
             }
