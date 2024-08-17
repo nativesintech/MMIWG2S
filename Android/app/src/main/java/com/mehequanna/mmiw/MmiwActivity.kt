@@ -49,7 +49,7 @@ import java.io.IOException
 import java.util.*
 
 class MmiwActivity : AppCompatActivity() {
-    private val TAG: String = MmiwActivity.javaClass.name
+    private val TAG: String = MmiwActivity::class.java.name
     private lateinit var arFragment: FaceArFragment
     private var faceMeshTexture: Texture? = null
     private var faceNodeMap = HashMap<AugmentedFace, AugmentedFaceNode>()
@@ -341,13 +341,13 @@ class MmiwActivity : AppCompatActivity() {
             if (copyResult == PixelCopy.SUCCESS) {
                 val file: File?
                 val databaseFile: File?
-                val bitmap: Bitmap?
                 try {
                     val screenElementsBitmap: Bitmap = takeScreenshot()
-                    bitmap = combineBitmaps(arViewBitmap, screenElementsBitmap)
-                    databaseFile = saveBitmapToDisk(bitmap.compressBitmapForDatabase())
-                    file = saveBitmapToDisk(bitmap)
-                    saveImageFiles(bitmap, file, databaseFile)
+                    combineBitmaps(arViewBitmap, screenElementsBitmap).also { combinedBitmap ->
+                        databaseFile = saveBitmapToDisk(combinedBitmap.compressBitmapForDatabase())
+                        file = saveBitmapToDisk(combinedBitmap)
+                        saveImageFiles(combinedBitmap, file, databaseFile)
+                    }
                 } catch (e: Exception) {
                     val toast: Toast = Toast.makeText(
                         this, e.toString(),

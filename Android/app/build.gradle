@@ -5,12 +5,12 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdk 33
+    compileSdk 34
     defaultConfig {
         applicationId "com.mehequanna.mmiw"
         minSdkVersion 24
-        targetSdkVersion 33
-        versionCode 4
+        targetSdkVersion 34
+        versionCode 7
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
