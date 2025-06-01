@@ -11,20 +11,22 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
-import kotlinx.android.synthetic.main.fragment_stat_viewpager.*
+import com.mehequanna.mmiw.databinding.FragmentStatViewpagerBinding
 
 class StatViewPagerFragment : Fragment() {
 
     private lateinit var pagerAdapter: StatSlidePagerAdapter
-
+    private var _binding: FragmentStatViewpagerBinding? = null
+    private val binding get() = _binding!!
     private var listener: OnStatsCompletedListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_stat_viewpager, container, false)
+    ): View {
+        _binding = FragmentStatViewpagerBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,9 +40,9 @@ class StatViewPagerFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         pagerAdapter =
             StatSlidePagerAdapter(fragmentManager ?: requireActivity().supportFragmentManager)
-        stat_pager.adapter = pagerAdapter
-        stat_pager.currentItem = 0
-        stat_pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+        binding.statPager.adapter = pagerAdapter
+        binding.statPager.currentItem = 0
+        binding.statPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
 
             override fun onPageScrollStateChanged(state: Int) {
             }
@@ -54,15 +56,20 @@ class StatViewPagerFragment : Fragment() {
             }
 
             override fun onPageSelected(position: Int) {
-                progressIndicator.setPage(position)
+                binding.progressIndicator.setPage(position)
             }
 
         })
-        progressIndicator.setPage(stat_pager.currentItem)
-        nextButton.setOnClickListener {
+        binding.progressIndicator.setPage(binding.statPager.currentItem)
+        binding.nextButton.setOnClickListener {
             it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
             onNextPressed()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onAttach(context: Context) {
@@ -74,23 +81,23 @@ class StatViewPagerFragment : Fragment() {
     }
 
     private fun onNextPressed() {
-        val currentPage = stat_pager.currentItem
+        val currentPage = binding.statPager.currentItem
         if (currentPage < NUM_PAGES - 1) {
-            stat_pager.currentItem = currentPage + 1
-            progressIndicator.setPage(stat_pager.currentItem)
+            binding.statPager.currentItem = currentPage + 1
+            binding.progressIndicator.setPage(binding.statPager.currentItem)
         } else {
             listener?.onStatsCompleted()
         }
     }
 
     fun onBackPressed() {
-        if (stat_pager.currentItem == 0) {
+        if (binding.statPager.currentItem == 0) {
             // If the user is currently looking at the first step, allow the system to handle the
             // Back button. This calls finish() on this activity and pops the back stack.
             listener?.onBackedOut()
         } else {
             // Otherwise, select the previous step.
-            stat_pager.currentItem = stat_pager.currentItem - 1
+            binding.statPager.currentItem = binding.statPager.currentItem - 1
         }
     }
 

@@ -4,9 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), StatViewPagerFragment.OnStatsCompletedListener,
     TermsFragment.OnTermsAcceptedListener, IntroFragment.OnIntroAnimationCompletedListener {
@@ -22,7 +20,6 @@ class MainActivity : AppCompatActivity(), StatViewPagerFragment.OnStatsCompleted
     }
 
     private fun launchIntroFragment() {
-        hashtagText.visibility = View.GONE
         val introFragment = IntroFragment()
         fragmentManager
             .beginTransaction()
@@ -32,7 +29,6 @@ class MainActivity : AppCompatActivity(), StatViewPagerFragment.OnStatsCompleted
     }
 
     private fun launchStatsFragment() {
-        hashtagText.visibility = View.VISIBLE
         val statsFragment = StatViewPagerFragment()
         fragmentManager
             .beginTransaction()

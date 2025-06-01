@@ -2,23 +2,26 @@ package com.mehequanna.mmiw
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.motion.widget.MotionLayout
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.constraintlayout.compose.MotionLayout
+import androidx.constraintlayout.compose.MotionScene
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_intro.*
 
 class IntroFragment : Fragment() {
     var listener: OnIntroAnimationCompletedListener? = null
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_intro, container, false)
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -28,31 +31,16 @@ class IntroFragment : Fragment() {
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        intro_motion_layout.addTransitionListener(object : MotionLayout.TransitionListener {
-            override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {
-            }
-
-            override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
-            }
-
-            override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {
-            }
-
-            override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
-                nextState(view)
-            }
-        })
-        nextState(view)
-    }
-
-    private fun nextState(view: View) {
-        when (intro_motion_layout.currentState ) {
-            R.id.animation_first -> intro_motion_layout.transitionToState(R.id.animation_second)
-            R.id.animation_second -> intro_motion_layout.transitionToState(R.id.animation_third)
-            R.id.animation_third -> {
-                view.postDelayed({ listener?.onIntroCompleted() }, 500)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                IntroScreenWithAnimation(onAnimationEnd = {
+                    listener?.onIntroCompleted()
+                })
             }
         }
     }
@@ -61,3 +49,117 @@ class IntroFragment : Fragment() {
         fun onIntroCompleted()
     }
 }
+
+@Composable
+fun IntroScreenWithAnimation(onAnimationEnd: () -> Unit) {
+    var progress by remember { mutableStateOf(0f) }
+    var stage by remember { mutableStateOf(0) }
+    val handler = remember { Handler(Looper.getMainLooper()) }
+
+    // Compose MotionScene as a string resource
+    val motionScene = remember {
+        // This should be the JSON version of your MotionScene
+        IntroMotionScene.composeMotionScene
+    }
+
+    // Animate progress using LaunchedEffect and Animatable
+    val animatable = remember { androidx.compose.animation.core.Animatable(0f) }
+
+    LaunchedEffect(stage) {
+        when (stage) {
+            0 -> {
+                animatable.animateTo(1f, animationSpec = androidx.compose.animation.core.tween(3000))
+                progress = animatable.value
+                stage = 1
+            }
+            1 -> {
+                animatable.animateTo(2f, animationSpec = androidx.compose.animation.core.tween(2500))
+                progress = animatable.value
+                stage = 2
+            }
+            2 -> {
+                handler.postDelayed({ onAnimationEnd() }, 500)
+            }
+        }
+    }
+
+    // Map progress to the correct range for each stage
+    val mappedProgress = when (stage) {
+        0 -> animatable.value
+        1 -> animatable.value - 1f
+        2 -> 1f
+        else -> 0f
+    }
+
+    MotionLayout(
+        motionScene = MotionScene(motionScene),
+        progress = mappedProgress,
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        IntroScreenContent()
+    }
+}
+
+//@Composable
+//fun IntroScreenContent() {
+//    Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
+//        // Hand watermark image
+//        Image(
+//            painter = painterResource(id = R.drawable.hand_watermark),
+//            contentDescription = null,
+//            modifier = Modifier
+//                .layoutId("hand_watermark")
+//                .fillMaxWidth()
+//                .wrapContentHeight(),
+//            contentScale = ContentScale.FillWidth
+//        )
+//
+//        // Hashtag text
+//        Text(
+//            text = stringResource(id = R.string.hashtag_only),
+//            style = MaterialTheme.typography.h5.copy(
+//                color = Color.White,
+//                fontWeight = FontWeight.Bold
+//            ),
+//            modifier = Modifier.layoutId("hashtag")
+//        )
+//
+//        // "Missing Murdered" text components
+//        Text(
+//            text = stringResource(id = R.string.m_only),
+//            style = MaterialTheme.typography.h5.copy(
+//                color = Color.White,
+//                fontWeight = FontWeight.Bold
+//            ),
+//            modifier = Modifier.layoutId("m_text")
+//        )
+//
+//        Text(
+//            text = stringResource(id = R.string.issing),
+//            style = MaterialTheme.typography.h5.copy(
+//                color = Color.White,
+//                fontWeight = FontWeight.Bold
+//            ),
+//            modifier = Modifier.layoutId("issing_text")
+//        )
+//
+//        Text(
+//            text = stringResource(id = R.string.m_only),
+//            style = MaterialTheme.typography.h5.copy(
+//                color = Color.White,
+//                fontWeight = FontWeight.Bold
+//            ),
+//            modifier = Modifier.layoutId("m_text_2")
+//        )
+//
+//        Text(
+//            text = stringResource(id = R.string.urdered),
+//            style = MaterialTheme.typography.h5.copy(
+//                color = Color.White,
+//                fontWeight = FontWeight.Bold
+//            ),
+//            modifier = Modifier.layoutId("urdered_text")
+//        )
+//    }
+//}
