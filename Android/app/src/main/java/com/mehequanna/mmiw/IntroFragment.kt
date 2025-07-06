@@ -38,9 +38,10 @@ class IntroFragment : Fragment() {
     ): View {
         return ComposeView(requireContext()).apply {
             setContent {
-                IntroScreenWithAnimation(onAnimationEnd = {
-                    listener?.onIntroCompleted()
-                })
+//                IntroScreenWithAnimation(onAnimationEnd = {
+//                    listener?.onIntroCompleted()
+//                })
+                MissingAnimationScreen()
             }
         }
     }
@@ -100,66 +101,3 @@ fun IntroScreenWithAnimation(onAnimationEnd: () -> Unit) {
         IntroScreenContent()
     }
 }
-
-//@Composable
-//fun IntroScreenContent() {
-//    Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
-//        // Hand watermark image
-//        Image(
-//            painter = painterResource(id = R.drawable.hand_watermark),
-//            contentDescription = null,
-//            modifier = Modifier
-//                .layoutId("hand_watermark")
-//                .fillMaxWidth()
-//                .wrapContentHeight(),
-//            contentScale = ContentScale.FillWidth
-//        )
-//
-//        // Hashtag text
-//        Text(
-//            text = stringResource(id = R.string.hashtag_only),
-//            style = MaterialTheme.typography.h5.copy(
-//                color = Color.White,
-//                fontWeight = FontWeight.Bold
-//            ),
-//            modifier = Modifier.layoutId("hashtag")
-//        )
-//
-//        // "Missing Murdered" text components
-//        Text(
-//            text = stringResource(id = R.string.m_only),
-//            style = MaterialTheme.typography.h5.copy(
-//                color = Color.White,
-//                fontWeight = FontWeight.Bold
-//            ),
-//            modifier = Modifier.layoutId("m_text")
-//        )
-//
-//        Text(
-//            text = stringResource(id = R.string.issing),
-//            style = MaterialTheme.typography.h5.copy(
-//                color = Color.White,
-//                fontWeight = FontWeight.Bold
-//            ),
-//            modifier = Modifier.layoutId("issing_text")
-//        )
-//
-//        Text(
-//            text = stringResource(id = R.string.m_only),
-//            style = MaterialTheme.typography.h5.copy(
-//                color = Color.White,
-//                fontWeight = FontWeight.Bold
-//            ),
-//            modifier = Modifier.layoutId("m_text_2")
-//        )
-//
-//        Text(
-//            text = stringResource(id = R.string.urdered),
-//            style = MaterialTheme.typography.h5.copy(
-//                color = Color.White,
-//                fontWeight = FontWeight.Bold
-//            ),
-//            modifier = Modifier.layoutId("urdered_text")
-//        )
-//    }
-//}

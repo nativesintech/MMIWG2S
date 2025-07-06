@@ -28,76 +28,38 @@ object IntroMotionScene {
             "end": ["parent", "start"],
             "alpha": 0
           },
+          "full_text": {
+            "width": "wrap",
+            "height": "wrap",
+            "start": ["parent", "start", 24],
+            "end": ["parent", "end", 24],
+            "top": ["parent", "bottom"],
+            "alpha": 0
+          },
           "m_text": {
             "width": "wrap",
             "height": "wrap",
-            "start": ["parent", "start", 36],
+            "start": ["parent", "start", 16],
+            "end": ["parent", "end"],
             "top": ["parent", "bottom"],
-            "alpha": 0,
-            "translationX": -120
-          },
-          "issing_text": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["m_text", "end"],
-            "top": ["m_text", "top"],
-            "bottom": ["m_text", "bottom"],
-            "alpha": 0,
-            "translationX": 120
-          },
-          "m_text_2": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["parent", "start", 36],
-            "top": ["m_text", "bottom", 36],
-            "alpha": 0,
-            "translationX": -120
-          },
-          "urdered_text": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["m_text_2", "end"],
-            "top": ["m_text_2", "top"],
-            "bottom": ["m_text_2", "bottom"],
-            "alpha": 0,
-            "translationX": 120
+            "alpha": 0
           },
           "i_text": {
             "width": "wrap",
             "height": "wrap",
-            "start": ["parent", "start", 36],
-            "top": ["m_text_2", "bottom", 36],
-            "alpha": 0,
-            "translationX": -120
-          },
-          "ndigenous_text": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["i_text", "end"],
-            "top": ["i_text", "top"],
-            "bottom": ["i_text", "bottom"],
-            "alpha": 0,
-            "translationX": 120
+            "start": ["m_text", "end", 8],
+            "top": ["m_text", "top"],
+            "alpha": 0
           },
           "w_text": {
             "width": "wrap",
             "height": "wrap",
-            "start": ["parent", "start", 36],
-            "top": ["i_text", "bottom", 36],
-            "alpha": 0,
-            "translationX": -120
-          },
-          "omen_text": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["w_text", "end"],
-            "top": ["w_text", "top"],
-            "bottom": ["w_text", "bottom"],
-            "alpha": 0,
-            "translationX": 120
+            "start": ["i_text", "end", 8],
+            "top": ["m_text", "top"],
+            "alpha": 0
           }
         },
-        "animation_first": {
+        "middle": {
           "hand_watermark": {
             "width": "spread",
             "height": "wrap",
@@ -116,165 +78,38 @@ object IntroMotionScene {
             "end": ["parent", "start"],
             "alpha": 0
           },
-          "m_text": {
+          "full_text": {
             "width": "wrap",
             "height": "wrap",
-            "start": ["parent", "start", 36],
-            "top": ["parent", "top", 48],
-            "alpha": 1,
-            "translationX": 0
-          },
-          "issing_text": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["m_text", "end"],
-            "top": ["m_text", "top"],
-            "bottom": ["m_text", "bottom"],
-            "alpha": 1,
-            "translationX": 0
-          },
-          "m_text_2": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["parent", "start", 36],
-            "top": ["m_text", "bottom", 36],
-            "alpha": 0,
-            "translationX": -120
-          },
-          "urdered_text": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["m_text_2", "end"],
-            "top": ["m_text_2", "top"],
-            "bottom": ["m_text_2", "bottom"],
-            "alpha": 0,
-            "translationX": 120
-          },
-          "i_text": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["parent", "start", 36],
-            "top": ["m_text_2", "bottom", 36],
-            "alpha": 0,
-            "translationX": -120
-          },
-          "ndigenous_text": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["i_text", "end"],
-            "top": ["i_text", "top"],
-            "bottom": ["i_text", "bottom"],
-            "alpha": 0,
-            "translationX": 120
-          },
-          "w_text": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["parent", "start", 36],
-            "top": ["i_text", "bottom", 36],
-            "alpha": 0,
-            "translationX": -120
-          },
-          "omen_text": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["w_text", "end"],
-            "top": ["w_text", "top"],
-            "bottom": ["w_text", "bottom"],
-            "alpha": 0,
-            "translationX": 120
-          }
-        },
-        "animation_second": {
-          "hand_watermark": {
-            "width": "spread",
-            "height": "wrap",
-            "start": ["parent", "start"],
-            "end": ["parent", "end"],
-            "bottom": ["parent", "bottom"],
-            "alpha": 0.5,
-            "custom": {
-              "ColorFilter": "#272727"
-            }
-          },
-          "hashtag": {
-            "width": "wrap",
-            "height": "wrap",
-            "top": ["parent", "top", 48],
-            "start": ["parent", "start"],
-            "end": ["m_text", "start"],
+            "start": ["parent", "start", 24],
+            "end": ["parent", "end", 24],
+            "top": ["parent", "top", 300],
             "alpha": 1
           },
           "m_text": {
             "width": "wrap",
             "height": "wrap",
-            "top": ["parent", "top", 48],
-            "start": ["hashtag", "end"],
-            "alpha": 1,
-            "translationX": 0
-          },
-          "issing_text": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["m_text", "end"],
-            "top": ["m_text", "top"],
-            "bottom": ["m_text", "bottom"],
-            "alpha": 1,
-            "translationX": 0
-          },
-          "m_text_2": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["parent", "start", 36],
-            "top": ["m_text", "bottom", 36],
-            "alpha": 1,
-            "translationX": 0
-          },
-          "urdered_text": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["m_text_2", "end"],
-            "top": ["m_text_2", "top"],
-            "bottom": ["m_text_2", "bottom"],
-            "alpha": 1,
-            "translationX": 0
+            "start": ["parent", "start", 16],
+            "end": ["parent", "end"],
+            "top": ["parent", "bottom"],
+            "alpha": 0
           },
           "i_text": {
             "width": "wrap",
             "height": "wrap",
-            "start": ["parent", "start", 36],
-            "top": ["m_text_2", "bottom", 36],
-            "alpha": 0,
-            "translationX": -120
-          },
-          "ndigenous_text": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["i_text", "end"],
-            "top": ["i_text", "top"],
-            "bottom": ["i_text", "bottom"],
-            "alpha": 0,
-            "translationX": 120
+            "start": ["m_text", "end", 8],
+            "top": ["m_text", "top"],
+            "alpha": 0
           },
           "w_text": {
             "width": "wrap",
             "height": "wrap",
-            "start": ["parent", "start", 36],
-            "top": ["i_text", "bottom", 36],
-            "alpha": 0,
-            "translationX": -120
-          },
-          "omen_text": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["w_text", "end"],
-            "top": ["w_text", "top"],
-            "bottom": ["w_text", "bottom"],
-            "alpha": 0,
-            "translationX": 120
+            "start": ["i_text", "end", 8],
+            "top": ["m_text", "top"],
+            "alpha": 0
           }
         },
-        "animation_third": {
+        "end": {
           "hand_watermark": {
             "width": "spread",
             "height": "wrap",
@@ -289,106 +124,54 @@ object IntroMotionScene {
           "hashtag": {
             "width": "wrap",
             "height": "wrap",
-            "top": ["parent", "top", 32],
-            "start": ["parent", "start"],
-            "end": ["m_text", "start"],
-            "horizontalChainStyle": "packed",
+            "top": ["parent", "top", 48],
+            "start": ["parent", "start", 24],
             "alpha": 1
+          },
+          "full_text": {
+            "width": "wrap",
+            "height": "wrap",
+            "start": ["parent", "start", 24],
+            "end": ["parent", "end", 24],
+            "top": ["parent", "top", 48],
+            "alpha": 0
           },
           "m_text": {
             "width": "wrap",
             "height": "wrap",
+            "start": ["hashtag", "end", 8],
             "baseline": ["hashtag", "baseline"],
-            "start": ["hashtag", "end"],
-            "end": ["m_text_2", "start"],
-            "alpha": 1,
-            "translationX": 0
-          },
-          "issing_text": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["m_text", "end"],
-            "top": ["m_text", "top"],
-            "bottom": ["m_text", "bottom"],
-            "alpha": 0,
-            "translationX": 0
-          },
-          "m_text_2": {
-            "width": "wrap",
-            "height": "wrap",
-            "baseline": ["m_text", "baseline"],
-            "start": ["m_text", "end"],
-            "end": ["i_text", "start"],
-            "alpha": 1,
-            "translationX": 0
-          },
-          "urdered_text": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["m_text_2", "end"],
-            "top": ["m_text_2", "top"],
-            "bottom": ["m_text_2", "bottom"],
-            "alpha": 0,
-            "translationX": 0
+            "alpha": 1
           },
           "i_text": {
             "width": "wrap",
             "height": "wrap",
-            "baseline": ["m_text_2", "baseline"],
-            "start": ["m_text_2", "end"],
-            "end": ["w_text", "start"],
-            "alpha": 1,
-            "translationX": 0
-          },
-          "ndigenous_text": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["i_text", "end"],
-            "top": ["i_text", "top"],
-            "bottom": ["i_text", "bottom"],
-            "alpha": 0,
-            "translationX": 0
+            "start": ["m_text", "end", 8],
+            "baseline": ["m_text", "baseline"],
+            "alpha": 1
           },
           "w_text": {
             "width": "wrap",
             "height": "wrap",
+            "start": ["i_text", "end", 8],
             "baseline": ["i_text", "baseline"],
-            "start": ["i_text", "end"],
-            "end": ["parent", "end"],
-            "alpha": 1,
-            "translationX": 0
-          },
-          "omen_text": {
-            "width": "wrap",
-            "height": "wrap",
-            "start": ["w_text", "end"],
-            "top": ["w_text", "top"],
-            "bottom": ["w_text", "bottom"],
-            "alpha": 0,
-            "translationX": 0
+            "alpha": 1
           }
         }
       },
       "Transitions": {
         "default": {
           "from": "start",
-          "to": "animation_first",
-          "pathMotionArc": "startHorizontal",
+          "to": "middle",
+          "pathMotionArc": "none",
           "duration": 3000,
           "interpolator": "easeInOut"
         },
-        "animation_first_to_second": {
-          "from": "animation_first",
-          "to": "animation_second",
+        "morph_to_hashtag": {
+          "from": "middle",
+          "to": "end",
           "pathMotionArc": "startHorizontal",
-          "duration": 3000,
-          "interpolator": "easeInOut" 
-        },
-        "animation_second_to_third": {
-          "from": "animation_second", 
-          "to": "animation_third",
-          "pathMotionArc": "startHorizontal",
-          "duration": 2500,
+          "duration": 2000,
           "interpolator": "easeInOut"
         }
       }
