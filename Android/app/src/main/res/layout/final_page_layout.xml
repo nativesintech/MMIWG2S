@@ -39,23 +39,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/WhiteTextBody"
-            android:text="@string/learn_more_watch_video_text"
+            android:padding="8dp"
+            android:text="@string/learn_more_niwrc_text"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-            android:id="@+id/youtubePlayerContainer"
+        <TextView
+            android:id="@+id/learnMoreTextMisti"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginStart="32dp"
-            app:videoId="@string/youtube_clip_string"
-            app:autoPlay="false"
-            app:layout_constraintTop_toBottomOf="@id/learnMoreText"
+            style="@style/WhiteTextBody"
+            android:padding="8dp"
+            android:text="@string/learn_more_misti_text"
+            app:layout_constraintTop_toBottomOf="@+id/learnMoreText"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

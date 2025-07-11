@@ -72,7 +72,6 @@ class MmiwActivity : AppCompatActivity() {
         }
         setContentView(R.layout.activity_mmiw_ar)
         arFragment = face_fragment as FaceArFragment
-        lifecycle.addObserver(youtubePlayerContainer)
         Texture.builder()
             .setSource(this, R.drawable.hand_red_solid)
             .build()
@@ -125,11 +124,6 @@ class MmiwActivity : AppCompatActivity() {
         setupStatisticsViewPager()
 
         setViewOnClickerListeners()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        youtubePlayerContainer.release()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -271,7 +265,7 @@ class MmiwActivity : AppCompatActivity() {
 
     private fun combineBitmaps(baseBitmap: Bitmap, overlayBitmap: Bitmap): Bitmap {
         val combinedBitmap =
-            Bitmap.createBitmap(baseBitmap.width, baseBitmap.height, baseBitmap.config)
+            Bitmap.createBitmap(baseBitmap.width, baseBitmap.height, baseBitmap.config!!)
         val canvas = Canvas(combinedBitmap)
         canvas.drawBitmap(baseBitmap, Matrix(), null)
         canvas.drawBitmap(overlayBitmap, 0f, 0f, null)
