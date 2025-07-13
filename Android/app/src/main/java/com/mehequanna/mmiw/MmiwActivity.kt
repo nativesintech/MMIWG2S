@@ -220,21 +220,18 @@ class MmiwActivity : AppCompatActivity() {
         }
 
         binding.shareButton.setOnClickListener {
-            it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-            binding.backGroup.visibility = View.INVISIBLE
-            binding.shareGroup.visibility = View.INVISIBLE
-            binding.statisticsViewPager.visibility = View.GONE
-            binding.statisticsCaptureView.apply {
-                visibility = View.VISIBLE
-                text = statisticsAdapter.getCurrentItemText(binding.statisticsViewPager.currentItem)
-                waitForLayout {
-                    takePhoto()
-                }
-            }
-            binding.shareButton.isEnabled = false
+            shareButtonPressed(it)
+        }
+
+        binding.sendButtonTextView.setOnClickListener {
+            shareButtonPressed(it)
         }
 
         binding.backButton.setOnClickListener {
+            backButtonPressed()
+        }
+
+        binding.backButtonTextView.setOnClickListener {
             backButtonPressed()
         }
 
@@ -255,6 +252,21 @@ class MmiwActivity : AppCompatActivity() {
             faceMeshTexture = redHand
             changeColor = true
         }
+    }
+
+    private fun shareButtonPressed(view: View) {
+        view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+        binding.backGroup.visibility = View.INVISIBLE
+        binding.shareGroup.visibility = View.INVISIBLE
+        binding.statisticsViewPager.visibility = View.GONE
+        binding.statisticsCaptureView.apply {
+            visibility = View.VISIBLE
+            text = statisticsAdapter.getCurrentItemText(binding.statisticsViewPager.currentItem)
+            waitForLayout {
+                takePhoto()
+            }
+        }
+        binding.shareButton.isEnabled = false
     }
 
     private fun backButtonPressed() {
