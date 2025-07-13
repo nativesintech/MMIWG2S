@@ -14,6 +14,7 @@
         android:focusableInTouchMode="true" />
 
     <ImageButton
+        android:fitsSystemWindows="true"
         android:id="@+id/swu_back_button"
         android:layout_width="46dp"
         android:layout_height="46dp"
@@ -128,15 +129,30 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="8dp"
         android:background="?attr/selectableItemBackground"
         android:backgroundTint="@color/transparent"
         android:minHeight="48dp"
         android:text="@string/share_with_us_skip_button"
         android:textColor="@color/white_100"
         android:theme="@style/MaterialButtonThemeTransparent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/child_abuse_support_email_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/child_abuse_support_email_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/child_abuse_support_email"
+        android:textColor="@color/white_100"
+        android:fitsSystemWindows="true"
+        android:textIsSelectable="true"
+        android:textSize="16sp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

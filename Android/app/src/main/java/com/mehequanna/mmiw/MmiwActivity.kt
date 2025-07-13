@@ -83,6 +83,8 @@ class MmiwActivity : AppCompatActivity() {
 
         binding.finalPageLayout.learnMoreText.movementMethod = LinkMovementMethod.getInstance()
         binding.finalPageLayout.learnMoreTextMisti.movementMethod = LinkMovementMethod.getInstance()
+        shareWithUsBinding.childAbuseSupportEmailText.movementMethod = LinkMovementMethod.getInstance()
+
         arFragment = supportFragmentManager.findFragmentById(R.id.face_fragment) as FaceArFragment
         Texture.builder()
             .setSource(this, R.drawable.hand_red_solid)
