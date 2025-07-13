@@ -22,7 +22,7 @@
     <string name="change_to_black_hand_color">Change to black hand color.</string>
     <string name="change_to_red_hand_color">Change to red hand color.</string>
     <string name="share_with_us_title">Will you share with us too?</string>
-    <string name="share_with_us_description">We plan to use the image in a collage to show the support for MMIW. We will use the email and state to send you messages about community events, alerts for missing women in your area, and to let you know how you can make a difference in MMIW.</string>
+    <string name="share_with_us_description">We plan to use the image in a collage to show the support for MMIW. We may use the email to send you messages about community events, alerts for missing women in your area, and to let you know how you can make a difference in MMIW.</string>
     <string name="name_field_title">Name</string>
     <string name="email_field_title">Email Address</string>
     <string name="share_with_us_share_button">Share</string>

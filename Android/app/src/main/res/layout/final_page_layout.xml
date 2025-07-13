@@ -41,6 +41,7 @@
             style="@style/WhiteTextBody"
             android:padding="8dp"
             android:text="@string/learn_more_niwrc_text"
+            android:textIsSelectable="true"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -50,6 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/WhiteTextBody"
+            android:textIsSelectable="true"
             android:padding="8dp"
             android:text="@string/learn_more_misti_text"
             app:layout_constraintTop_toBottomOf="@+id/learnMoreText"

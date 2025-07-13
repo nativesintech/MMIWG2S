@@ -1,19 +1,15 @@
 package com.mehequanna.mmiw.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mehequanna.mmiw.R
-import kotlinx.android.synthetic.main.statistics_item.view.*
+import com.mehequanna.mmiw.databinding.StatisticsItemBinding
 
-class StatisticsViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class StatisticsViewHolder private constructor(private val binding: StatisticsItemBinding) : RecyclerView.ViewHolder(binding.root) {
     constructor(parent: ViewGroup) :
-            this(
-                LayoutInflater.from(parent.context).inflate(R.layout.statistics_item, parent, false)
-            )
+            this(StatisticsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
 
     fun bind(boxText: String) {
-        itemView.statisticsTextView.text = boxText
+        binding.statisticsTextView.text = boxText
     }
 }

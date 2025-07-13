@@ -6,23 +6,26 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import com.mehequanna.mmiw.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), StatViewPagerFragment.OnStatsCompletedListener,
     TermsFragment.OnTermsAcceptedListener, IntroFragment.OnIntroAnimationCompletedListener {
 
     private val fragmentManager = supportFragmentManager
     private lateinit var sharedPrefs: SharedPreferences
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedPrefs = getSharedPreferences(SHARED_PREFS_FILE, Context.MODE_PRIVATE)
-        setContentView(R.layout.activity_main)
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         launchIntroFragment()
     }
 
     private fun launchIntroFragment() {
-        hashtagText.visibility = View.GONE
+        binding.hashtagText.visibility = View.GONE
         val introFragment = IntroFragment()
         fragmentManager
             .beginTransaction()
@@ -32,7 +35,7 @@ class MainActivity : AppCompatActivity(), StatViewPagerFragment.OnStatsCompleted
     }
 
     private fun launchStatsFragment() {
-        hashtagText.visibility = View.VISIBLE
+        binding.hashtagText.visibility = View.VISIBLE
         val statsFragment = StatViewPagerFragment()
         fragmentManager
             .beginTransaction()
@@ -92,6 +95,11 @@ class MainActivity : AppCompatActivity(), StatViewPagerFragment.OnStatsCompleted
     override fun onTermsAccepted() {
         sharedPrefs.edit().putBoolean(PREF_TERMS_AGREED_TO, true).apply()
         openArActivity()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     companion object {
