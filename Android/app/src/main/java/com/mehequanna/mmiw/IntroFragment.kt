@@ -7,17 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_intro.*
+import com.mehequanna.mmiw.databinding.FragmentIntroBinding
 
 class IntroFragment : Fragment() {
     var listener: OnIntroAnimationCompletedListener? = null
+    private var _binding: FragmentIntroBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_intro, container, false)
+        _binding = FragmentIntroBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onAttach(context: Context) {
@@ -30,31 +33,30 @@ class IntroFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        intro_motion_layout.addTransitionListener(object : MotionLayout.TransitionListener {
-            override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {
-            }
-
-            override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {
-            }
-
-            override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {
-            }
-
+        binding.introMotionLayout.addTransitionListener(object : MotionLayout.TransitionListener {
+            override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) {}
+            override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) {}
+            override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) {}
             override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
-                nextState(view)
+                nextState()
             }
         })
-        nextState(view)
+        nextState()
     }
 
-    private fun nextState(view: View) {
-        when (intro_motion_layout.currentState ) {
-            R.id.animation_first -> intro_motion_layout.transitionToState(R.id.animation_second)
-            R.id.animation_second -> intro_motion_layout.transitionToState(R.id.animation_third)
+    private fun nextState() {
+        when (binding.introMotionLayout.currentState) {
+            R.id.animation_first -> binding.introMotionLayout.transitionToState(R.id.animation_second)
+            R.id.animation_second -> binding.introMotionLayout.transitionToState(R.id.animation_third)
             R.id.animation_third -> {
-                view.postDelayed({ listener?.onIntroCompleted() }, 500)
+                binding.root.postDelayed({ listener?.onIntroCompleted() }, 500)
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     interface OnIntroAnimationCompletedListener {

@@ -5,13 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_stat_slide.view.*
+import com.mehequanna.mmiw.databinding.FragmentStatSlideBinding
 
 class StatSlideFragment : Fragment() {
 
     private var backgroundRes: Int = 0
     private var statString: String = ""
     private var pageIndex: Int = 0
+    private var _binding: FragmentStatSlideBinding? = null
+    private val binding get() = _binding!!
 
     fun newInstance(backgroundRes: Int, statString: String, pageIndex: Int): StatSlideFragment {
         val fragment = StatSlideFragment()
@@ -26,9 +28,9 @@ class StatSlideFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            backgroundRes = arguments!!.getInt(ARG_BACKGROUND_RES)
-            statString = arguments!!.getString(ARG_STAT_TEXT, "")
-            pageIndex = arguments!!.getInt(ARG_PAGE_INDEX)
+            backgroundRes = requireArguments().getInt(ARG_BACKGROUND_RES)
+            statString = requireArguments().getString(ARG_STAT_TEXT, "")
+            pageIndex = requireArguments().getInt(ARG_PAGE_INDEX)
         }
     }
 
@@ -37,18 +39,22 @@ class StatSlideFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view = inflater.inflate(R.layout.fragment_stat_slide, container, false)
-        createStatSlide(view, backgroundRes, statString)
-        return view
+        _binding = FragmentStatSlideBinding.inflate(inflater, container, false)
+        createStatSlide(backgroundRes, statString)
+        return binding.root
     }
 
     private fun createStatSlide(
-        view: View,
         backgroundRes: Int,
         text: String
     ) {
-        view.statImage.setImageResource(backgroundRes)
-        view.statText.text = text
+        binding.statImage.setImageResource(backgroundRes)
+        binding.statText.text = text
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

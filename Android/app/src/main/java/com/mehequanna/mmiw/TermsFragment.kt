@@ -7,18 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_respect_page.*
+import com.mehequanna.mmiw.databinding.FragmentRespectPageBinding
 
 class TermsFragment : Fragment() {
     var listener: OnTermsAcceptedListener? = null
+    private var _binding: FragmentRespectPageBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_respect_page, container, false)
+        _binding = FragmentRespectPageBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,10 +40,15 @@ class TermsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        accept_button.setOnClickListener {
+        binding.acceptButton.setOnClickListener {
             listener?.onTermsAccepted()
         }
-        terms_motion_layout.transitionToEnd()
+        binding.termsMotionLayout.transitionToEnd()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     interface OnTermsAcceptedListener {

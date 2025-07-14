@@ -15,6 +15,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
+import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.util.TypedValue
 import android.view.HapticFeedbackConstants
@@ -35,18 +36,20 @@ import com.google.ar.sceneform.rendering.Renderable
 import com.google.ar.sceneform.rendering.Texture
 import com.google.ar.sceneform.ux.AugmentedFaceNode
 import com.mehequanna.mmiw.adapter.StatisticsAdapter
+import com.mehequanna.mmiw.databinding.ActivityMmiwArBinding
+import com.mehequanna.mmiw.databinding.ShareWithUsLayoutBinding
 import com.mehequanna.mmiw.network.RetrofitEventListener
 import com.mehequanna.mmiw.network.Submission
 import com.mehequanna.mmiw.network.SubmissionRestClient
-import kotlinx.android.synthetic.main.activity_mmiw_ar.*
-import kotlinx.android.synthetic.main.final_page_layout.*
-import kotlinx.android.synthetic.main.share_with_us_layout.*
-import retrofit2.Call
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
+import retrofit2.Call
+import androidx.core.graphics.createBitmap
+import androidx.core.graphics.scale
+import androidx.core.view.isGone
 
 class MmiwActivity : AppCompatActivity() {
     private val TAG: String = MmiwActivity::class.java.name
@@ -65,14 +68,24 @@ class MmiwActivity : AppCompatActivity() {
     private lateinit var imageFile: File
     private lateinit var databaseImageFile: File
 
+    private lateinit var binding: ActivityMmiwArBinding
+    private lateinit var shareWithUsBinding: ShareWithUsLayoutBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (!checkIsSupportedDeviceOrFinish()) {
             return
         }
-        setContentView(R.layout.activity_mmiw_ar)
-        arFragment = face_fragment as FaceArFragment
-        lifecycle.addObserver(youtubePlayerContainer)
+        binding = ActivityMmiwArBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        // Inflate share_with_us_layout binding
+        shareWithUsBinding = ShareWithUsLayoutBinding.bind(binding.shareWithUsLayout.root)
+
+        binding.finalPageLayout.learnMoreText.movementMethod = LinkMovementMethod.getInstance()
+        binding.finalPageLayout.learnMoreTextMisti.movementMethod = LinkMovementMethod.getInstance()
+        shareWithUsBinding.childAbuseSupportEmailText.movementMethod = LinkMovementMethod.getInstance()
+
+        arFragment = supportFragmentManager.findFragmentById(R.id.face_fragment) as FaceArFragment
         Texture.builder()
             .setSource(this, R.drawable.hand_red_solid)
             .build()
@@ -127,11 +140,6 @@ class MmiwActivity : AppCompatActivity() {
         setViewOnClickerListeners()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        youtubePlayerContainer.release()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == SHARE_INTENT_CODE) {
@@ -143,10 +151,10 @@ class MmiwActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (back_button.visibility != View.GONE) {
+        if (binding.backButton.visibility != View.GONE) {
             backButtonPressed()
         }
-        else if (final_page_layout.visibility == View.GONE) {
+        else if (binding.finalPageLayout.root.isGone) {
             showFinalPage()
         } else {
             super.onBackPressed()
@@ -177,10 +185,10 @@ class MmiwActivity : AppCompatActivity() {
     }
 
     private fun setupStatisticsViewPager() {
-        statisticsViewPager.adapter = statisticsAdapter
+        binding.statisticsViewPager.adapter = statisticsAdapter
         statisticsAdapter.setStatisticsAdapterData(Statistics(this).statisticsList)
 
-        with(statisticsViewPager) {
+        with(binding.statisticsViewPager) {
             offscreenPageLimit = 3
         }
 
@@ -191,7 +199,7 @@ class MmiwActivity : AppCompatActivity() {
     }
 
     private fun updateViewPagerTransformer(offsetPixels: Int, pageMarginPixels: Int) {
-        statisticsViewPager.setPageTransformer { page, position ->
+        binding.statisticsViewPager.setPageTransformer { page, position ->
             val viewPager = page.parent.parent as ViewPager2
             val offset = position * -(2 * offsetPixels + pageMarginPixels)
             if (viewPager.orientation == ViewPager2.ORIENTATION_HORIZONTAL) {
@@ -207,71 +215,79 @@ class MmiwActivity : AppCompatActivity() {
     }
 
     private fun setViewOnClickerListeners() {
-        capture_button.setOnClickListener {
+        binding.captureButton.setOnClickListener {
             it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
             changeButtonVisibility(ButtonState.IMAGE_CAPTURED)
             pauseSceneView(true)
         }
 
-        share_button.setOnClickListener {
-            it.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
-            back_group.visibility = View.INVISIBLE
-            share_group.visibility = View.INVISIBLE
-            statisticsViewPager.visibility = View.GONE
-            statisticsCaptureView.apply {
-                visibility = View.VISIBLE
-                text = statisticsAdapter.getCurrentItemText(statisticsViewPager.currentItem)
-                waitForLayout {
-                    takePhoto()
-                }
-            }
-            share_button.isEnabled = false
+        binding.shareButton.setOnClickListener {
+            shareButtonPressed(it)
         }
 
-        back_button.setOnClickListener {
+        binding.sendButtonTextView.setOnClickListener {
+            shareButtonPressed(it)
+        }
+
+        binding.backButton.setOnClickListener {
             backButtonPressed()
         }
 
-        color_button_black.setOnClickListener { blackButton ->
+        binding.backButtonTextView.setOnClickListener {
+            backButtonPressed()
+        }
+
+        binding.colorButtonBlack.setOnClickListener { blackButton ->
             blackButton.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
             blackButton.updateHeightWidth(54f.toDips(resources))
 
-            color_button_red.updateHeightWidth(36f.toDips(resources))
+            binding.colorButtonRed.updateHeightWidth(36f.toDips(resources))
             faceMeshTexture = blackHand
             changeColor = true
         }
 
-        color_button_red.setOnClickListener { redButton ->
+        binding.colorButtonRed.setOnClickListener { redButton ->
             redButton.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
             redButton.updateHeightWidth(54f.toDips(resources))
 
-            color_button_black.updateHeightWidth(36f.toDips(resources))
+            binding.colorButtonBlack.updateHeightWidth(36f.toDips(resources))
             faceMeshTexture = redHand
             changeColor = true
         }
     }
 
+    private fun shareButtonPressed(view: View) {
+        view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+        binding.backGroup.visibility = View.INVISIBLE
+        binding.shareGroup.visibility = View.INVISIBLE
+        binding.statisticsViewPager.visibility = View.GONE
+        binding.statisticsCaptureView.apply {
+            visibility = View.VISIBLE
+            text = statisticsAdapter.getCurrentItemText(binding.statisticsViewPager.currentItem)
+            waitForLayout {
+                takePhoto()
+            }
+        }
+        binding.shareButton.isEnabled = false
+    }
+
     private fun backButtonPressed() {
-        back_button.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+        binding.backButton.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
         changeButtonVisibility(ButtonState.CAPTURING)
         pauseSceneView(false)
     }
 
     private fun takeScreenshot(): Bitmap =
-        mmiw_overlay_view.let { view ->
-            val bitmap = Bitmap.createBitmap(
-                view.width,
-                view.height,
-                Bitmap.Config.ARGB_8888
-            )
+        binding.mmiwOverlayView.let { view ->
+            val bitmap = createBitmap(view.width, view.height)
             val canvas = Canvas(bitmap)
             view.draw(canvas)
             return bitmap
         }
 
     private fun combineBitmaps(baseBitmap: Bitmap, overlayBitmap: Bitmap): Bitmap {
-        val combinedBitmap =
-            Bitmap.createBitmap(baseBitmap.width, baseBitmap.height, baseBitmap.config)
+        val config = baseBitmap.config ?: Bitmap.Config.ARGB_8888
+        val combinedBitmap = createBitmap(baseBitmap.width, baseBitmap.height, config)
         val canvas = Canvas(combinedBitmap)
         canvas.drawBitmap(baseBitmap, Matrix(), null)
         canvas.drawBitmap(overlayBitmap, 0f, 0f, null)
@@ -282,31 +298,31 @@ class MmiwActivity : AppCompatActivity() {
     private fun changeButtonVisibility(buttonVisbility: ButtonState) {
         when (buttonVisbility) {
             ButtonState.CAPTURING -> {
-                color_button_black.visibility = View.VISIBLE
-                color_button_red.visibility = View.VISIBLE
-                capture_button.visibility = View.VISIBLE
-                capture_button.isEnabled = true
-                back_group.visibility = View.GONE
-                share_group.visibility = View.GONE
-                statisticsViewPager.visibility = View.GONE
+                binding.colorButtonBlack.visibility = View.VISIBLE
+                binding.colorButtonRed.visibility = View.VISIBLE
+                binding.captureButton.visibility = View.VISIBLE
+                binding.captureButton.isEnabled = true
+                binding.backGroup.visibility = View.GONE
+                binding.shareGroup.visibility = View.GONE
+                binding.statisticsViewPager.visibility = View.GONE
             }
             ButtonState.IMAGE_CAPTURED -> {
-                color_button_black.visibility = View.GONE
-                color_button_red.visibility = View.GONE
-                capture_button.visibility = View.GONE
-                capture_button.isEnabled = false
-                back_group.visibility = View.VISIBLE
-                share_group.visibility = View.VISIBLE
-                statisticsViewPager.visibility = View.VISIBLE
+                binding.colorButtonBlack.visibility = View.GONE
+                binding.colorButtonRed.visibility = View.GONE
+                binding.captureButton.visibility = View.GONE
+                binding.captureButton.isEnabled = false
+                binding.backGroup.visibility = View.VISIBLE
+                binding.shareGroup.visibility = View.VISIBLE
+                binding.statisticsViewPager.visibility = View.VISIBLE
             }
             ButtonState.HIDE_ALL -> {
-                color_button_black.visibility = View.GONE
-                color_button_red.visibility = View.GONE
-                capture_button.visibility = View.GONE
-                capture_button.isEnabled = false
-                back_group.visibility = View.GONE
-                share_group.visibility = View.GONE
-                statisticsViewPager.visibility = View.GONE
+                binding.colorButtonBlack.visibility = View.GONE
+                binding.colorButtonRed.visibility = View.GONE
+                binding.captureButton.visibility = View.GONE
+                binding.captureButton.isEnabled = false
+                binding.backGroup.visibility = View.GONE
+                binding.shareGroup.visibility = View.GONE
+                binding.statisticsViewPager.visibility = View.GONE
             }
         }
     }
@@ -318,8 +334,8 @@ class MmiwActivity : AppCompatActivity() {
     private fun resetToCapturing() {
         pauseSceneView(false)
         changeButtonVisibility(ButtonState.CAPTURING)
-        statisticsCaptureView.visibility = View.INVISIBLE
-        share_button.isEnabled = true
+        binding.statisticsCaptureView.visibility = View.INVISIBLE
+        binding.shareButton.isEnabled = true
         imagesObtained = false
     }
 
@@ -327,11 +343,7 @@ class MmiwActivity : AppCompatActivity() {
         val arSceneView: ArSceneView = arFragment.arSceneView
 
         // Create a bitmap the size of the scene view.
-        val arViewBitmap = Bitmap.createBitmap(
-            arSceneView.width,
-            arSceneView.height,
-            Bitmap.Config.ARGB_8888
-        )
+        val arViewBitmap = createBitmap(arSceneView.width, arSceneView.height)
 
         // Create a handler thread to offload the processing of the image.
         val handlerThread = HandlerThread("PixelCopier")
@@ -368,8 +380,8 @@ class MmiwActivity : AppCompatActivity() {
             runOnUiThread {
                 if (!imagesObtained) {
                     changeButtonVisibility(ButtonState.CAPTURING)
-                    statisticsCaptureView.visibility = View.INVISIBLE
-                    share_button.isEnabled = true
+                    binding.statisticsCaptureView.visibility = View.INVISIBLE
+                    binding.shareButton.isEnabled = true
                 }
                 if (imagesObtained) {
                     showShareWithUs()
@@ -388,31 +400,30 @@ class MmiwActivity : AppCompatActivity() {
     }
 
     private fun showShareWithUs() {
-        swu_photo.setImageBitmap(combinedBitmap)
-        fadeInView(share_with_us_layout)
-
-        swu_skip_button.setOnClickListener {
-            fadeOutView(share_with_us_layout) { sharePhoto(imageFile) }
+        shareWithUsBinding.swuPhoto.setImageBitmap(combinedBitmap)
+        fadeInView(binding.shareWithUsLayout.root)
+        shareWithUsBinding.swuSkipButton.setOnClickListener {
+            fadeOutView(binding.shareWithUsLayout.root) { sharePhoto(imageFile) }
         }
-        swu_back_button.setOnClickListener {
-            fadeOutView(share_with_us_layout)
+        shareWithUsBinding.swuBackButton.setOnClickListener {
+            fadeOutView(binding.shareWithUsLayout.root)
             resetToCapturing()
         }
-        swu_share_button.setOnClickListener {
+        shareWithUsBinding.swuShareButton.setOnClickListener {
             val newSubmission = Submission().apply {
-                this.name = swu_name_edit_text.text.toString()
-                this.email = swu_email_edit_text.text.toString()
+                this.name = shareWithUsBinding.swuNameEditText.text.toString()
+                this.email = shareWithUsBinding.swuEmailEditText.text.toString()
                 this.image = databaseImageFile
             }
             sendPhotoToBackend(newSubmission)
-            share_with_us_layout.visibility = View.GONE
+            binding.shareWithUsLayout.root.visibility = View.GONE
             sharePhoto(imageFile)
         }
     }
 
     private fun showFinalPage() {
         changeButtonVisibility(ButtonState.HIDE_ALL)
-        fadeInView(final_page_layout)
+        fadeInView(binding.finalPageLayout.root)
     }
 
     private fun sharePhoto(file: File) {
@@ -555,5 +566,5 @@ private fun Bitmap.compressBitmapForDatabase(): Bitmap {
     val modifier = 1300 / this.height.toDouble()
     val width = (this.width * modifier).toInt()
     val height = (this.height * modifier).toInt()
-    return Bitmap.createScaledBitmap(this, width, height, true)
+    return this.scale(width, height)
 }
